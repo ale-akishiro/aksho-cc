@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Akshoverse Studio v1.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>The Akshoverse Studio</h1>
+            <p>Professional Creative Studio Platform - Grand Launch v1.0</p>
+        </div>
+
+        <!-- Centered Pills Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-pill active" data-tab="home" onclick="switchTab('home')" aria-label="Home tab">
+                🏠 HOME
+            </button>
+            <button class="nav-pill" data-tab="human" onclick="switchTab('human')" aria-label="Human character creation tab">
+                👤 Human
+            </button>
+            <button class="nav-pill" data-tab="monster" onclick="switchTab('monster')" aria-label="Monster character creation tab">
+                👹 Monster  
+            </button>
+            <button class="nav-pill coming-soon" data-tab="aksho-style" onclick="switchTab('aksho-style')" aria-label="Aksho Style tab - Coming Soon">
+                🎨 Aksho Style
+            </button>
+            <button class="nav-pill coming-soon" data-tab="furry" onclick="switchTab('furry')" aria-label="Furry tab - Coming Soon">
+                🐺 Furry
+            </button>
+            <button class="nav-pill coming-soon" data-tab="closet" onclick="switchTab('closet')" aria-label="The Closet tab - Coming Soon">
+                👗 The Closet
+            </button>
+            <button class="nav-pill coming-soon" data-tab="location" onclick="switchTab('location')" aria-label="Location tab - Coming Soon">
+                🌍 Location
+            </button>
+            <button class="nav-pill coming-soon" data-tab="wiki" onclick="switchTab('wiki')" aria-label="The Tag Wiki tab - Coming Soon">
+                📚 The Tag Wiki
+            </button>
+        </div>
+
+        <div class="main-content">
+            <div class="image-viewer">
+                <img id="viewer-img" src="" alt="Select an option to preview" />
+            </div>
+            
+            <div class="creator-panel">
+                <!-- HOME Tab Content -->
+                <div id="home-tab" class="tab-content active">
+                    <div class="home-welcome">
+                        <h2>Welcome to The Akshoverse Studio</h2>
+                        <p>Your ultimate creative companion for character creation, world building, and artistic exploration. Dive into our comprehensive tools and unleash your imagination.</p>
+                        
+                        <div class="home-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">312+</span>
+                                <span class="stat-label">Human Tags</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">247+</span>
+                                <span class="stat-label">Monster Species</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">8</span>
+                                <span class="stat-label">Creation Modes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-cards">
+                        <div class="feature-card available" onclick="switchTab('human')" tabindex="0" role="button">
+                            <span class="feature-icon">👤</span>
+                            <h3 class="feature-title">Human Creator</h3>
+                            <p class="feature-description">Create detailed human characters with 312+ tags covering appearance, personality, clothing, and more.</p>
+                            <span class="feature-badge">312+ Tags Available</span>
+                        </div>
+
+                        <div class="feature-card available" onclick="switchTab('monster')" tabindex="0" role="button">
+                            <span class="feature-icon">👹</span>
+                            <h3 class="feature-title">Monster Creator</h3>
+                            <p class="feature-description">Design fantastical creatures with 247 species across 7 scientific categories, from terrestrial to supernatural beings.</p>
+                            <span class="feature-badge">247 Species Available</span>
+                        </div>
+
+                        <div class="feature-card coming-soon">
+                            <span class="feature-icon">🎨</span>
+                            <h3 class="feature-title">Aksho Style</h3>
+                            <p class="feature-description">Signature art styles and aesthetic presets for consistent visual themes across your creations.</p>
+                            <span class="feature-badge">Coming Soon</span>
+                        </div>
+
+                        <div class="feature-card coming-soon">
+                            <span class="feature-icon">🐺</span>
+                            <h3 class="feature-title">Furry Creator</h3>
+                            <p class="feature-description">Specialized tools for anthropomorphic character creation with detailed fur, features, and species-specific traits.</p>
+                            <span class="feature-badge">Coming Soon</span>
+                        </div>
+
+                        <div class="feature-card coming-soon">
+                            <span class="feature-icon">👗</span>
+                            <h3 class="feature-title">The Closet</h3>
+                            <p class="feature-description">Comprehensive wardrobe system with clothing styles, accessories, and fashion combinations for any era or setting.</p>
+                            <span class="feature-badge">Coming Soon</span>
+                        </div>
+
+                        <div class="feature-card coming-soon">
+                            <span class="feature-icon">🌍</span>
+                            <h3 class="feature-title">Location Builder</h3>
+                            <p class="feature-description">Create immersive environments, from cozy interiors to vast landscapes, with detailed atmospheric controls.</p>
+                            <span class="feature-badge">Coming Soon</span>
+                        </div>
+
+                        <div class="feature-card coming-soon">
+                            <span class="feature-icon">📚</span>
+                            <h3 class="feature-title">The Tag Wiki</h3>
+                            <p class="feature-description">Comprehensive documentation and examples for all tags, with visual references and usage guidelines.</p>
+                            <span class="feature-badge">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>🚀 Recent Updates</h3>
+                        <ul style="list-style: none; padding: 0; color: #6b7280;">
+                            <li style="padding: 8px 0; border-bottom: 1px solid rgba(139, 92, 246, 0.1);"><strong>v1.0 Launch:</strong> Complete rebrand to The Akshoverse Studio</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid rgba(139, 92, 246, 0.1);"><strong>Monster Integration:</strong> All 247 species now available with scientific categorization</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid rgba(139, 92, 246, 0.1);"><strong>Typography Upgrade:</strong> Space Grotesk font family throughout</li>
+                            <li style="padding: 8px 0;"><strong>UI Enhancement:</strong> Centered navigation and professional studio aesthetic</li>
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h3>✨ Getting Started</h3>
+                        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 15px;">
+                            Welcome to your creative journey! Choose from our available creation modes to start building your characters and worlds. Each mode offers specialized tools and extensive customization options.
+                        </p>
+                        <p style="color: #6b7280; line-height: 1.6;">
+                            <strong>Pro Tip:</strong> Start with the Human or Monster creators to explore our comprehensive tag system, then keep an eye out for our upcoming specialized tools!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Human Tab Content -->
+                <div id="human-tab" class="tab-content">
+                    <!-- This will be populated by human-data.js -->
+                </div>
+
+                <!-- Monster Tab Content -->
+                <div id="monster-tab" class="tab-content">
+                    <!-- This will be populated by monster-data.js -->
+                </div>
+
+                <!-- Coming Soon Tabs -->
+                <div id="aksho-style-tab" class="tab-content">
+                    <div class="coming-soon-section">
+                        <span class="coming-soon-icon">🎨</span>
+                        <h2 class="coming-soon-title">Aksho Style</h2>
+                        <p class="coming-soon-description">
+                            Signature art styles and aesthetic presets for consistent visual themes across your creations.
+                        </p>
+                        <span class="coming-soon-badge">Coming Soon™</span>
+                    </div>
+                </div>
+
+                <div id="furry-tab" class="tab-content">
+                    <div class="coming-soon-section">
+                        <span class="coming-soon-icon">🐺</span>
+                        <h2 class="coming-soon-title">Furry Creator</h2>
+                        <p class="coming-soon-description">
+                            Specialized tools for anthropomorphic character creation with detailed fur, features, and species-specific traits.
+                        </p>
+                        <span class="coming-soon-badge">Coming Soon™</span>
+                    </div>
+                </div>
+
+                <div id="closet-tab" class="tab-content">
+                    <div class="coming-soon-section">
+                        <span class="coming-soon-icon">👗</span>
+                        <h2 class="coming-soon-title">The Closet</h2>
+                        <p class="coming-soon-description">
+                            Comprehensive wardrobe system with clothing styles, accessories, and fashion combinations for any era or setting.
+                        </p>
+                        <span class="coming-soon-badge">Coming Soon™</span>
+                    </div>
+                </div>
+
+                <div id="location-tab" class="tab-content">
+                    <div class="coming-soon-section">
+                        <span class="coming-soon-icon">🌍</span>
+                        <h2 class="coming-soon-title">Location Builder</h2>
+                        <p class="coming-soon-description">
+                            Create immersive environments, from cozy interiors to vast landscapes, with detailed atmospheric controls.
+                        </p>
+                        <span class="coming-soon-badge">Coming Soon™</span>
+                    </div>
+                </div>
+
+                <div id="wiki-tab" class="tab-content">
+                    <div class="coming-soon-section">
+                        <span class="coming-soon-icon">📚</span>
+                        <h2 class="coming-soon-title">The Tag Wiki</h2>
+                        <p class="coming-soon-description">
+                            Comprehensive documentation and examples for all tags, with visual references and usage guidelines.
+                        </p>
+                        <span class="coming-soon-badge">Coming Soon™</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="output-panel">
+                <div class="output-section">
+                    <h3>Generated Tags</h3>
+                    <div class="output-text" id="output-text">Select options to generate tags...</div>
+                    <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Tags</button>
+                </div>
+
+                <div class="output-section">
+                    <h3>Character Summary</h3>
+                    <div class="output-text" id="summary-text">Character details will appear here...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript modules -->
+    <script src="utils.js"></script>
+    <script src="validation.js"></script>
+    <script src="conflict-detection.js"></script>
+    <script src="human-data.js"></script>
+    <script src="monster-data.js"></script>
+    <script src="logic.js"></script>
+</body>
+</html>
