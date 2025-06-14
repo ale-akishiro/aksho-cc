@@ -18,6 +18,20 @@ const AppState = {
     selectedTags: new Set(),
     characterData: {},
     
+    // Tab-specific prompt data
+    tabPrompts: {
+        human: {
+            characterName: '',
+            customTags: '',
+            selectedTags: new Set()
+        },
+        monster: {
+            characterName: '',
+            customTags: '',
+            selectedTags: new Set()
+        }
+    },
+    
     // Feature flags and settings
     settings: {
         autoSave: true,
@@ -280,11 +294,17 @@ class AkshoStudio {
                 activeTab.classList.add('active');
             }
             
+            // Save current tab's prompt data before switching
+            this.saveCurrentTabPrompts();
+            
             // Update state
             this.state.currentTab = tabName;
             
             // Handle tab-specific logic
             this.handleTabSwitch(tabName);
+            
+            // Restore new tab's prompt data after switching
+            this.restoreTabPrompts(tabName);
             
             // Auto-save state
             if (this.state.settings.autoSave) {
@@ -316,6 +336,13 @@ class AkshoStudio {
                 break;
             case 'home':
                 this.setupHomeTabFeatures();
+                break;
+            case 'aksho-style':
+            case 'furry':
+            case 'closet':
+            case 'location':
+            case 'wiki':
+                this.setupComingSoonTabFeatures();
                 break;
         }
     }
@@ -406,6 +433,95 @@ class AkshoStudio {
         if (imageViewer) {
             imageViewer.style.display = 'none';
         }
+    }
+
+    /**
+     * Setup coming soon tab features (for non-functional tabs)
+     */
+    setupComingSoonTabFeatures() {
+        // Apply HOME layout class to main content (single column)
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.classList.add('home-layout');
+        }
+        
+        // Hide output panel and image viewer on coming-soon tabs
+        const outputPanel = document.querySelector('.output-panel');
+        const imageViewer = document.querySelector('.image-viewer');
+        
+        if (outputPanel) {
+            outputPanel.style.display = 'none';
+        }
+        
+        if (imageViewer) {
+            imageViewer.style.display = 'none';
+        }
+    }
+
+    /**
+     * Save current tab's prompt data to state
+     */
+    saveCurrentTabPrompts() {
+        const currentTab = this.state.currentTab;
+        
+        // Only save for functional tabs (human/monster)
+        if (currentTab === 'human' || currentTab === 'monster') {
+            const characterNameInput = document.getElementById('character-name');
+            const customTagsInput = document.getElementById(currentTab === 'human' ? 'custom-tags' : 'monster-custom-tags');
+            
+            if (characterNameInput && customTagsInput) {
+                this.state.tabPrompts[currentTab] = {
+                    characterName: characterNameInput.value || '',
+                    customTags: customTagsInput.value || '',
+                    selectedTags: new Set(this.state.selectedTags)
+                };
+            }
+        }
+    }
+
+    /**
+     * Restore tab's prompt data from state
+     * @param {string} tabName - Name of tab to restore
+     */
+    restoreTabPrompts(tabName) {
+        // Only restore for functional tabs (human/monster)
+        if (tabName === 'human' || tabName === 'monster') {
+            const characterNameInput = document.getElementById('character-name');
+            const customTagsInput = document.getElementById(tabName === 'human' ? 'custom-tags' : 'monster-custom-tags');
+            
+            if (characterNameInput && customTagsInput && this.state.tabPrompts[tabName]) {
+                const tabData = this.state.tabPrompts[tabName];
+                
+                // Restore input values
+                characterNameInput.value = tabData.characterName || '';
+                customTagsInput.value = tabData.customTags || '';
+                
+                // Restore selected tags
+                this.state.selectedTags = new Set(tabData.selectedTags);
+                
+                // Update the UI to reflect restored selections
+                this.updateSelectedTagsUI();
+                this.updateOutput();
+            }
+        }
+    }
+
+    /**
+     * Update UI to reflect current selected tags
+     */
+    updateSelectedTagsUI() {
+        // Clear all active selections
+        document.querySelectorAll('.tag-item.active').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Restore active selections based on state
+        this.state.selectedTags.forEach(tag => {
+            const tagElement = document.querySelector(`[data-tag="${tag}"]`);
+            if (tagElement) {
+                tagElement.classList.add('active');
+            }
+        });
     }
 
     /**
@@ -778,10 +894,25 @@ class AkshoStudio {
      */
     autoSave() {
         try {
+            // Save current tab data before auto-saving
+            this.saveCurrentTabPrompts();
+            
             const state = {
                 currentTab: this.state.currentTab,
                 selectedTags: Array.from(this.state.selectedTags),
                 characterData: this.getCurrentCharacterData(),
+                tabPrompts: {
+                    human: {
+                        characterName: this.state.tabPrompts.human.characterName,
+                        customTags: this.state.tabPrompts.human.customTags,
+                        selectedTags: Array.from(this.state.tabPrompts.human.selectedTags)
+                    },
+                    monster: {
+                        characterName: this.state.tabPrompts.monster.characterName,
+                        customTags: this.state.tabPrompts.monster.customTags,
+                        selectedTags: Array.from(this.state.tabPrompts.monster.selectedTags)
+                    }
+                },
                 timestamp: Date.now()
             };
             
@@ -804,6 +935,21 @@ class AkshoStudio {
                 const ageHours = (Date.now() - savedState.timestamp) / (1000 * 60 * 60);
                 if (ageHours < 24) {
                     this.state.selectedTags = new Set(savedState.selectedTags || []);
+                    
+                    // Restore tab-specific prompt data
+                    if (savedState.tabPrompts) {
+                        this.state.tabPrompts.human = {
+                            characterName: savedState.tabPrompts.human?.characterName || '',
+                            customTags: savedState.tabPrompts.human?.customTags || '',
+                            selectedTags: new Set(savedState.tabPrompts.human?.selectedTags || [])
+                        };
+                        this.state.tabPrompts.monster = {
+                            characterName: savedState.tabPrompts.monster?.characterName || '',
+                            customTags: savedState.tabPrompts.monster?.customTags || '',
+                            selectedTags: new Set(savedState.tabPrompts.monster?.selectedTags || [])
+                        };
+                    }
+                    
                     console.log('📥 Loaded saved application state');
                 }
             }
