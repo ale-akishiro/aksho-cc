@@ -173,6 +173,30 @@ body::before {
     left: 100%;
 }
 
+/* Disable sliding animation for coming-soon tabs to prevent conflicts */
+.nav-pill.coming-soon::before {
+    content: 'COMING SOON™';
+    position: absolute;
+    top: -5px;
+    right: -12px;
+    background: linear-gradient(45deg, #f59e0b, #f97316);
+    color: white;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 6px 6px 6px 2px;
+    transform: rotate(12deg);
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+    z-index: 10;
+    /* Override the sliding animation */
+    width: auto;
+    height: auto;
+    left: auto;
+    background: linear-gradient(45deg, #f59e0b, #f97316);
+    transition: none;
+}
+
 .nav-pill.active {
     background: linear-gradient(135deg, 
         #8b5cf6 0%, 
@@ -202,22 +226,6 @@ body::before {
     overflow: hidden;
 }
 
-.nav-pill.coming-soon::before {
-    content: 'COMING SOON™';
-    position: absolute;
-    top: -5px;
-    right: -12px;
-    background: linear-gradient(45deg, #f59e0b, #f97316);
-    color: white;
-    font-size: 8px;
-    font-weight: 700;
-    padding: 3px 7px;
-    border-radius: 6px 6px 6px 2px;
-    transform: rotate(12deg);
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
-    z-index: 10;
-}
 
 /* Main Content Layout */
 .main-content {
@@ -434,8 +442,8 @@ body::before {
 .feature-card.coming-soon::after {
     content: 'COMING SOON™';
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 8px;
+    right: 8px;
     background: linear-gradient(45deg, #f59e0b, #f97316);
     color: white;
     font-size: 10px;
