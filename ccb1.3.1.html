@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akshoverse Character Creator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+         
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px 400px;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .image-viewer {
+            background: #f0f0f0;
+            border-left: 1px solid #ddd;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #viewer-img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .creator-panel {
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .output-panel {
+            background: #f8f9fa;
+            border-left: 1px solid #e9ecef;
+            padding: 30px;
+            position: sticky;
+            top: 0;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            width: 20px;
+            height: 20px;
+            background: #4facfe;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        select, input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input[type="number"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .toggle-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .toggle-btn {
+            padding: 8px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            user-select: none;
+        }
+
+        .toggle-btn:hover {
+            border-color: #4facfe;
+            background: #f0f8ff;
+        }
+
+        .toggle-btn.active {
+            background: #4facfe;
+            color: white;
+            border-color: #4facfe;
+        }
+
+        .output-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .output-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .prompt-output {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            min-height: 200px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #219a52;
+            transform: translateY(-1px);
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+
+        .conflict {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .output-panel {
+                border-left: none;
+                border-top: 1px solid #e9ecef;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Akshoverse Character Creator</h1>
+            <p>BETA 1.3 - Enhanced Human Features Dataset (312+ Tags)</p>
+        </div>
+
+        <div class="main-content">
+            <div class="image-viewer">
+                <img id="viewer-img" src="" alt="Select an option to preview" />
+            </div>
+            
+            <div class="creator-panel">
+                <!-- Character Name Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Character Name</h3>
+                    
+                    <div class="form-group">
+                        <label>Character Name</label>
+                        <input type="text" id="character-name" placeholder="Enter character name...">
+                    </div>
+                </div>
+
+                <!-- Basic Info Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Basic Info</h3>
+                    
+                    <div class="form-group">
+                        <label>Art Style</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="artstyle" data-value="2.5d">2.5D</div>
+                            <div class="toggle-btn" data-category="artstyle" data-value="anime style">Anime Style</div>
+                            <div class="toggle-btn" data-category="artstyle" data-value="realistic style">Realistic Style</div>
+                            <div class="toggle-btn" data-category="artstyle" data-value="semi-realistic style">Semi-Realistic</div>
+                            <div class="toggle-btn" data-category="artstyle" data-value="cartoon style">Cartoon Style</div>
+                            <div class="toggle-btn" data-category="artstyle" data-value="stylized">Stylized</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender + Life Stage</label>
+                        <select id="gender-stage">
+                            <option value="">Select gender and stage...</option>
+                            <option value="adult female">Adult Female</option>
+                            <option value="mature female">Mature Female</option>
+                            <option value="elderly female">Elderly Female</option>
+                            <option value="adult male">Adult Male</option>
+                            <option value="mature male">Mature Male</option>
+                            <option value="elderly male">Elderly Male</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Age (18-100)</label>
+                        <input type="number" id="age" min="18" max="100" placeholder="Enter age...">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ethnicity & Heritage</label>
+                        <select id="ethnicity">
+                            <option value="">Select ethnicity...</option>
+                            <optgroup label="European">
+                                <option value="european">European</option>
+                                <option value="scandinavian">Scandinavian</option>
+                                <option value="mediterranean">Mediterranean</option>
+                                <option value="slavic">Slavic</option>
+                                <option value="celtic">Celtic</option>
+                                <option value="germanic">Germanic</option>
+                            </optgroup>
+                            <optgroup label="East Asian">
+                                <option value="east asian">East Asian</option>
+                                <option value="chinese">Chinese</option>
+                                <option value="japanese">Japanese</option>
+                                <option value="korean">Korean</option>
+                                <option value="vietnamese">Vietnamese</option>
+                                <option value="thai">Thai</option>
+                                <option value="filipino">Filipino</option>
+                            </optgroup>
+                            <optgroup label="South Asian">
+                                <option value="south asian">South Asian</option>
+                                <option value="indian">Indian</option>
+                                <option value="pakistani">Pakistani</option>
+                                <option value="bengali">Bengali</option>
+                                <option value="sri lankan">Sri Lankan</option>
+                                <option value="nepalese">Nepalese</option>
+                            </optgroup>
+                            <optgroup label="Middle Eastern">
+                                <option value="middle eastern">Middle Eastern</option>
+                                <option value="arabic">Arabic</option>
+                                <option value="persian">Persian</option>
+                                <option value="turkish">Turkish</option>
+                                <option value="israeli">Israeli</option>
+                                <option value="armenian">Armenian</option>
+                            </optgroup>
+                            <optgroup label="African">
+                                <option value="african">African</option>
+                                <option value="west african">West African</option>
+                                <option value="east african">East African</option>
+                                <option value="north african">North African</option>
+                                <option value="ethiopian">Ethiopian</option>
+                                <option value="somali">Somali</option>
+                            </optgroup>
+                            <optgroup label="Latino/Hispanic">
+                                <option value="latino/hispanic">Latino/Hispanic</option>
+                                <option value="mexican">Mexican</option>
+                                <option value="brazilian">Brazilian</option>
+                                <option value="argentinian">Argentinian</option>
+                                <option value="colombian">Colombian</option>
+                                <option value="puerto rican">Puerto Rican</option>
+                            </optgroup>
+                            <optgroup label="Indigenous & Other">
+                                <option value="native american">Native American</option>
+                                <option value="inuit">Inuit</option>
+                                <option value="polynesian">Polynesian</option>
+                                <option value="aboriginal australian">Aboriginal Australian</option>
+                                <option value="maori">Maori</option>
+                                <option value="mixed heritage">Mixed Heritage</option>
+                                <option value="multiracial">Multiracial</option>
+                                <option value="eurasian">Eurasian</option>
+                                <option value="afro-latino">Afro-Latino</option>
+                                <option value="indo-european">Indo-European</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Height</label>
+                        <select id="height">
+                            <option value="">Select height...</option>
+                            <option value="very short height">Very Short</option>
+                            <option value="short height">Short</option>
+                            <option value="below average height">Below Average</option>
+                            <option value="average height">Average</option>
+                            <option value="above average height">Above Average</option>
+                            <option value="tall height">Tall</option>
+                            <option value="very tall height">Very Tall</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Build Descriptors</label>
+                        <select id="build-descriptor">
+                            <option value="">Select build descriptor...</option>
+                            <option value="petite build">Petite Build</option>
+                            <option value="small build">Small Build</option>
+                            <option value="compact build">Compact Build</option>
+                            <option value="average build">Average Build</option>
+                            <option value="sturdy build">Sturdy Build</option>
+                            <option value="large build">Large Build</option>
+                            <option value="imposing build">Imposing Build</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skin Tone</label>
+                        <select id="skin-tone">
+                            <option value="">Select skin tone...</option>
+                            <option value="very pale skin">Very Pale Skin</option>
+                            <option value="pale skin">Pale Skin</option>
+                            <option value="fair skin">Fair Skin</option>
+                            <option value="light olive skin">Light Olive Skin</option>
+                            <option value="olive skin">Olive Skin</option>
+                            <option value="light brown skin">Light Brown Skin</option>
+                            <option value="sun kissed skin">Sun Kissed Skin</option>
+                            <option value="warm brown skin">Warm Brown Skin</option>
+                            <option value="medium brown skin">Medium Brown Skin</option>
+                            <option value="brown skin">Brown Skin</option>
+                            <option value="dark brown skin">Dark Brown Skin</option>
+                            <option value="deep brown skin">Deep Brown Skin</option>
+                            <option value="dark skin">Dark Skin</option>
+                            <option value="ebony skin">Ebony Skin</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skin Features</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="skin-features" data-value="body blush">Body Blush</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="sun tan">Sun Tan</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="tan lines">Tan Lines</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="farmer's tan">Farmer's Tan</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="smooth skin">Smooth Skin</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="rough skin">Rough Skin</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="weathered skin">Weathered Skin</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="soft skin">Soft Skin</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="firm skin">Firm Skin</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="youthful skin">Youthful Skin</div>
+                            <div class="toggle-btn" data-category="skin-features" data-value="aged skin">Aged Skin</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hair Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Hair</h3>
+                    
+                    <div class="form-group">
+                        <label>Hair Color</label>
+                        <select id="hair-color">
+                            <option value="">Select hair color...</option>
+                            <optgroup label="Blonde Family">
+                                <option value="platinum blonde hair">Platinum Blonde Hair</option>
+                                <option value="ash blonde hair">Ash Blonde Hair</option>
+                                <option value="golden blonde hair">Golden Blonde Hair</option>
+                                <option value="strawberry blonde hair">Strawberry Blonde Hair</option>
+                                <option value="dirty blonde hair">Dirty Blonde Hair</option>
+                                <option value="bleached blonde hair">Bleached Blonde Hair</option>
+                            </optgroup>
+                            <optgroup label="Brown Family">
+                                <option value="light brown hair">Light Brown Hair</option>
+                                <option value="medium brown hair">Medium Brown Hair</option>
+                                <option value="dark brown hair">Dark Brown Hair</option>
+                                <option value="chestnut brown hair">Chestnut Brown Hair</option>
+                                <option value="chocolate brown hair">Chocolate Brown Hair</option>
+                                <option value="auburn brown hair">Auburn Brown Hair</option>
+                            </optgroup>
+                            <optgroup label="Black Family">
+                                <option value="jet black hair">Jet Black Hair</option>
+                                <option value="blue-black hair">Blue-Black Hair</option>
+                                <option value="brown-black hair">Brown-Black Hair</option>
+                                <option value="soft black hair">Soft Black Hair</option>
+                            </optgroup>
+                            <optgroup label="Red Family">
+                                <option value="ginger hair">Ginger Hair</option>
+                                <option value="copper hair">Copper Hair</option>
+                                <option value="auburn hair">Auburn Hair</option>
+                                <option value="strawberry hair">Strawberry Hair</option>
+                                <option value="burgundy hair">Burgundy Hair</option>
+                                <option value="mahogany hair">Mahogany Hair</option>
+                            </optgroup>
+                            <optgroup label="Gray/White Family">
+                                <option value="silver hair">Silver Hair</option>
+                                <option value="gray hair">Gray Hair</option>
+                                <option value="white hair">White Hair</option>
+                                <option value="salt and pepper hair">Salt and Pepper Hair</option>
+                                <option value="premature gray hair">Premature Gray Hair</option>
+                            </optgroup>
+                            <optgroup label="Unnatural Colors">
+                                <option value="blue hair">Blue Hair</option>
+                                <option value="green hair">Green Hair</option>
+                                <option value="purple hair">Purple Hair</option>
+                                <option value="pink hair">Pink Hair</option>
+                                <option value="rainbow hair">Rainbow Hair</option>
+                                <option value="ombre hair">Ombre Hair</option>
+                                <option value="color-streaked hair">Color-Streaked Hair</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hair Texture</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="hair-texture" data-value="pin straight hair">Pin Straight</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="straight hair">Straight</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="slightly wavy hair">Slightly Wavy</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="wavy hair">Wavy</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="loose curls">Loose Curls</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="tight curls">Tight Curls</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="coily hair">Coily</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="kinky hair">Kinky</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="afro texture hair">Afro Texture</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="fine hair">Fine</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="thick hair">Thick</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="coarse hair">Coarse</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="silky hair">Silky</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="wiry hair">Wiry</div>
+                            <div class="toggle-btn" data-category="hair-texture" data-value="frizzy hair">Frizzy</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hair Length</label>
+                        <select id="hair-length">
+                            <option value="">Select hair length...</option>
+                            <option value="bald">Bald</option>
+                            <option value="very short hair">Very Short Hair</option>
+                            <option value="short hair">Short Hair</option>
+                            <option value="medium hair">Medium Hair</option>
+                            <option value="long hair">Long Hair</option>
+                            <option value="very long hair">Very Long Hair</option>
+                            <option value="absurdly long hair">Absurdly Long Hair</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hairstyle Categories</label>
+                        <select id="hairstyle">
+                            <option value="">Select hairstyle...</option>
+                            <optgroup label="Professional Styles">
+                                <option value="business cut">Business Cut</option>
+                                <option value="corporate style">Corporate Style</option>
+                                <option value="professional updo">Professional Updo</option>
+                                <option value="neat ponytail">Neat Ponytail</option>
+                                <option value="conservative style">Conservative Style</option>
+                            </optgroup>
+                            <optgroup label="Casual Styles">
+                                <option value="messy bun">Messy Bun</option>
+                                <option value="loose waves">Loose Waves</option>
+                                <option value="beach waves">Beach Waves</option>
+                                <option value="tousled hair">Tousled Hair</option>
+                                <option value="bedhead style">Bedhead Style</option>
+                            </optgroup>
+                            <optgroup label="Elaborate Styles">
+                                <option value="intricate braids">Intricate Braids</option>
+                                <option value="formal updo">Formal Updo</option>
+                                <option value="wedding hair">Wedding Hair</option>
+                                <option value="red carpet style">Red Carpet Style</option>
+                                <option value="vintage style">Vintage Style</option>
+                            </optgroup>
+                            <optgroup label="Cultural Styles">
+                                <option value="afro puffs">Afro Puffs</option>
+                                <option value="bantu knots">Bantu Knots</option>
+                                <option value="box braids">Box Braids</option>
+                                <option value="cornrows">Cornrows</option>
+                                <option value="dreadlocks">Dreadlocks</option>
+                                <option value="twist-outs">Twist-Outs</option>
+                            </optgroup>
+                            <optgroup label="Alternative Styles">
+                                <option value="undercut">Undercut</option>
+                                <option value="mohawk">Mohawk</option>
+                                <option value="shaved sides">Shaved Sides</option>
+                                <option value="punk style">Punk Style</option>
+                                <option value="emo fringe">Emo Fringe</option>
+                                <option value="scene hair">Scene Hair</option>
+                            </optgroup>
+                            <optgroup label="Classic Cuts">
+                                <option value="ponytail">Ponytail</option>
+                                <option value="high ponytail">High Ponytail</option>
+                                <option value="side ponytail">Side Ponytail</option>
+                                <option value="twintails">Twintails</option>
+                                <option value="braid">Braid</option>
+                                <option value="hair bun">Hair Bun</option>
+                                <option value="bob cut">Bob Cut</option>
+                                <option value="pixie cut">Pixie Cut</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hair Accessories</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="hair-accessories" data-value="hair clips">Hair Clips</div>
+                            <div class="toggle-btn" data-category="hair-accessories" data-value="hair pins">Hair Pins</div>
+                            <div class="toggle-btn" data-category="hair-accessories" data-value="hair ties">Hair Ties</div>
+                            <div class="toggle-btn" data-category="hair-accessories" data-value="headbands">Headbands</div>
+                            <div class="toggle-btn" data-category="hair-accessories" data-value="hair scarves">Hair Scarves</div>
+                            <div class="toggle-btn" data-category="hair-accessories" data-value="hair ribbons">Hair Ribbons</div>
+                            <div class="toggle-btn" data-category="hair-accessories" data-value="hair flowers">Hair Flowers</div>
+                            <div class="toggle-btn" data-category="hair-accessories" data-value="hair jewelry">Hair Jewelry</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bangs & Fringe</label>
+                        <select id="bangs">
+                            <option value="">Select bangs style...</option>
+                            <option value="blunt bangs">Blunt Bangs</option>
+                            <option value="arched bangs">Arched Bangs</option>
+                            <option value="asymmetrical bangs">Asymmetrical Bangs</option>
+                            <option value="bangs pinned back">Bangs Pinned Back</option>
+                            <option value="braided bangs">Braided Bangs</option>
+                            <option value="crossed bangs">Crossed Bangs</option>
+                            <option value="choppy bangs">Choppy Bangs</option>
+                            <option value="wispy bangs">Wispy Bangs</option>
+                            <option value="diagonal bangs">Diagonal Bangs</option>
+                            <option value="fanged bangs">Fanged Bangs</option>
+                            <option value="short bangs">Short Bangs</option>
+                            <option value="long bangs">Long Bangs</option>
+                            <option value="hair between eyes">Hair Between Eyes</option>
+                            <option value="hair over one eye">Hair Over One Eye</option>
+                            <option value="hair over eyes">Hair Over Eyes</option>
+                            <option value="parted bangs">Parted Bangs</option>
+                            <option value="curtained hair">Curtained Hair</option>
+                            <option value="swept bangs">Swept Bangs</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Facial Features Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Facial Features</h3>
+                    
+                    <div class="form-group">
+                        <label>Face Shape</label>
+                        <select id="face-shape">
+                            <option value="">Select face shape...</option>
+                            <option value="oval face">Oval Face</option>
+                            <option value="round face">Round Face</option>
+                            <option value="square face">Square Face</option>
+                            <option value="heart face">Heart Face</option>
+                            <option value="diamond face">Diamond Face</option>
+                            <option value="oblong face">Oblong Face</option>
+                            <option value="triangular face">Triangular Face</option>
+                            <option value="rectangular face">Rectangular Face</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Forehead</label>
+                        <select id="forehead">
+                            <option value="">Select forehead type...</option>
+                            <option value="high forehead">High Forehead</option>
+                            <option value="low forehead">Low Forehead</option>
+                            <option value="wide forehead">Wide Forehead</option>
+                            <option value="narrow forehead">Narrow Forehead</option>
+                            <option value="prominent forehead">Prominent Forehead</option>
+                            <option value="receding hairline">Receding Hairline</option>
+                            <option value="widow's peak">Widow's Peak</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Eyebrow Variations</label>
+                        <select id="eyebrows">
+                            <option value="">Select eyebrow type...</option>
+                            <option value="thin eyebrows">Thin Eyebrows</option>
+                            <option value="thick eyebrows">Thick Eyebrows</option>
+                            <option value="arched eyebrows">Arched Eyebrows</option>
+                            <option value="straight eyebrows">Straight Eyebrows</option>
+                            <option value="bushy eyebrows">Bushy Eyebrows</option>
+                            <option value="plucked eyebrows">Plucked Eyebrows</option>
+                            <option value="natural eyebrows">Natural Eyebrows</option>
+                            <option value="unibrow">Unibrow</option>
+                            <option value="sparse eyebrows">Sparse Eyebrows</option>
+                            <option value="defined eyebrows">Defined Eyebrows</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Eye Shape & Features</label>
+                        <select id="eye-shape">
+                            <option value="">Select eye shape...</option>
+                            <option value="almond eyes">Almond Eyes</option>
+                            <option value="round eyes">Round Eyes</option>
+                            <option value="hooded eyes">Hooded Eyes</option>
+                            <option value="upturned eyes">Upturned Eyes</option>
+                            <option value="downturned eyes">Downturned Eyes</option>
+                            <option value="close-set eyes">Close-Set Eyes</option>
+                            <option value="wide-set eyes">Wide-Set Eyes</option>
+                            <option value="deep-set eyes">Deep-Set Eyes</option>
+                            <option value="prominent eyes">Prominent Eyes</option>
+                            <option value="monolid eyes">Monolid Eyes</option>
+                            <option value="double eyelid">Double Eyelid</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Eye Color Detailed</label>
+                        <select id="eye-color">
+                            <option value="">Select eye color...</option>
+                            <optgroup label="Blue Family">
+                                <option value="ice blue iris">Ice Blue Iris</option>
+                                <option value="sky blue iris">Sky Blue Iris</option>
+                                <option value="navy blue iris">Navy Blue Iris</option>
+                                <option value="steel blue iris">Steel Blue Iris</option>
+                                <option value="aqua blue iris">Aqua Blue Iris</option>
+                            </optgroup>
+                            <optgroup label="Green Family">
+                                <option value="emerald green iris">Emerald Green Iris</option>
+                                <option value="forest green iris">Forest Green Iris</option>
+                                <option value="hazel green iris">Hazel Green Iris</option>
+                                <option value="olive green iris">Olive Green Iris</option>
+                                <option value="mint green iris">Mint Green Iris</option>
+                            </optgroup>
+                            <optgroup label="Brown Family">
+                                <option value="amber iris">Amber Iris</option>
+                                <option value="honey brown iris">Honey Brown Iris</option>
+                                <option value="chocolate brown iris">Chocolate Brown Iris</option>
+                                <option value="dark brown iris">Dark Brown Iris</option>
+                                <option value="mahogany iris">Mahogany Iris</option>
+                            </optgroup>
+                            <optgroup label="Gray Family">
+                                <option value="light gray iris">Light Gray Iris</option>
+                                <option value="dark gray iris">Dark Gray Iris</option>
+                                <option value="blue-gray iris">Blue-Gray Iris</option>
+                                <option value="green-gray iris">Green-Gray Iris</option>
+                            </optgroup>
+                            <optgroup label="Rare Colors">
+                                <option value="violet iris">Violet Iris</option>
+                                <option value="golden iris">Golden Iris</option>
+                                <option value="heterochromia">Heterochromia</option>
+                                <option value="sectoral heterochromia">Sectoral Heterochromia</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Eye Features</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="eye-features" data-value="long eyelashes">Long Eyelashes</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="short eyelashes">Short Eyelashes</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="thick eyelashes">Thick Eyelashes</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="sparse eyelashes">Sparse Eyelashes</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="curled eyelashes">Curled Eyelashes</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="straight eyelashes">Straight Eyelashes</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="heavy eyelids">Heavy Eyelids</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="light eyelids">Light Eyelids</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="eyebags">Eyebags</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="dark circles">Dark Circles</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="crow's feet">Crow's Feet</div>
+                            <div class="toggle-btn" data-category="eye-features" data-value="laugh lines">Laugh Lines</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nose Variations</label>
+                        <select id="nose">
+                            <option value="">Select nose type...</option>
+                            <option value="button nose">Button Nose</option>
+                            <option value="aquiline nose">Aquiline Nose</option>
+                            <option value="roman nose">Roman Nose</option>
+                            <option value="snub nose">Snub Nose</option>
+                            <option value="wide nose">Wide Nose</option>
+                            <option value="narrow nose">Narrow Nose</option>
+                            <option value="long nose">Long Nose</option>
+                            <option value="short nose">Short Nose</option>
+                            <option value="crooked nose">Crooked Nose</option>
+                            <option value="straight nose">Straight Nose</option>
+                            <option value="bulbous nose">Bulbous Nose</option>
+                            <option value="pointed nose">Pointed Nose</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Lip Variations</label>
+                        <select id="lips">
+                            <option value="">Select lip type...</option>
+                            <option value="thin lips">Thin Lips</option>
+                            <option value="full lips">Full Lips</option>
+                            <option value="pouty lips">Pouty Lips</option>
+                            <option value="wide lips">Wide Lips</option>
+                            <option value="narrow lips">Narrow Lips</option>
+                            <option value="bow-shaped lips">Bow-Shaped Lips</option>
+                            <option value="asymmetrical lips">Asymmetrical Lips</option>
+                            <option value="natural lips">Natural Lips</option>
+                            <option value="defined cupid's bow">Defined Cupid's Bow</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cheek Features</label>
+                        <select id="cheeks">
+                            <option value="">Select cheek features...</option>
+                            <option value="high cheekbones">High Cheekbones</option>
+                            <option value="low cheekbones">Low Cheekbones</option>
+                            <option value="hollow cheeks">Hollow Cheeks</option>
+                            <option value="full cheeks">Full Cheeks</option>
+                            <option value="dimples">Dimples</option>
+                            <option value="smile lines">Smile Lines</option>
+                            <option value="blush">Blush</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Jaw & Chin</label>
+                        <select id="jaw-chin">
+                            <option value="">Select jaw/chin type...</option>
+                            <option value="strong jaw">Strong Jaw</option>
+                            <option value="weak jaw">Weak Jaw</option>
+                            <option value="square jaw">Square Jaw</option>
+                            <option value="pointed chin">Pointed Chin</option>
+                            <option value="cleft chin">Cleft Chin</option>
+                            <option value="double chin">Double Chin</option>
+                            <option value="defined jawline">Defined Jawline</option>
+                            <option value="soft jawline">Soft Jawline</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Beauty Marks & Skin Features Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Beauty Marks & Skin Features</h3>
+                    
+                    <div class="form-group">
+                        <label>Beauty Marks & Moles</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="beauty-marks" data-value="freckles">Freckles</div>
+                            <div class="toggle-btn" data-category="beauty-marks" data-value="freckles on whole body">Freckles on Whole Body</div>
+                            <div class="toggle-btn" data-category="beauty-marks" data-value="beauty mark">Beauty Mark</div>
+                            <div class="toggle-btn" data-category="beauty-marks" data-value="multiple beauty marks">Multiple Beauty Marks</div>
+                            <div class="toggle-btn" data-category="moles" data-value="mole on neck">Mole on Neck</div>
+                            <div class="toggle-btn" data-category="moles" data-value="mole on chin">Mole on Chin</div>
+                            <div class="toggle-btn" data-category="moles" data-value="mole above lip">Mole Above Lip</div>
+                            <div class="toggle-btn" data-category="moles" data-value="mole on forehead">Mole on Forehead</div>
+                            <div class="toggle-btn" data-category="moles" data-value="mole above chest">Mole Above Chest</div>
+                            <div class="toggle-btn" data-category="moles" data-value="mole on cheek">Mole on Cheek</div>
+                            <div class="toggle-btn" data-category="moles" data-value="mole on nose">Mole on Nose</div>
+                            <div class="toggle-btn" data-category="moles" data-value="mole on shoulder">Mole on Shoulder</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skin Conditions & Marks</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="skin-conditions" data-value="sun spots">Sun Spots</div>
+                            <div class="toggle-btn" data-category="skin-conditions" data-value="age spots">Age Spots</div>
+                            <div class="toggle-btn" data-category="skin-conditions" data-value="birthmarks">Birthmarks</div>
+                            <div class="toggle-btn" data-category="skin-conditions" data-value="vitiligo">Vitiligo</div>
+                            <div class="toggle-btn" data-category="skin-conditions" data-value="stretch marks">Stretch Marks</div>
+                            <div class="toggle-btn" data-category="skin-conditions" data-value="port wine stain">Port Wine Stain</div>
+                            <div class="toggle-btn" data-category="skin-conditions" data-value="cafe au lait spots">Cafe Au Lait Spots</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Body Build Expanded Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Body Build Expanded</h3>
+                    
+                    <div class="form-group">
+                        <label>Body Frame</label>
+                        <select id="body-frame">
+                            <option value="">Select body frame...</option>
+                            <option value="very small body frame">Very Small Body Frame</option>
+                            <option value="small body frame">Small Body Frame</option>
+                            <option value="medium body frame">Medium Body Frame</option>
+                            <option value="big body frame">Big Body Frame</option>
+                            <option value="very big body frame">Very Big Body Frame</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Muscle Definition</label>
+                        <select id="muscle-definition">
+                            <option value="">Select muscle definition...</option>
+                            <option value="no muscle definition">No Muscle Definition</option>
+                            <option value="subtle muscle tone">Subtle Muscle Tone</option>
+                            <option value="moderate muscle definition">Moderate Muscle Definition</option>
+                            <option value="well-defined muscles">Well-Defined Muscles</option>
+                            <option value="bodybuilder physique">Bodybuilder Physique</option>
+                            <option value="athletic build">Athletic Build</option>
+                            <option value="dancer's build">Dancer's Build</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Body Build Shape</label>
+                        <select id="body-build-shape">
+                            <option value="">Select body build shape...</option>
+                            <option value="skinny shape build">Skinny Shape Build</option>  
+                            <option value="petite shape build">Petite Shape Build</option>
+                            <option value="slim shape build">Slim Shape Build</option>
+                            <option value="fit shape build">Fit Shape Build</option>
+                            <option value="slender shape build">Slender Shape Build</option>
+                            <option value="toned shape build">Toned Shape Build</option>
+                            <option value="curvy shape build">Curvy Shape Build</option>
+                            <option value="chubby shape build">Chubby Shape Build</option>
+                            <option value="fat shape build">Fat Shape Build</option>
+                            <option value="pear shape build">Pear Shape Build</option>
+                            <option value="apple shape build">Apple Shape Build</option>
+                            <option value="hourglass shape build">Hourglass Shape Build</option>
+                            <option value="rectangle shape build">Rectangle Shape Build</option>
+                            <option value="inverted triangle shape build">Inverted Triangle Shape Build</option>
+                        </select>
+                    </div>
+
+
+                </div>
+
+                <!-- Torso Detailed Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Torso Detailed</h3>
+                    
+                    <div class="form-group">
+                        <label>Chest/Breast Size</label>
+                        <select id="breast-size">
+                            <option value="">Select chest/breast size...</option>
+                            <option value="flat chest">Flat Chest</option>
+                            <option value="small breasts">Small Breasts</option>
+                            <option value="medium breasts">Medium Breasts</option>
+                            <option value="large breasts">Large Breasts</option>
+                            <option value="huge breasts">Huge Breasts</option>
+                            <option value="gigantic breasts">Gigantic Breasts</option>
+                            <option value="broad chest">Broad Chest (Male)</option>
+                            <option value="narrow chest">Narrow Chest (Male)</option>
+                            <option value="athletic chest">Athletic Chest (Male)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Breast/Chest Shape & Features</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="breast-features" data-value="perky">Perky</div>
+                            <div class="toggle-btn" data-category="breast-features" data-value="soft">Soft</div>
+                            <div class="toggle-btn" data-category="breast-features" data-value="natural">Natural</div>
+                            <div class="toggle-btn" data-category="breast-features" data-value="saggy">Saggy</div>
+                            <div class="toggle-btn" data-category="breast-features" data-value="round shape">Round Shape</div>
+                            <div class="toggle-btn" data-category="breast-features" data-value="teardrop shape">Teardrop Shape</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Shoulder Features</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="shoulder-features" data-value="broad shoulders">Broad Shoulders</div>
+                            <div class="toggle-btn" data-category="shoulder-features" data-value="narrow shoulders">Narrow Shoulders</div>
+                            <div class="toggle-btn" data-category="shoulder-features" data-value="sloped shoulders">Sloped Shoulders</div>
+                            <div class="toggle-btn" data-category="shoulder-features" data-value="square shoulders">Square Shoulders</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Torso Features</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="torso-features" data-value="long torso">Long Torso</div>
+                            <div class="toggle-btn" data-category="torso-features" data-value="short torso">Short Torso</div>
+                            <div class="toggle-btn" data-category="torso-features" data-value="proportional torso">Proportional Torso</div>
+                            <div class="toggle-btn" data-category="torso-features" data-value="visible ribs">Visible Ribs</div>
+                            <div class="toggle-btn" data-category="torso-features" data-value="soft stomach">Soft Stomach</div>
+                            <div class="toggle-btn" data-category="torso-features" data-value="flat stomach">Flat Stomach</div>
+                            <div class="toggle-btn" data-category="torso-features" data-value="toned abs">Toned Abs</div>
+                            <div class="toggle-btn" data-category="torso-features" data-value="belly">Belly</div>
+                            <div class="toggle-btn" data-category="torso-features" data-value="love handles">Love Handles</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Waist Variations</label>
+                        <select id="waist">
+                            <option value="">Select waist type...</option>
+                            <option value="no waist definition">No Waist Definition</option>
+                            <option value="narrow waist">Narrow Waist</option>
+                            <option value="slight waist">Slight Waist</option>
+                            <option value="defined waist">Defined Waist</option>
+                            <option value="cinched waist">Cinched Waist</option>
+                            <option value="thick waist">Thick Waist</option>
+                            <option value="natural waist">Natural Waist</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nipple Features (Adult Content)</label>
+                        <select id="nipple-size">
+                            <option value="">Select nipple size...</option>
+                            <option value="small">Small</option>
+                            <option value="big">Big</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nipple Color</label>
+                        <select id="nipple-color">
+                            <option value="">Select nipple color...</option>
+                            <option value="pink">Pink</option>
+                            <option value="reddish">Reddish</option>
+                            <option value="brown">Brown</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nipple Shape</label>
+                        <select id="nipple-shape">
+                            <option value="">Select nipple shape...</option>
+                            <option value="puffy">Puffy</option>
+                            <option value="pointy">Pointy</option>
+                            <option value="inverted">Inverted</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Lower Body Detailed Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Lower Body Detailed</h3>
+                    
+                    <div class="form-group">
+                        <label>Hip Variations</label>
+                        <select id="hips">
+                            <option value="">Select hip type...</option>
+                            <option value="narrow hips">Narrow Hips</option>
+                            <option value="average hips">Average Hips</option>
+                            <option value="wide hips">Wide Hips</option>
+                            <option value="flared hips">Flared Hips</option>
+                            <option value="boyish hips">Boyish Hips</option>
+                            <option value="childbearing hips">Childbearing Hips</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Buttocks Size</label>
+                        <select id="butt-size">
+                            <option value="">Select buttocks size...</option>
+                            <option value="flat butt">Flat Butt</option>
+                            <option value="small butt">Small Butt</option>
+                            <option value="average butt">Average Butt</option>
+                            <option value="large butt">Large Butt</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Buttocks Shape</label>
+                        <select id="butt-shape">
+                            <option value="">Select buttocks shape...</option>
+                            <option value="round butt">Round Butt</option>
+                            <option value="square butt">Square Butt</option>
+                            <option value="heart-shaped butt">Heart-Shaped Butt</option>
+                            <option value="bubble butt">Bubble Butt</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Thigh Types</label>
+                        <select id="thighs">
+                            <option value="">Select thigh type...</option>
+                            <option value="skinny thighs">Skinny Thighs</option>
+                            <option value="athletic thighs">Athletic Thighs</option>
+                            <option value="thick thighs">Thick Thighs</option>
+                            <option value="muscular thighs">Muscular Thighs</option>
+                            <option value="soft thighs">Soft Thighs</option>
+                            <option value="proportional thighs">Proportional Thighs</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Leg Features</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="leg-features" data-value="long legs">Long Legs</div>
+                            <div class="toggle-btn" data-category="leg-features" data-value="short legs">Short Legs</div>
+                            <div class="toggle-btn" data-category="leg-features" data-value="proportional legs">Proportional Legs</div>
+                            <div class="toggle-btn" data-category="leg-features" data-value="bow legs">Bow Legs</div>
+                            <div class="toggle-btn" data-category="leg-features" data-value="knock knees">Knock Knees</div>
+                            <div class="toggle-btn" data-category="leg-features" data-value="straight legs">Straight Legs</div>
+                            <div class="toggle-btn" data-category="leg-features" data-value="muscular calves">Muscular Calves</div>
+                            <div class="toggle-btn" data-category="leg-features" data-value="skinny calves">Skinny Calves</div>
+                            <div class="toggle-btn" data-category="leg-features" data-value="thigh gap">Thigh Gap</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Genital Features (Adult - 18+)</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="genital-features" data-value="shaved pubes">Shaved Pubes</div>
+                            <div class="toggle-btn" data-category="genital-features" data-value="small pubes">Small Pubes</div>
+                            <div class="toggle-btn" data-category="genital-features" data-value="heart pubes">Heart Pubes</div>
+                            <div class="toggle-btn" data-category="genital-features" data-value="line shaped pubes">Line Shaped Pubes</div>
+                            <div class="toggle-btn" data-category="genital-features" data-value="full pubes">Full Pubes</div>
+                            <div class="toggle-btn" data-category="genital-features" data-value="sparse pubic hair">Sparse Pubic Hair</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Vagina Color (Adult - 18+)</label>
+                        <select id="vagina-color">
+                            <option value="">Select vagina color...</option>
+                            <option value="pink vagina">Pink Vagina</option>
+                            <option value="reddish vagina">Reddish Vagina</option>
+                            <option value="brown vagina">Brown Vagina</option>
+                            <option value="dark vagina">Dark Vagina</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Vagina Type (Adult - 18+)</label>
+                        <select id="vagina-type">
+                            <option value="">Select vagina type...</option>
+                            <option value="innie vagina">Innie Vagina</option>
+                            <option value="outie vagina">Outie Vagina</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Hands & Feet Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Hands & Feet</h3>
+                    
+                    <div class="form-group">
+                        <label>Hand Features</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="hand-features" data-value="small hands">Small Hands</div>
+                            <div class="toggle-btn" data-category="hand-features" data-value="large hands">Large Hands</div>
+                            <div class="toggle-btn" data-category="hand-features" data-value="long fingers">Long Fingers</div>
+                            <div class="toggle-btn" data-category="hand-features" data-value="short fingers">Short Fingers</div>
+                            <div class="toggle-btn" data-category="hand-features" data-value="thick fingers">Thick Fingers</div>
+                            <div class="toggle-btn" data-category="hand-features" data-value="delicate fingers">Delicate Fingers</div>
+                            <div class="toggle-btn" data-category="hand-features" data-value="calloused hands">Calloused Hands</div>
+                            <div class="toggle-btn" data-category="hand-features" data-value="soft hands">Soft Hands</div>
+                            <div class="toggle-btn" data-category="hand-features" data-value="veiny hands">Veiny Hands</div>
+                            <div class="toggle-btn" data-category="hand-features" data-value="wrinkled hands">Wrinkled Hands</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nail Features</label>
+                        <select id="nail-length">
+                            <option value="">Select nail length...</option>
+                            <option value="short nails">Short Nails</option>
+                            <option value="long nails">Long Nails</option>
+                            <option value="medium nails">Medium Nails</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nail Types & Colors</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="nail-colors" data-value="painted nails">Painted Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value="chipped nails">Chipped Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value="bitten nails">Bitten Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value="artificial nails">Artificial Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value="black nails">Black Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value="red nails">Red Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value="pink nails">Pink Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value="blue nails">Blue Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value="white nails">White Nails</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Foot Features</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="foot-features" data-value="small feet">Small Feet</div>
+                            <div class="toggle-btn" data-category="foot-features" data-value="large feet">Large Feet</div>
+                            <div class="toggle-btn" data-category="foot-features" data-value="wide feet">Wide Feet</div>
+                            <div class="toggle-btn" data-category="foot-features" data-value="narrow feet">Narrow Feet</div>
+                            <div class="toggle-btn" data-category="foot-features" data-value="high arches">High Arches</div>
+                            <div class="toggle-btn" data-category="foot-features" data-value="flat feet">Flat Feet</div>
+                            <div class="toggle-btn" data-category="foot-features" data-value="long toes">Long Toes</div>
+                            <div class="toggle-btn" data-category="foot-features" data-value="short toes">Short Toes</div>
+                            <div class="toggle-btn" data-category="foot-features" data-value="pedicured feet">Pedicured Feet</div>
+                            <div class="toggle-btn" data-category="foot-features" data-value="callused feet">Callused Feet</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Body Modifications & Markings Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Body Modifications & Markings</h3>
+                    
+                    <div class="form-group">
+                        <label>Tattoo Categories</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="tattoos" data-value="small tattoo">Small Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="medium tattoo">Medium Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="large tattoo">Large Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="full sleeve">Full Sleeve</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="half sleeve">Half Sleeve</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="back piece">Back Piece</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="chest piece">Chest Piece</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="traditional tattoo">Traditional Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="tribal tattoo">Tribal Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="realistic tattoo">Realistic Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="watercolor tattoo">Watercolor Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="geometric tattoo">Geometric Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="text tattoo">Text Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="portrait tattoo">Portrait Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="maori tattoo">Maori Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="polynesian tattoo">Polynesian Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="japanese tattoo">Japanese Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="mandala tattoo">Mandala Tattoo</div>
+                            <div class="toggle-btn" data-category="tattoos" data-value="henna tattoo">Henna Tattoo</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Piercing Options</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="piercings" data-value="lobe piercing">Lobe Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="multiple lobe piercings">Multiple Lobe Piercings</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="cartilage piercing">Cartilage Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="industrial piercing">Industrial Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="tragus piercing">Tragus Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="helix piercing">Helix Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="nose piercing">Nose Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="septum piercing">Septum Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="eyebrow piercing">Eyebrow Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="lip piercing">Lip Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="tongue piercing">Tongue Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="cheek piercing">Cheek Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="navel piercing">Navel Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="nipple piercing">Nipple Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="surface piercing">Surface Piercing</div>
+                            <div class="toggle-btn" data-category="piercings" data-value="dermal piercing">Dermal Piercing</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Scar Types</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="scars" data-value="surgical scars">Surgical Scars</div>
+                            <div class="toggle-btn" data-category="scars" data-value="accident scars">Accident Scars</div>
+                            <div class="toggle-btn" data-category="scars" data-value="burn scars">Burn Scars</div>
+                            <div class="toggle-btn" data-category="scars" data-value="acne scars">Acne Scars</div>
+                            <div class="toggle-btn" data-category="scars" data-value="keloid scars">Keloid Scars</div>
+                            <div class="toggle-btn" data-category="scars" data-value="battle scars">Battle Scars</div>
+                            <div class="toggle-btn" data-category="scars" data-value="chicken pox scars">Chicken Pox Scars</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clothing & Accessories Section -->
+                <div class="section">
+                    <h3><span class="section-icon"></span>Clothing & Accessories</h3>
+                    
+                    <div class="form-group">
+                        <label>Jewelry Categories</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="jewelry" data-value="choker">Choker</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="pendant">Pendant</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="chain">Chain</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="pearl necklace">Pearl Necklace</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="statement necklace">Statement Necklace</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="studs">Studs</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="hoops">Hoops</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="dangles">Dangles</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="chandelier earrings">Chandelier Earrings</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="ear cuffs">Ear Cuffs</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="wedding ring">Wedding Ring</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="engagement ring">Engagement Ring</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="class ring">Class Ring</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="statement ring">Statement Ring</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="multiple rings">Multiple Rings</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="bangles">Bangles</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="charm bracelet">Charm Bracelet</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="watch">Watch</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="fitness tracker">Fitness Tracker</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="cuff bracelet">Cuff Bracelet</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="ankle bracelet">Ankle Bracelet</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="toe ring">Toe Ring</div>
+                            <div class="toggle-btn" data-category="jewelry" data-value="body chains">Body Chains</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Eyewear</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="eyewear" data-value="glasses">Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="sunglasses">Sunglasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="reading glasses">Reading Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="square glasses">Square Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="round glasses">Round Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="oval glasses">Oval Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="cat eye glasses">Cat Eye Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="aviator glasses">Aviator Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="thick frame glasses">Thick Frame Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="thin frame glasses">Thin Frame Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="wire frame glasses">Wire Frame Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="black frame glasses">Black Frame Glasses</div>
+                            <div class="toggle-btn" data-category="eyewear" data-value="colored frame glasses">Colored Frame Glasses</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Clothing Style</label>
+                        <div class="toggle-group">
+                            <div class="toggle-btn" data-category="clothing-style" data-value="casual style">Casual Style</div>
+                            <div class="toggle-btn" data-category="clothing-style" data-value="formal style">Formal Style</div>
+                            <div class="toggle-btn" data-category="clothing-style" data-value="business casual style">Business Casual Style</div>
+                            <div class="toggle-btn" data-category="clothing-style" data-value="alternative style">Alternative Style</div>
+                            <div class="toggle-btn" data-category="clothing-style" data-value="vintage style">Vintage Style</div>
+                            <div class="toggle-btn" data-category="clothing-style" data-value="modern style">Modern Style</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="output-panel">
+                <div class="output-section">
+                    <h3>Generated Prompt</h3>
+                    <div class="prompt-output" id="prompt-output">
+                        Your character prompt will appear here as you make selections...
+                    </div>
+                    <button class="copy-btn" onclick="copyPrompt()">Copy Prompt</button>
+                </div>
+
+                <div class="output-section">
+                    <h3>Warnings & Suggestions</h3>
+                    <div id="warnings-panel">
+                        No conflicts detected.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateViewerImage(value) {
+            if (!value) return;
+
+            const img = document.getElementById('viewer-img');
+            const baseName = value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+            const baseUrl = 'https://raw.githubusercontent.com/ChemtrailCat/Aksho-Char-Creator-Previews/refs/heads/main/';
+            const jpgUrl = `${baseUrl}${baseName}.jpg`;
+            const pngUrl = `${baseUrl}${baseName}.png`;
+
+            img.onerror = function () {
+                if (!img.src.endsWith('.png')) {
+                    img.src = pngUrl;
+                } else {
+                    img.src = ''; // Hide image if both fail
+                }
+            };
+
+            img.src = jpgUrl;
+        }
+
+        // Hook into dropdowns
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', function () {
+                updateViewerImage(this.value);
+            });
+        });
+
+        // Hook into toggle buttons
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const value = this.dataset.value;
+                updateViewerImage(value);
+            });
+        });
+
+        // Enhanced character data storage with expanded human features
+        let characterData = {
+            characterName: '',
+            artstyle: [],
+            genderStage: '',
+            age: '',
+            ethnicity: '',
+            height: '',
+            buildDescriptor: '',
+            skinTone: '',
+            skinFeatures: [],
+            hairColor: '',
+            hairTexture: [],
+            hairLength: '',
+            hairstyle: '',
+            hairAccessories: [],
+            bangs: '',
+            faceShape: '',
+            forehead: '',
+            eyebrows: '',
+            eyeShape: '',
+            eyeColor: '',
+            eyeFeatures: [],
+            nose: '',
+            lips: '',
+            cheeks: '',
+            jawChin: '',
+            beautyMarks: [],
+            moles: [],
+            skinConditions: [],
+            bodyFrame: '',
+            muscleDefinition: '',
+            bodyBuildShape: '',
+            posture: '',
+            breastSize: '',
+            breastFeatures: [],
+            shoulderFeatures: [],
+            torsoFeatures: [],
+            waist: '',
+            nippleSize: '',
+            nippleColor: '',
+            nippleShape: '',
+            hips: '',
+            buttSize: '',
+            buttShape: '',
+            thighs: '',
+            legFeatures: [],
+            genitalFeatures: [],
+            vaginaColor: '',
+            vaginaType: '',
+            handFeatures: [],
+            nailLength: '',
+            nailColors: [],
+            footFeatures: [],
+            tattoos: [],
+            piercings: [],
+            scars: [],
+            jewelry: [],
+            eyewear: [],
+            clothingStyle: []
+        };
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    const value = this.dataset.value;
+                    
+                    this.classList.toggle('active');
+                    
+                    // Handle multiple selection categories
+                    if (category === 'artstyle') {
+                        // Clear other art styles first for single selection
+                        characterData.artstyle = this.classList.contains('active') ? [value] : [];
+                        // Clear other active art style buttons
+                        document.querySelectorAll('.toggle-btn[data-category="artstyle"]').forEach(btn => {
+                            if (btn !== this) btn.classList.remove('active');
+                        });
+                    } else if (category === 'skin-features') {
+                        if (this.classList.contains('active')) {
+                            characterData.skinFeatures.push(value);
+                        } else {
+                            characterData.skinFeatures = characterData.skinFeatures.filter(f => f !== value);
+                        }
+                    } else if (category === 'hair-texture') {
+                        if (this.classList.contains('active')) {
+                            characterData.hairTexture.push(value);
+                        } else {
+                            characterData.hairTexture = characterData.hairTexture.filter(t => t !== value);
+                        }
+                    } else if (category === 'hair-accessories') {
+                        if (this.classList.contains('active')) {
+                            characterData.hairAccessories.push(value);
+                        } else {
+                            characterData.hairAccessories = characterData.hairAccessories.filter(a => a !== value);
+                        }
+                    } else if (category === 'eye-features') {
+                        if (this.classList.contains('active')) {
+                            characterData.eyeFeatures.push(value);
+                        } else {
+                            characterData.eyeFeatures = characterData.eyeFeatures.filter(f => f !== value);
+                        }
+                    } else if (category === 'beauty-marks') {
+                        if (this.classList.contains('active')) {
+                            characterData.beautyMarks.push(value);
+                        } else {
+                            characterData.beautyMarks = characterData.beautyMarks.filter(m => m !== value);
+                        }
+                    } else if (category === 'moles') {
+                        if (this.classList.contains('active')) {
+                            characterData.moles.push(value);
+                        } else {
+                            characterData.moles = characterData.moles.filter(m => m !== value);
+                        }
+                    } else if (category === 'skin-conditions') {
+                        if (this.classList.contains('active')) {
+                            characterData.skinConditions.push(value);
+                        } else {
+                            characterData.skinConditions = characterData.skinConditions.filter(s => s !== value);
+                        }
+                    } else if (category === 'breast-features') {
+                        if (this.classList.contains('active')) {
+                            characterData.breastFeatures.push(value);
+                        } else {
+                            characterData.breastFeatures = characterData.breastFeatures.filter(f => f !== value);
+                        }
+                    } else if (category === 'shoulder-features') {
+                        if (this.classList.contains('active')) {
+                            characterData.shoulderFeatures.push(value);
+                        } else {
+                            characterData.shoulderFeatures = characterData.shoulderFeatures.filter(f => f !== value);
+                        }
+                    } else if (category === 'torso-features') {
+                        if (this.classList.contains('active')) {
+                            characterData.torsoFeatures.push(value);
+                        } else {
+                            characterData.torsoFeatures = characterData.torsoFeatures.filter(f => f !== value);
+                        }
+                    } else if (category === 'leg-features') {
+                        if (this.classList.contains('active')) {
+                            characterData.legFeatures.push(value);
+                        } else {
+                            characterData.legFeatures = characterData.legFeatures.filter(f => f !== value);
+                        }
+                    } else if (category === 'genital-features') {
+                        if (this.classList.contains('active')) {
+                            characterData.genitalFeatures.push(value);
+                        } else {
+                            characterData.genitalFeatures = characterData.genitalFeatures.filter(f => f !== value);
+                        }
+                    } else if (category === 'hand-features') {
+                        if (this.classList.contains('active')) {
+                            characterData.handFeatures.push(value);
+                        } else {
+                            characterData.handFeatures = characterData.handFeatures.filter(f => f !== value);
+                        }
+                    } else if (category === 'nail-colors') {
+                        if (this.classList.contains('active')) {
+                            characterData.nailColors.push(value);
+                        } else {
+                            characterData.nailColors = characterData.nailColors.filter(n => n !== value);
+                        }
+                    } else if (category === 'foot-features') {
+                        if (this.classList.contains('active')) {
+                            characterData.footFeatures.push(value);
+                        } else {
+                            characterData.footFeatures = characterData.footFeatures.filter(f => f !== value);
+                        }
+                    } else if (category === 'tattoos') {
+                        if (this.classList.contains('active')) {
+                            characterData.tattoos.push(value);
+                        } else {
+                            characterData.tattoos = characterData.tattoos.filter(t => t !== value);
+                        }
+                    } else if (category === 'piercings') {
+                        if (this.classList.contains('active')) {
+                            characterData.piercings.push(value);
+                        } else {
+                            characterData.piercings = characterData.piercings.filter(p => p !== value);
+                        }
+                    } else if (category === 'scars') {
+                        if (this.classList.contains('active')) {
+                            characterData.scars.push(value);
+                        } else {
+                            characterData.scars = characterData.scars.filter(s => s !== value);
+                        }
+                    } else if (category === 'jewelry') {
+                        if (this.classList.contains('active')) {
+                            characterData.jewelry.push(value);
+                        } else {
+                            characterData.jewelry = characterData.jewelry.filter(j => j !== value);
+                        }
+                    } else if (category === 'eyewear') {
+                        if (this.classList.contains('active')) {
+                            characterData.eyewear.push(value);
+                        } else {
+                            characterData.eyewear = characterData.eyewear.filter(e => e !== value);
+                        }
+                    } else if (category === 'clothing-style') {
+                        if (this.classList.contains('active')) {
+                            characterData.clothingStyle.push(value);
+                        } else {
+                            characterData.clothingStyle = characterData.clothingStyle.filter(c => c !== value);
+                        }
+                    }
+                    
+                    updatePrompt();
+                });
+            });
+
+            // Character name input
+            document.getElementById('character-name').addEventListener('input', function() {
+                characterData.characterName = this.value;
+                updatePrompt();
+            });
+
+            // Dropdowns
+            document.getElementById('gender-stage').addEventListener('change', function() {
+                characterData.genderStage = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('age').addEventListener('input', function() {
+                const age = parseInt(this.value);
+                if (age >= 18) {
+                    characterData.age = age + ' year old';
+                    updatePrompt();
+                }
+            });
+
+            document.getElementById('ethnicity').addEventListener('change', function() {
+                characterData.ethnicity = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('height').addEventListener('change', function() {
+                characterData.height = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('build-descriptor').addEventListener('change', function() {
+                characterData.buildDescriptor = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('skin-tone').addEventListener('change', function() {
+                characterData.skinTone = this.value;
+                updatePrompt();
+            });
+
+            // Hair dropdowns
+            document.getElementById('hair-color').addEventListener('change', function() {
+                characterData.hairColor = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('hair-length').addEventListener('change', function() {
+                characterData.hairLength = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('hairstyle').addEventListener('change', function() {
+                characterData.hairstyle = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('bangs').addEventListener('change', function() {
+                characterData.bangs = this.value;
+                updatePrompt();
+            });
+
+            // Facial feature dropdowns
+            document.getElementById('face-shape').addEventListener('change', function() {
+                characterData.faceShape = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('forehead').addEventListener('change', function() {
+                characterData.forehead = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('eyebrows').addEventListener('change', function() {
+                characterData.eyebrows = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('eye-shape').addEventListener('change', function() {
+                characterData.eyeShape = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('eye-color').addEventListener('change', function() {
+                characterData.eyeColor = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('nose').addEventListener('change', function() {
+                characterData.nose = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('lips').addEventListener('change', function() {
+                characterData.lips = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('cheeks').addEventListener('change', function() {
+                characterData.cheeks = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('jaw-chin').addEventListener('change', function() {
+                characterData.jawChin = this.value;
+                updatePrompt();
+            });
+
+            // Body build dropdowns
+            document.getElementById('body-frame').addEventListener('change', function() {
+                characterData.bodyFrame = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('muscle-definition').addEventListener('change', function() {
+                characterData.muscleDefinition = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('body-build-shape').addEventListener('change', function() {
+                characterData.bodyBuildShape = this.value;
+                updatePrompt();
+            });
+
+            // Torso dropdowns
+            document.getElementById('breast-size').addEventListener('change', function() {
+                characterData.breastSize = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('waist').addEventListener('change', function() {
+                characterData.waist = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('nipple-size').addEventListener('change', function() {
+                characterData.nippleSize = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('nipple-color').addEventListener('change', function() {
+                characterData.nippleColor = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('nipple-shape').addEventListener('change', function() {
+                characterData.nippleShape = this.value;
+                updatePrompt();
+            });
+
+            // Lower body dropdowns
+            document.getElementById('hips').addEventListener('change', function() {
+                characterData.hips = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('butt-size').addEventListener('change', function() {
+                characterData.buttSize = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('butt-shape').addEventListener('change', function() {
+                characterData.buttShape = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('thighs').addEventListener('change', function() {
+                characterData.thighs = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('vagina-color').addEventListener('change', function() {
+                characterData.vaginaColor = this.value;
+                updatePrompt();
+            });
+
+            document.getElementById('vagina-type').addEventListener('change', function() {
+                characterData.vaginaType = this.value;
+                updatePrompt();
+            });
+
+            // Hand and foot dropdowns
+            document.getElementById('nail-length').addEventListener('change', function() {
+                characterData.nailLength = this.value;
+                updatePrompt();
+            });
+        });
+
+        function updatePrompt() {
+            const parts = [];
+            
+            // Add parts in logical order for best AI generation
+            if (characterData.artstyle.length > 0) parts.push(...characterData.artstyle);
+            if (characterData.age) parts.push(characterData.age);
+            if (characterData.genderStage) parts.push(characterData.genderStage);
+            if (characterData.ethnicity) parts.push(characterData.ethnicity);
+            if (characterData.height) parts.push(characterData.height);
+            if (characterData.buildDescriptor) parts.push(characterData.buildDescriptor);
+            if (characterData.skinTone) parts.push(characterData.skinTone);
+            if (characterData.skinFeatures.length > 0) parts.push(...characterData.skinFeatures);
+            
+            // Face shape and structure
+            if (characterData.faceShape) parts.push(characterData.faceShape);
+            if (characterData.forehead) parts.push(characterData.forehead);
+            if (characterData.jawChin) parts.push(characterData.jawChin);
+            
+            // Hair features - combine length and texture for efficiency
+            // Hair features - combine length and texture for efficiency
+            if (characterData.hairColor) parts.push(characterData.hairColor);
+            let hairLengthTexture = '';
+            if (characterData.hairLength && characterData.hairTexture.length > 0) {
+                // Combine length with textures: "short straight hair" instead of "short hair, straight hair"
+                const lengthWithoutHair = characterData.hairLength.replace(' hair', '');
+                const texturesWithoutHair = characterData.hairTexture.map(t => t.replace(' hair', ''));
+                hairLengthTexture = lengthWithoutHair + ' ' + texturesWithoutHair.join(' ') + ' hair';
+                parts.push(hairLengthTexture);
+            } else if (characterData.hairLength) {
+                parts.push(characterData.hairLength);
+            } else if (characterData.hairTexture.length > 0) {
+                parts.push(...characterData.hairTexture);
+            }
+            
+            if (characterData.hairstyle) parts.push(characterData.hairstyle);
+            if (characterData.bangs) parts.push(characterData.bangs);
+            if (characterData.hairAccessories.length > 0) parts.push(...characterData.hairAccessories);
+            
+            // Facial features
+            if (characterData.eyebrows) parts.push(characterData.eyebrows);
+            if (characterData.eyeShape) parts.push(characterData.eyeShape);
+            if (characterData.eyeColor) parts.push(characterData.eyeColor);
+            if (characterData.eyeFeatures.length > 0) parts.push(...characterData.eyeFeatures);
+            if (characterData.nose) parts.push(characterData.nose);
+            if (characterData.lips) parts.push(characterData.lips);
+            if (characterData.cheeks) parts.push(characterData.cheeks);
+            
+            // Beauty marks and skin features
+            if (characterData.beautyMarks.length > 0) parts.push(...characterData.beautyMarks);
+            if (characterData.moles.length > 0) parts.push(...characterData.moles);
+            if (characterData.skinConditions.length > 0) parts.push(...characterData.skinConditions);
+            
+            // Body build and frame
+            if (characterData.bodyFrame) parts.push(characterData.bodyFrame);
+            if (characterData.muscleDefinition) parts.push(characterData.muscleDefinition);
+            if (characterData.bodyBuildShape) parts.push(characterData.bodyBuildShape);
+            
+            // Torso features
+            if (characterData.shoulderFeatures.length > 0) parts.push(...characterData.shoulderFeatures);
+            if (characterData.breastSize) parts.push(characterData.breastSize);
+            if (characterData.breastFeatures.length > 0) {
+                const modifiers = characterData.breastFeatures.join(' ');
+                if (characterData.breastSize) {
+                    // Replace the last added breast size with modified version
+                    parts[parts.length - 1] = modifiers + ' ' + characterData.breastSize;
+                }
+            }
+            if (characterData.torsoFeatures.length > 0) parts.push(...characterData.torsoFeatures);
+            if (characterData.waist) parts.push(characterData.waist);
+            
+            // Handle nipple combinations
+            if (characterData.nippleSize || characterData.nippleColor || characterData.nippleShape) {
+                const nippleParts = [characterData.nippleSize, characterData.nippleColor, characterData.nippleShape].filter(p => p);
+                if (nippleParts.length > 0) {
+                    parts.push(nippleParts.join(' ') + ' nipples');
+                }
+            }
+            
+            // Lower body features
+            if (characterData.hips) parts.push(characterData.hips);
+            
+            // Handle butt combinations - fix the compound logic properly
+            if (characterData.buttSize && characterData.buttShape) {
+                // Remove "butt" from individual parts and combine properly
+                const sizeWithoutButt = characterData.buttSize.replace(' butt', '');
+                const shapeWithoutButt = characterData.buttShape.replace(' butt', '');
+                parts.push(sizeWithoutButt + ' ' + shapeWithoutButt + ' butt');
+            } else if (characterData.buttSize) {
+                parts.push(characterData.buttSize);
+            } else if (characterData.buttShape) {
+                parts.push(characterData.buttShape);
+            }
+            
+            if (characterData.thighs) parts.push(characterData.thighs);
+            if (characterData.legFeatures.length > 0) parts.push(...characterData.legFeatures);
+            
+            // Handle vagina combinations (adult content)
+            if (characterData.vaginaColor && characterData.vaginaType) {
+                parts.push(characterData.vaginaColor.replace(' vagina', '') + ' ' + characterData.vaginaType.replace(' vagina', '') + ' vagina');
+            } else if (characterData.vaginaColor) {
+                parts.push(characterData.vaginaColor);
+            } else if (characterData.vaginaType) {
+                parts.push(characterData.vaginaType);
+            }
+            
+            if (characterData.genitalFeatures.length > 0) parts.push(...characterData.genitalFeatures);
+            
+            // Hands and feet
+            if (characterData.handFeatures.length > 0) parts.push(...characterData.handFeatures);
+            if (characterData.nailLength) parts.push(characterData.nailLength);
+            if (characterData.nailColors.length > 0) parts.push(...characterData.nailColors);
+            if (characterData.footFeatures.length > 0) parts.push(...characterData.footFeatures);
+            
+            // Body modifications
+            if (characterData.tattoos.length > 0) parts.push(...characterData.tattoos);
+            if (characterData.piercings.length > 0) parts.push(...characterData.piercings);
+            if (characterData.scars.length > 0) parts.push(...characterData.scars);
+            
+            // Accessories and clothing
+            if (characterData.jewelry.length > 0) parts.push(...characterData.jewelry);
+            if (characterData.eyewear.length > 0) parts.push(...characterData.eyewear);
+            if (characterData.clothingStyle.length > 0) parts.push(...characterData.clothingStyle);
+
+            let finalPrompt = '';
+            
+            // Add character name if provided
+            if (characterData.characterName.trim()) {
+                finalPrompt += `Name: ${characterData.characterName.trim()}.\n`;
+            }
+            
+            // Add the main prompt
+            const prompt = parts.join(', ').toLowerCase();
+            if (prompt) {
+                finalPrompt += prompt;
+            }
+            
+            document.getElementById('prompt-output').textContent = finalPrompt || 'Your character prompt will appear here as you make selections...';
+            
+            // Update warnings
+            checkConflicts();
+        }
+
+        function checkConflicts() {
+            const warnings = [];
+            
+            // Age and life stage conflicts
+            if (characterData.age && characterData.genderStage) {
+                const ageNum = parseInt(characterData.age);
+                if (characterData.genderStage.includes('elderly') && ageNum < 60) {
+                    warnings.push('⚠️ Elderly life stage but age is under 60');
+                }
+                if (characterData.genderStage.includes('mature') && ageNum < 35) {
+                    warnings.push('⚠️ Mature life stage but age is under 35');
+                }
+            }
+            
+            // Body build conflicts
+            if (characterData.bodyBuildShape.includes('skinny') && characterData.muscleDefinition.includes('bodybuilder')) {
+                warnings.push('⚠️ Skinny build conflicts with bodybuilder physique');
+            }
+            
+            if (characterData.breastSize.includes('huge') && characterData.bodyBuildShape.includes('petite')) {
+                warnings.push('⚠️ Huge breasts may conflict with petite build');
+            }
+            
+            // Hair conflicts
+            if (characterData.hairLength === 'bald' && characterData.hairstyle && characterData.hairstyle !== '') {
+                warnings.push('⚠️ Bald selected but hairstyle chosen');
+            }
+            
+            if (characterData.hairLength === 'very short hair' && (characterData.hairstyle.includes('long') || characterData.hairstyle.includes('braid'))) {
+                warnings.push('⚠️ Very short hair conflicts with selected hairstyle');
+            }
+            
+            // Ethnicity and feature suggestions
+            if (characterData.ethnicity && characterData.eyeShape) {
+                if (characterData.ethnicity.includes('asian') && !characterData.eyeShape.includes('monolid') && !characterData.eyeShape.includes('almond')) {
+                    warnings.push('💡 Consider monolid or almond eyes for Asian ethnicity');
+                }
+            }
+            
+            // Display warnings
+            const warningsPanel = document.getElementById('warnings-panel');
+            if (warnings.length > 0) {
+                warningsPanel.innerHTML = warnings.map(warning => 
+                    `<div class="warning ${warning.includes('⚠️') ? 'conflict' : ''}">${warning}</div>`
+                ).join('');
+            } else {
+                warningsPanel.innerHTML = '<div style="color: #27ae60;">✓ No conflicts detected. Character looks good!</div>';
+            }
+        }
+
+        function copyPrompt() {
+            const promptText = document.getElementById('prompt-output').textContent;
+            if (promptText && promptText !== 'Your character prompt will appear here as you make selections...') {
+                navigator.clipboard.writeText(promptText).then(() => {
+                    const btn = document.querySelector('.copy-btn');
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied!';
+                    btn.style.background = '#27ae60';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '#27ae60';
+                    }, 2000);
+                }).catch(err => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = promptText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    const btn = document.querySelector('.copy-btn');
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied!';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                    }, 2000);
+                });
+            }
+        }
+
+        // Initialize conflict checking
+        document.addEventListener('DOMContentLoaded', function() {
+            checkConflicts();
+        });
+    </script>
+</body>
+</html>="manicured nails">Manicured Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value="natural nails">Natural Nails</div>
+                            <div class="toggle-btn" data-category="nail-colors" data-value
+                

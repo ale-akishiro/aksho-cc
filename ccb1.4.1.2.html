@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akshoverse Character Creator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, 
+                #0a0e27 0%,
+                #1a1b3e 15%,
+                #2d1b69 30%,
+                #4b2582 45%,
+                #6b46c1 60%,
+                #8b5cf6 75%,
+                #a78bfa 85%,
+                #c7d2fe 95%,
+                #e0e7ff 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(192, 132, 252, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, 
+                #6366f1 0%, 
+                #8b5cf6 25%, 
+                #a855f7 50%, 
+                #c084fc 75%, 
+                #e879f9 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Pills Navigation */
+        .nav-tabs {
+            display: flex;
+            background: rgba(248, 250, 252, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 20px 30px 0;
+            gap: 15px;
+        }
+
+        .nav-pill {
+            padding: 14px 28px;
+            background: rgba(229, 231, 235, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-pill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(168, 85, 247, 0.1), 
+                transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-pill:hover {
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        .nav-pill:hover::before {
+            left: 100%;
+        }
+
+        .nav-pill.active {
+            background: linear-gradient(135deg, 
+                #8b5cf6 0%, 
+                #a855f7 50%, 
+                #c084fc 100%);
+            color: white;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
+            border-color: rgba(168, 85, 247, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .nav-pill.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(255, 255, 255, 0.95);
+        }
+         
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 500px 350px;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .image-viewer {
+            background: rgba(240, 240, 250, 0.3);
+            backdrop-filter: blur(10px);
+            border-left: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .image-viewer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(139, 92, 246, 0.05) 0%, 
+                rgba(168, 85, 247, 0.03) 100%);
+            pointer-events: none;
+        }
+
+        #viewer-img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .creator-panel {
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 80vh;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .output-panel {
+            background: rgba(248, 250, 252, 0.4);
+            backdrop-filter: blur(15px);
+            border-left: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 30px;
+            position: sticky;
+            top: 0;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border-left: 4px solid transparent;
+            border-image: linear-gradient(135deg, #8b5cf6, #a855f7, #c084fc) 1;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        .section.collapsed {
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(139, 92, 246, 0.05);
+        }
+
+        .section-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(139, 92, 246, 0.1), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+
+        .section-header:hover {
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .section-header:hover::before {
+            left: 100%;
+        }
+
+        .section-header h3 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .section-icon {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        }
+
+        .collapse-icon {
+            font-size: 1.4em;
+            color: #8b5cf6;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .section.collapsed .collapse-icon {
+            transform: rotate(0deg);
+        }
+
+        .section:not(.collapsed) .collapse-icon {
+            transform: rotate(0deg);
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        .collapse-icon:hover {
+            background: rgba(139, 92, 246, 0.2);
+            transform: scale(1.1);
+        }
+
+        .section-content {
+            padding: 0 20px 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .section.collapsed .section-content {
+            max-height: 0;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .section:not(.collapsed) .section-content {
+            max-height: 2000px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .basic-info-section {
+            background: rgba(139, 92, 246, 0.08);
+            border-left: 4px solid transparent;
+            border-image: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7) 1;
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.15);
+        }
+
+        .basic-info-section .section-header {
+            background: rgba(139, 92, 246, 0.12);
+        }
+
+        .basic-info-section .section-icon {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            box-shadow: 0 3px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        select, input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            color: #374151;
+        }
+
+        select:focus, input[type="number"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1), 0 4px 20px rgba(139, 92, 246, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-1px);
+        }
+
+        select:hover, input[type="number"]:hover, input[type="text"]:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 2px 10px rgba(139, 92, 246, 0.1);
+        }
+
+        .toggle-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .toggle-btn {
+            padding: 10px 18px;
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 12px;
+            font-weight: 500;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(139, 92, 246, 0.1), 
+                transparent);
+            transition: left 0.5s ease;
+        }
+
+        .toggle-btn:hover {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .toggle-btn:hover::before {
+            left: 100%;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            color: white;
+            border-color: #8b5cf6;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .toggle-btn.active::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+        }
+
+        .output-section {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.1);
+        }
+
+        .output-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .prompt-output {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            min-height: 200px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .prompt-output::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(139, 92, 246, 0.5), 
+                transparent);
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #10b981, #06d6a0);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            transition: left 0.5s ease;
+        }
+
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #059669, #048c68);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .copy-btn:hover::before {
+            left: 100%;
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+
+        .conflict {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        /* Monster-specific styling */
+        .monster-section {
+            border-left: 4px solid transparent;
+            border-image: linear-gradient(135deg, #ef4444, #f97316, #eab308) 1;
+            background: rgba(239, 68, 68, 0.08);
+            box-shadow: 0 6px 25px rgba(239, 68, 68, 0.1);
+        }
+
+        .monster-section .section-icon {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            box-shadow: 0 3px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        .monster-section .section-header {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr 250px;
+            }
+            
+            .image-viewer {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .output-panel {
+                border-left: none;
+                border-top: 1px solid #e9ecef;
+            }
+
+            .nav-tabs {
+                padding: 15px 20px 0;
+                flex-wrap: wrap;
+            }
+
+            .nav-pill {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+
+            .creator-panel {
+                padding: 20px;
+            }
+
+            .output-panel {
+                padding: 20px;
+            }
+        }
+
+        /* Accessibility improvements */
+        .nav-pill:focus {
+            outline: 2px solid #4facfe;
+            outline-offset: 2px;
+        }
+
+        .section-header:focus {
+            outline: 2px solid #4facfe;
+            outline-offset: -2px;
+        }
+
+        .toggle-btn:focus {
+            outline: 2px solid #4facfe;
+            outline-offset: 2px;
+        }
+
+        /* Reduce motion for users with motion sensitivity */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Akshoverse Character Creator</h1>
+            <p>BETA 1.4.1 - Enhanced Human & Monster Features Dataset with Dawn Horizon UI (400+ Tags)</p>
+        </div>
+
+        <!-- Pills Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-pill active" data-tab="human" onclick="switchTab('human')" aria-label="Human character creation tab">
+                👤 Human
+            </button>
+            <button class="nav-pill" data-tab="monster" onclick="switchTab('monster')" aria-label="Monster character creation tab">
+                👹 Monster
+            </button>
+        </div>
+
+        <div class="main-content">
+            <div class="image-viewer">
+                <img id="viewer-img" src="" alt="Select an option to preview" />
+            </div>
+            
+            <div class="creator-panel">
+                <!-- Human Tab Content -->
+                <div id="human-tab" class="tab-content active">
+                    <!-- Basic Info Section -->
+                    <div class="section basic-info-section">
+                        <div class="section-header">
+                            <h3><span class="section-icon"></span>Basic Info</h3>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="character-name">Character Name</label>
+                                <input type="text" id="character-name" placeholder="Enter character name" 
+                                       onchange="updateCharacterData('characterName', this.value)">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Art Style</label>
+                                <div class="toggle-group">
+                                    <div class="toggle-btn" onclick="toggleMultiple('artstyle', 'realistic')" data-value="realistic">Realistic</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('artstyle', 'anime')" data-value="anime">Anime</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('artstyle', 'cartoon')" data-value="cartoon">Cartoon</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('artstyle', 'painting')" data-value="painting">Painting</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('artstyle', 'digital art')" data-value="digital art">Digital Art</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender-stage">Gender & Life Stage</label>
+                                <select id="gender-stage" onchange="updateCharacterData('genderStage', this.value)">
+                                    <option value="">Select gender and life stage</option>
+                                    <option value="1girl, teenage girl">Teenage Girl</option>
+                                    <option value="1girl, young woman">Young Woman</option>
+                                    <option value="1girl, mature woman">Mature Woman</option>
+                                    <option value="1girl, elderly woman">Elderly Woman</option>
+                                    <option value="1boy, teenage boy">Teenage Boy</option>
+                                    <option value="1boy, young man">Young Man</option>
+                                    <option value="1boy, mature man">Mature Man</option>
+                                    <option value="1boy, elderly man">Elderly Man</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="age">Age (Optional)</label>
+                                <input type="number" id="age" min="13" max="100" 
+                                       onchange="updateCharacterData('age', this.value ? this.value + ' years old' : '')">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ethnicity">Ethnicity</label>
+                                <select id="ethnicity" onchange="updateCharacterData('ethnicity', this.value)">
+                                    <option value="">Select ethnicity</option>
+                                    <option value="caucasian">Caucasian</option>
+                                    <option value="african">African</option>
+                                    <option value="asian">Asian</option>
+                                    <option value="hispanic">Hispanic</option>
+                                    <option value="middle eastern">Middle Eastern</option>
+                                    <option value="native american">Native American</option>
+                                    <option value="mixed race">Mixed Race</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="height">Height</label>
+                                <select id="height" onchange="updateCharacterData('height', this.value)">
+                                    <option value="">Select height</option>
+                                    <option value="very short">Very Short</option>
+                                    <option value="short">Short</option>
+                                    <option value="average height">Average Height</option>
+                                    <option value="tall">Tall</option>
+                                    <option value="very tall">Very Tall</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="build-descriptor">Build Descriptor</label>
+                                <select id="build-descriptor" onchange="updateCharacterData('buildDescriptor', this.value)">
+                                    <option value="">Select build descriptor</option>
+                                    <option value="petite">Petite</option>
+                                    <option value="slim">Slim</option>
+                                    <option value="athletic">Athletic</option>
+                                    <option value="curvy">Curvy</option>
+                                    <option value="voluptuous">Voluptuous</option>
+                                    <option value="plus-size">Plus-size</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="skin-tone">Skin Tone</label>
+                                <select id="skin-tone" onchange="updateCharacterData('skinTone', this.value)">
+                                    <option value="">Select skin tone</option>
+                                    <option value="pale skin">Pale</option>
+                                    <option value="fair skin">Fair</option>
+                                    <option value="light skin">Light</option>
+                                    <option value="medium skin">Medium</option>
+                                    <option value="olive skin">Olive</option>
+                                    <option value="tan skin">Tan</option>
+                                    <option value="brown skin">Brown</option>
+                                    <option value="dark skin">Dark</option>
+                                    <option value="ebony skin">Ebony</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Skin Features</label>
+                                <div class="toggle-group">
+                                    <div class="toggle-btn" onclick="toggleMultiple('skinFeatures', 'smooth skin')" data-value="smooth skin">Smooth</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('skinFeatures', 'freckles')" data-value="freckles">Freckles</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('skinFeatures', 'sun-kissed')" data-value="sun-kissed">Sun-kissed</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('skinFeatures', 'glowing skin')" data-value="glowing skin">Glowing</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hair Section -->
+                    <div class="section collapsed">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3><span class="section-icon"></span>Hair</h3>
+                            <span class="collapse-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="hair-color">Hair Color</label>
+                                <select id="hair-color" onchange="updateCharacterData('hairColor', this.value)">
+                                    <option value="">Select hair color</option>
+                                    <option value="black hair">Black</option>
+                                    <option value="brown hair">Brown</option>
+                                    <option value="blonde hair">Blonde</option>
+                                    <option value="red hair">Red</option>
+                                    <option value="auburn hair">Auburn</option>
+                                    <option value="grey hair">Grey</option>
+                                    <option value="white hair">White</option>
+                                    <option value="silver hair">Silver</option>
+                                    <option value="pink hair">Pink</option>
+                                    <option value="blue hair">Blue</option>
+                                    <option value="purple hair">Purple</option>
+                                    <option value="green hair">Green</option>
+                                    <option value="multicolored hair">Multicolored</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hair Texture</label>
+                                <div class="toggle-group">
+                                    <div class="toggle-btn" onclick="toggleMultiple('hairTexture', 'straight hair')" data-value="straight hair">Straight</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('hairTexture', 'wavy hair')" data-value="wavy hair">Wavy</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('hairTexture', 'curly hair')" data-value="curly hair">Curly</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('hairTexture', 'afro')" data-value="afro">Afro</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('hairTexture', 'kinky hair')" data-value="kinky hair">Kinky</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hair-length">Hair Length</label>
+                                <select id="hair-length" onchange="updateCharacterData('hairLength', this.value)">
+                                    <option value="">Select hair length</option>
+                                    <option value="bald">Bald</option>
+                                    <option value="very short hair">Very Short</option>
+                                    <option value="short hair">Short</option>
+                                    <option value="medium hair">Medium</option>
+                                    <option value="long hair">Long</option>
+                                    <option value="very long hair">Very Long</option>
+                                    <option value="floor-length hair">Floor-length</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hairstyle">Hairstyle</label>
+                                <select id="hairstyle" onchange="updateCharacterData('hairstyle', this.value)">
+                                    <option value="">Select hairstyle</option>
+                                    <option value="ponytail">Ponytail</option>
+                                    <option value="twin tails">Twin Tails</option>
+                                    <option value="braided hair">Braided</option>
+                                    <option value="messy hair">Messy</option>
+                                    <option value="straight hair">Straight</option>
+                                    <option value="bob cut">Bob Cut</option>
+                                    <option value="pixie cut">Pixie Cut</option>
+                                    <option value="updo">Updo</option>
+                                    <option value="loose hair">Loose</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hair Accessories</label>
+                                <div class="toggle-group">
+                                    <div class="toggle-btn" onclick="toggleMultiple('hairAccessories', 'hair ribbon')" data-value="hair ribbon">Ribbon</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('hairAccessories', 'hairband')" data-value="hairband">Hairband</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('hairAccessories', 'hair clip')" data-value="hair clip">Hair Clip</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('hairAccessories', 'hair bow')" data-value="hair bow">Hair Bow</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bangs">Bangs Style</label>
+                                <select id="bangs" onchange="updateCharacterData('bangs', this.value)">
+                                    <option value="">Select bangs style</option>
+                                    <option value="no bangs">No Bangs</option>
+                                    <option value="straight bangs">Straight Bangs</option>
+                                    <option value="side bangs">Side Bangs</option>
+                                    <option value="swept bangs">Swept Bangs</option>
+                                    <option value="blunt bangs">Blunt Bangs</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Facial Features Section -->
+                    <div class="section collapsed">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3><span class="section-icon"></span>Facial Features</h3>
+                            <span class="collapse-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="face-shape">Face Shape</label>
+                                <select id="face-shape" onchange="updateCharacterData('faceShape', this.value)">
+                                    <option value="">Select face shape</option>
+                                    <option value="oval face">Oval Face</option>
+                                    <option value="round face">Round Face</option>
+                                    <option value="square face">Square Face</option>
+                                    <option value="heart face">Heart Face</option>
+                                    <option value="diamond face">Diamond Face</option>
+                                    <option value="oblong face">Oblong Face</option>
+                                    <option value="triangular face">Triangular Face</option>
+                                    <option value="rectangular face">Rectangular Face</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="eyebrows">Eyebrows</label>
+                                <select id="eyebrows" onchange="updateCharacterData('eyebrows', this.value)">
+                                    <option value="">Select eyebrow type</option>
+                                    <option value="thin eyebrows">Thin Eyebrows</option>
+                                    <option value="thick eyebrows">Thick Eyebrows</option>
+                                    <option value="arched eyebrows">Arched Eyebrows</option>
+                                    <option value="straight eyebrows">Straight Eyebrows</option>
+                                    <option value="bushy eyebrows">Bushy Eyebrows</option>
+                                    <option value="natural eyebrows">Natural Eyebrows</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="eye-shape">Eye Shape</label>
+                                <select id="eye-shape" onchange="updateCharacterData('eyeShape', this.value)">
+                                    <option value="">Select eye shape</option>
+                                    <option value="almond eyes">Almond Eyes</option>
+                                    <option value="round eyes">Round Eyes</option>
+                                    <option value="hooded eyes">Hooded Eyes</option>
+                                    <option value="upturned eyes">Upturned Eyes</option>
+                                    <option value="downturned eyes">Downturned Eyes</option>
+                                    <option value="close-set eyes">Close-Set Eyes</option>
+                                    <option value="wide-set eyes">Wide-Set Eyes</option>
+                                    <option value="deep-set eyes">Deep-Set Eyes</option>
+                                    <option value="monolid eyes">Monolid Eyes</option>
+                                    <option value="double eyelid">Double Eyelid</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="eye-color">Eye Color</label>
+                                <select id="eye-color" onchange="updateCharacterData('eyeColor', this.value)">
+                                    <option value="">Select eye color</option>
+                                    <option value="ice blue iris">Ice Blue</option>
+                                    <option value="sky blue iris">Sky Blue</option>
+                                    <option value="emerald green iris">Emerald Green</option>
+                                    <option value="hazel green iris">Hazel Green</option>
+                                    <option value="amber iris">Amber</option>
+                                    <option value="honey brown iris">Honey Brown</option>
+                                    <option value="chocolate brown iris">Chocolate Brown</option>
+                                    <option value="dark brown iris">Dark Brown</option>
+                                    <option value="light gray iris">Light Gray</option>
+                                    <option value="dark gray iris">Dark Gray</option>
+                                    <option value="violet iris">Violet</option>
+                                    <option value="golden iris">Golden</option>
+                                    <option value="heterochromia">Heterochromia</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Eye Features</label>
+                                <div class="toggle-group">
+                                    <div class="toggle-btn" onclick="toggleMultiple('eyeFeatures', 'long eyelashes')" data-value="long eyelashes">Long Eyelashes</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('eyeFeatures', 'thick eyelashes')" data-value="thick eyelashes">Thick Eyelashes</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('eyeFeatures', 'curled eyelashes')" data-value="curled eyelashes">Curled Eyelashes</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('eyeFeatures', 'heavy eyelids')" data-value="heavy eyelids">Heavy Eyelids</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('eyeFeatures', 'eyebags')" data-value="eyebags">Eyebags</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('eyeFeatures', 'dark circles')" data-value="dark circles">Dark Circles</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nose">Nose Type</label>
+                                <select id="nose" onchange="updateCharacterData('nose', this.value)">
+                                    <option value="">Select nose type</option>
+                                    <option value="button nose">Button Nose</option>
+                                    <option value="aquiline nose">Aquiline Nose</option>
+                                    <option value="roman nose">Roman Nose</option>
+                                    <option value="snub nose">Snub Nose</option>
+                                    <option value="wide nose">Wide Nose</option>
+                                    <option value="narrow nose">Narrow Nose</option>
+                                    <option value="straight nose">Straight Nose</option>
+                                    <option value="crooked nose">Crooked Nose</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lips">Lips</label>
+                                <select id="lips" onchange="updateCharacterData('lips', this.value)">
+                                    <option value="">Select lips type</option>
+                                    <option value="full lips">Full Lips</option>
+                                    <option value="thin lips">Thin Lips</option>
+                                    <option value="pouty lips">Pouty Lips</option>
+                                    <option value="heart-shaped lips">Heart-shaped Lips</option>
+                                    <option value="bow-shaped lips">Bow-shaped Lips</option>
+                                    <option value="wide lips">Wide Lips</option>
+                                    <option value="narrow lips">Narrow Lips</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cheeks">Cheeks</label>
+                                <select id="cheeks" onchange="updateCharacterData('cheeks', this.value)">
+                                    <option value="">Select cheek type</option>
+                                    <option value="high cheekbones">High Cheekbones</option>
+                                    <option value="prominent cheekbones">Prominent Cheekbones</option>
+                                    <option value="round cheeks">Round Cheeks</option>
+                                    <option value="hollow cheeks">Hollow Cheeks</option>
+                                    <option value="chubby cheeks">Chubby Cheeks</option>
+                                    <option value="dimpled cheeks">Dimpled Cheeks</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="jaw-chin">Jaw & Chin</label>
+                                <select id="jaw-chin" onchange="updateCharacterData('jawChin', this.value)">
+                                    <option value="">Select jaw/chin type</option>
+                                    <option value="square jaw">Square Jaw</option>
+                                    <option value="sharp jaw">Sharp Jaw</option>
+                                    <option value="soft jaw">Soft Jaw</option>
+                                    <option value="pointed chin">Pointed Chin</option>
+                                    <option value="round chin">Round Chin</option>
+                                    <option value="cleft chin">Cleft Chin</option>
+                                    <option value="double chin">Double Chin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Body Build Section -->
+                    <div class="section collapsed">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3><span class="section-icon"></span>Body Build</h3>
+                            <span class="collapse-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="body-frame">Body Frame</label>
+                                <select id="body-frame" onchange="updateCharacterData('bodyFrame', this.value)">
+                                    <option value="">Select body frame</option>
+                                    <option value="ectomorph">Ectomorph (Lean)</option>
+                                    <option value="mesomorph">Mesomorph (Athletic)</option>
+                                    <option value="endomorph">Endomorph (Curvy)</option>
+                                    <option value="pear shape">Pear Shape</option>
+                                    <option value="apple shape">Apple Shape</option>
+                                    <option value="hourglass">Hourglass</option>
+                                    <option value="rectangle">Rectangle</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="muscle-definition">Muscle Definition</label>
+                                <select id="muscle-definition" onchange="updateCharacterData('muscleDefinition', this.value)">
+                                    <option value="">Select muscle definition</option>
+                                    <option value="no muscle definition">No Definition</option>
+                                    <option value="slight muscle definition">Slight Definition</option>
+                                    <option value="toned">Toned</option>
+                                    <option value="athletic build">Athletic Build</option>
+                                    <option value="muscular">Muscular</option>
+                                    <option value="bodybuilder">Bodybuilder</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="posture">Posture</label>
+                                <select id="posture" onchange="updateCharacterData('posture', this.value)">
+                                    <option value="">Select posture</option>
+                                    <option value="good posture">Good Posture</option>
+                                    <option value="slouched posture">Slouched</option>
+                                    <option value="confident posture">Confident</option>
+                                    <option value="relaxed posture">Relaxed</option>
+                                    <option value="rigid posture">Rigid</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clothing Section -->
+                    <div class="section collapsed">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3><span class="section-icon"></span>Clothing & Style</h3>
+                            <span class="collapse-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label>Clothing Style</label>
+                                <div class="toggle-group">
+                                    <div class="toggle-btn" onclick="toggleMultiple('clothingStyle', 'casual wear')" data-value="casual wear">Casual</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('clothingStyle', 'formal wear')" data-value="formal wear">Formal</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('clothingStyle', 'business attire')" data-value="business attire">Business</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('clothingStyle', 'streetwear')" data-value="streetwear">Streetwear</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('clothingStyle', 'vintage style')" data-value="vintage style">Vintage</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('clothingStyle', 'bohemian style')" data-value="bohemian style">Bohemian</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Accessories</label>
+                                <div class="toggle-group">
+                                    <div class="toggle-btn" onclick="toggleMultiple('accessories', 'glasses')" data-value="glasses">Glasses</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('accessories', 'sunglasses')" data-value="sunglasses">Sunglasses</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('accessories', 'jewelry')" data-value="jewelry">Jewelry</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('accessories', 'watch')" data-value="watch">Watch</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('accessories', 'hat')" data-value="hat">Hat</div>
+                                    <div class="toggle-btn" onclick="toggleMultiple('accessories', 'scarf')" data-value="scarf">Scarf</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monster Tab Content -->
+                <div id="monster-tab" class="tab-content">
+                    <!-- Species Section -->
+                    <div class="section monster-section basic-info-section">
+                        <div class="section-header">
+                            <h3><span class="section-icon"></span>Species & Basic Info</h3>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="monster-character-name">Character Name</label>
+                                <input type="text" id="monster-character-name" placeholder="Enter character name" 
+                                       onchange="updateMonsterData('characterName', this.value)">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="monster-species">Monster Species</label>
+                                <select id="monster-species" onchange="updateMonsterData('species', this.value)">
+                                    <option value="">Select monster species</option>
+                                    <option value="demon girl">Demon Girl</option>
+                                    <option value="angel girl">Angel Girl</option>
+                                    <option value="cat girl">Cat Girl</option>
+                                    <option value="fox girl">Fox Girl</option>
+                                    <option value="wolf girl">Wolf Girl</option>
+                                    <option value="dragon girl">Dragon Girl</option>
+                                    <option value="vampire girl">Vampire Girl</option>
+                                    <option value="succubus">Succubus</option>
+                                    <option value="elf">Elf</option>
+                                    <option value="dark elf">Dark Elf</option>
+                                    <option value="lamia">Lamia</option>
+                                    <option value="harpy">Harpy</option>
+                                    <option value="mermaid">Mermaid</option>
+                                    <option value="spider girl">Spider Girl</option>
+                                    <option value="slime girl">Slime Girl</option>
+                                </select>
+                            </div>
+
+                            <!-- Copy of Basic Info from Human tab -->
+                            <div class="form-group">
+                                <label>Art Style</label>
+                                <div class="toggle-group">
+                                    <div class="toggle-btn" onclick="toggleMonsterMultiple('artstyle', 'realistic')" data-value="realistic">Realistic</div>
+                                    <div class="toggle-btn" onclick="toggleMonsterMultiple('artstyle', 'anime')" data-value="anime">Anime</div>
+                                    <div class="toggle-btn" onclick="toggleMonsterMultiple('artstyle', 'cartoon')" data-value="cartoon">Cartoon</div>
+                                    <div class="toggle-btn" onclick="toggleMonsterMultiple('artstyle', 'painting')" data-value="painting">Painting</div>
+                                    <div class="toggle-btn" onclick="toggleMonsterMultiple('artstyle', 'digital art')" data-value="digital art">Digital Art</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="monster-gender-stage">Gender & Life Stage</label>
+                                <select id="monster-gender-stage" onchange="updateMonsterData('genderStage', this.value)">
+                                    <option value="">Select gender and life stage</option>
+                                    <option value="1girl, teenage girl">Teenage Girl</option>
+                                    <option value="1girl, young woman">Young Woman</option>
+                                    <option value="1girl, mature woman">Mature Woman</option>
+                                    <option value="1girl, elderly woman">Elderly Woman</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monster Features Sections -->
+                    <div class="section monster-section collapsed">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3><span class="section-icon"></span>Ears</h3>
+                            <span class="collapse-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="monster-ears">Ear Type</label>
+                                <select id="monster-ears" onchange="updateMonsterData('ears', this.value)">
+                                    <option value="">Select ear type</option>
+                                    <option value="cat ears">Cat Ears</option>
+                                    <option value="fox ears">Fox Ears</option>
+                                    <option value="wolf ears">Wolf Ears</option>
+                                    <option value="dog ears">Dog Ears</option>
+                                    <option value="rabbit ears">Rabbit Ears</option>
+                                    <option value="elf ears">Elf Ears</option>
+                                    <option value="pointed ears">Pointed Ears</option>
+                                    <option value="dragon ears">Dragon Ears</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section monster-section collapsed">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3><span class="section-icon"></span>Tails</h3>
+                            <span class="collapse-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="monster-tail">Tail Type</label>
+                                <select id="monster-tail" onchange="updateMonsterData('tail', this.value)">
+                                    <option value="">Select tail type</option>
+                                    <option value="cat tail">Cat Tail</option>
+                                    <option value="fox tail">Fox Tail</option>
+                                    <option value="multiple tails">Multiple Tails</option>
+                                    <option value="wolf tail">Wolf Tail</option>
+                                    <option value="dragon tail">Dragon Tail</option>
+                                    <option value="demon tail">Demon Tail</option>
+                                    <option value="snake tail">Snake Tail</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section monster-section collapsed">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3><span class="section-icon"></span>Horns</h3>
+                            <span class="collapse-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="monster-horns">Horn Type</label>
+                                <select id="monster-horns" onchange="updateMonsterData('horns', this.value)">
+                                    <option value="">Select horn type</option>
+                                    <option value="demon horns">Demon Horns</option>
+                                    <option value="dragon horns">Dragon Horns</option>
+                                    <option value="curved horns">Curved Horns</option>
+                                    <option value="straight horns">Straight Horns</option>
+                                    <option value="small horns">Small Horns</option>
+                                    <option value="large horns">Large Horns</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section monster-section collapsed">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3><span class="section-icon"></span>Wings</h3>
+                            <span class="collapse-icon">+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="monster-wings">Wing Type</label>
+                                <select id="monster-wings" onchange="updateMonsterData('wings', this.value)">
+                                    <option value="">Select wing type</option>
+                                    <option value="angel wings">Angel Wings</option>
+                                    <option value="demon wings">Demon Wings</option>
+                                    <option value="dragon wings">Dragon Wings</option>
+                                    <option value="bat wings">Bat Wings</option>
+                                    <option value="feathered wings">Feathered Wings</option>
+                                    <option value="fairy wings">Fairy Wings</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="output-panel">
+                <!-- Human Output -->
+                <div id="human-output" class="output-content">
+                    <div class="output-section">
+                        <h3>Generated Human Prompt</h3>
+                        <div class="prompt-output" id="human-prompt-output">
+                            Your human character prompt will appear here as you make selections...
+                        </div>
+                        <button class="copy-btn" onclick="copyPrompt('human')">Copy Prompt</button>
+                    </div>
+
+                    <div class="output-section">
+                        <h3>Warnings & Suggestions</h3>
+                        <div id="human-warnings-panel">
+                            No conflicts detected.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monster Output -->
+                <div id="monster-output" class="output-content" style="display: none;">
+                    <div class="output-section">
+                        <h3>Generated Monster Prompt</h3>
+                        <div class="prompt-output" id="monster-prompt-output">
+                            Your monster character prompt will appear here as you make selections...
+                        </div>
+                        <button class="copy-btn" onclick="copyPrompt('monster')">Copy Prompt</button>
+                    </div>
+
+                    <div class="output-section">
+                        <h3>Warnings & Suggestions</h3>
+                        <div id="monster-warnings-panel">
+                            No conflicts detected.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Current active tab
+        let currentTab = 'human';
+
+        // Tab persistence using localStorage
+        function saveCurrentTab() {
+            localStorage.setItem('aksho-character-creator-tab', currentTab);
+        }
+
+        function loadSavedTab() {
+            const savedTab = localStorage.getItem('aksho-character-creator-tab');
+            if (savedTab) {
+                switchTab(savedTab);
+            }
+        }
+
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Update active states
+            document.querySelectorAll('.nav-pill').forEach(pill => {
+                pill.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+            // Switch tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+
+            // Switch output content
+            document.querySelectorAll('.output-content').forEach(output => {
+                output.style.display = 'none';
+            });
+            document.getElementById(`${tabName}-output`).style.display = 'block';
+
+            currentTab = tabName;
+            saveCurrentTab();
+        }
+
+        // Section collapse functionality
+        function toggleSection(header) {
+            const section = header.parentElement;
+            const collapseIcon = header.querySelector('.collapse-icon');
+            
+            section.classList.toggle('collapsed');
+            
+            // Update collapse icon
+            if (section.classList.contains('collapsed')) {
+                collapseIcon.textContent = '+';
+            } else {
+                collapseIcon.textContent = '-';
+            }
+        }
+
+        // Character data storage
+        let humanData = {
+            characterName: '',
+            artstyle: [],
+            genderStage: '',
+            age: '',
+            ethnicity: '',
+            height: '',
+            buildDescriptor: '',
+            skinTone: '',
+            skinFeatures: [],
+            hairColor: '',
+            hairTexture: [],
+            hairLength: '',
+            hairstyle: '',
+            hairAccessories: [],
+            bangs: '',
+            faceShape: '',
+            eyebrows: '',
+            eyeShape: '',
+            eyeColor: '',
+            eyeFeatures: [],
+            nose: '',
+            lips: '',
+            cheeks: '',
+            jawChin: '',
+            bodyFrame: '',
+            muscleDefinition: '',
+            posture: '',
+            clothingStyle: [],
+            accessories: []
+        };
+
+        let monsterData = {
+            characterName: '',
+            species: '',
+            artstyle: [],
+            genderStage: '',
+            age: '',
+            ethnicity: '',
+            height: '',
+            buildDescriptor: '',
+            skinTone: '',
+            skinFeatures: [],
+            hairColor: '',
+            hairTexture: [],
+            hairLength: '',
+            hairstyle: '',
+            hairAccessories: [],
+            bangs: '',
+            faceShape: '',
+            eyebrows: '',
+            eyeShape: '',
+            eyeColor: '',
+            eyeFeatures: [],
+            nose: '',
+            lips: '',
+            cheeks: '',
+            jawChin: '',
+            bodyFrame: '',
+            muscleDefinition: '',
+            posture: '',
+            clothingStyle: [],
+            accessories: [],
+            ears: '',
+            tail: '',
+            horns: '',
+            wings: '',
+            specialFeatures: []
+        };
+
+        function updateCharacterData(field, value) {
+            humanData[field] = value;
+            updatePrompt('human');
+        }
+
+        function updateMonsterData(field, value) {
+            monsterData[field] = value;
+            updatePrompt('monster');
+        }
+
+        function toggleMultiple(category, value) {
+            const btn = event.target;
+            const isActive = btn.classList.contains('active');
+            
+            if (isActive) {
+                btn.classList.remove('active');
+                const index = humanData[category].indexOf(value);
+                if (index > -1) {
+                    humanData[category].splice(index, 1);
+                }
+            } else {
+                btn.classList.add('active');
+                if (!humanData[category].includes(value)) {
+                    humanData[category].push(value);
+                }
+            }
+            
+            updatePrompt('human');
+            updateViewerImage(value);
+        }
+
+        function toggleMonsterMultiple(category, value) {
+            const btn = event.target;
+            const isActive = btn.classList.contains('active');
+            
+            if (isActive) {
+                btn.classList.remove('active');
+                const index = monsterData[category].indexOf(value);
+                if (index > -1) {
+                    monsterData[category].splice(index, 1);
+                }
+            } else {
+                btn.classList.add('active');
+                if (!monsterData[category].includes(value)) {
+                    monsterData[category].push(value);
+                }
+            }
+            
+            updatePrompt('monster');
+            updateViewerImage(value);
+        }
+
+        function updatePrompt(type) {
+            const data = type === 'human' ? humanData : monsterData;
+            let finalPrompt = '';
+            
+            // Build prompt from data
+            for (const [key, value] of Object.entries(data)) {
+                if (Array.isArray(value) && value.length > 0) {
+                    finalPrompt += value.join(', ') + ', ';
+                } else if (value && typeof value === 'string') {
+                    finalPrompt += value + ', ';
+                }
+            }
+            
+            // Clean up the prompt
+            finalPrompt = finalPrompt.replace(/,\s*$/, '');
+            
+            document.getElementById(`${type}-prompt-output`).textContent = 
+                finalPrompt || `Your ${type} character prompt will appear here as you make selections...`;
+            
+            checkConflicts(type);
+        }
+
+        function checkConflicts(type) {
+            const warnings = [];
+            // Add conflict checking logic here
+            
+            const warningsPanel = document.getElementById(`${type}-warnings-panel`);
+            if (warnings.length > 0) {
+                warningsPanel.innerHTML = warnings.map(warning => 
+                    `<div class="warning ${warning.includes('⚠️') ? 'conflict' : ''}">${warning}</div>`
+                ).join('');
+            } else {
+                warningsPanel.innerHTML = '<div style="color: #27ae60;">✓ No conflicts detected. Character looks good!</div>';
+            }
+        }
+
+        function copyPrompt(type) {
+            const promptText = document.getElementById(`${type}-prompt-output`).textContent;
+            if (promptText && !promptText.includes('will appear here')) {
+                navigator.clipboard.writeText(promptText).then(() => {
+                    const btn = event.target;
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied!';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                    }, 2000);
+                });
+            }
+        }
+
+        function updateViewerImage(value) {
+            if (!value) return;
+
+            const img = document.getElementById('viewer-img');
+            const baseName = value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+            const baseUrl = 'https://raw.githubusercontent.com/ChemtrailCat/Aksho-Char-Creator-Previews/refs/heads/main/';
+            const jpgUrl = `${baseUrl}${baseName}.jpg`;
+            const pngUrl = `${baseUrl}${baseName}.png`;
+
+            img.onerror = function () {
+                if (!img.src.endsWith('.png')) {
+                    img.src = pngUrl;
+                } else {
+                    img.src = '';
+                }
+            };
+
+            img.src = jpgUrl;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedTab();
+            
+            // Hook into dropdowns
+            document.querySelectorAll('select').forEach(select => {
+                select.addEventListener('change', function () {
+                    updateViewerImage(this.value);
+                });
+            });
+
+            // Initialize collapsed states (all except basic info)
+            document.querySelectorAll('.section:not(.basic-info-section)').forEach(section => {
+                section.classList.add('collapsed');
+            });
+        });
+    </script>
+</body>
+</html>
