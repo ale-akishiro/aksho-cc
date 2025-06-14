@@ -324,6 +324,12 @@ class AkshoStudio {
      * Setup human tab specific features
      */
     setupHumanTabFeatures() {
+        // Remove HOME layout class and restore 3-column layout
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.classList.remove('home-layout');
+        }
+        
         // Show output panel when switching to human tab
         const outputPanel = document.querySelector('.output-panel');
         if (outputPanel) {
@@ -334,6 +340,7 @@ class AkshoStudio {
         const imageViewerContainer = document.querySelector('.image-viewer');
         if (imageViewerContainer) {
             imageViewerContainer.innerHTML = '<img id="viewer-img" src="" alt="Select an option to preview" />';
+            imageViewerContainer.style.display = 'block';
         }
         
         // Enable human-specific validation
@@ -346,6 +353,12 @@ class AkshoStudio {
      * Setup monster tab specific features
      */
     setupMonsterTabFeatures() {
+        // Remove HOME layout class and restore 3-column layout
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.classList.remove('home-layout');
+        }
+        
         // Show output panel when switching to monster tab
         const outputPanel = document.querySelector('.output-panel');
         if (outputPanel) {
@@ -356,6 +369,7 @@ class AkshoStudio {
         const imageViewerContainer = document.querySelector('.image-viewer');
         if (imageViewerContainer) {
             imageViewerContainer.innerHTML = '<img id="viewer-img" src="" alt="Select an option to preview" />';
+            imageViewerContainer.style.display = 'block';
         }
         
         // Enable monster-specific validation and conflict detection
@@ -375,30 +389,22 @@ class AkshoStudio {
         // Update statistics
         this.updateHomeStatistics();
         
-        // Hide output panel on HOME tab
+        // Apply HOME layout class to main content
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.classList.add('home-layout');
+        }
+        
+        // Hide output panel and image viewer on HOME tab
         const outputPanel = document.querySelector('.output-panel');
+        const imageViewer = document.querySelector('.image-viewer');
+        
         if (outputPanel) {
             outputPanel.style.display = 'none';
         }
         
-        // Update image viewer for HOME tab
-        const imageViewer = document.getElementById('viewer-img');
         if (imageViewer) {
-            imageViewer.src = '';
-            imageViewer.alt = 'Welcome to The Akshoverse Studio';
             imageViewer.style.display = 'none';
-        }
-        
-        // Show welcome message in image viewer area
-        const imageViewerContainer = document.querySelector('.image-viewer');
-        if (imageViewerContainer) {
-            imageViewerContainer.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; padding: 40px;">
-                    <div style="font-size: 4em; margin-bottom: 20px;">🎨</div>
-                    <h2 style="color: #8b5cf6; margin-bottom: 10px; font-family: 'Space Grotesk', sans-serif;">The Akshoverse Studio</h2>
-                    <p style="color: #6b7280; font-size: 1.1em; line-height: 1.6;">Your creative journey starts here</p>
-                </div>
-            `;
         }
     }
 

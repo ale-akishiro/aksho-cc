@@ -227,6 +227,14 @@ body::before {
     min-height: 600px;
 }
 
+/* HOME tab single column layout */
+.main-content.home-layout {
+    grid-template-columns: 1fr;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 .image-viewer {
     background: rgba(240, 240, 250, 0.3);
     backdrop-filter: blur(10px);
@@ -358,6 +366,25 @@ body::before {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     margin-bottom: 40px;
+}
+
+/* HOME layout feature cards - 3 per row */
+.main-content.home-layout .feature-cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
+
+@media (max-width: 1024px) {
+    .main-content.home-layout .feature-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .main-content.home-layout .feature-cards {
+        grid-template-columns: 1fr;
+    }
 }
 
 .feature-card {
