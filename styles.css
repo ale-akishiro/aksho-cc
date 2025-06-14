@@ -434,6 +434,19 @@ body::before {
 
 .feature-card.available {
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+    text-align: center;
+}
+
+.feature-card.available .feature-title {
+    color: #8b5cf6;
+}
+
+.feature-card.available .feature-description {
+    color: #4b5563;
+}
+
+.feature-card.available .feature-icon {
+    text-align: center;
 }
 
 .feature-card.coming-soon {
@@ -475,13 +488,14 @@ body::before {
     font-size: 1.4em;
     font-weight: 700;
     margin-bottom: 10px;
-    color: #1f2937;
+    color: #ffffff;
     font-family: 'Space Grotesk', sans-serif;
     text-align: center;
+    text-transform: uppercase;
 }
 
 .feature-description {
-    color: #374151;
+    color: #e5e7eb;
     font-size: 0.95em;
     line-height: 1.5;
     margin-bottom: 15px;
