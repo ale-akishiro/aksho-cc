@@ -13,25 +13,81 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(180deg, 
+                #0a0e27 0%,
+                #1a1b3e 15%,
+                #2d1b69 30%,
+                #4b2582 45%,
+                #6b46c1 60%,
+                #8b5cf6 75%,
+                #a78bfa 85%,
+                #c7d2fe 95%,
+                #e0e7ff 100%);
             min-height: 100vh;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(192, 132, 252, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, 
+                #6366f1 0%, 
+                #8b5cf6 25%, 
+                #a855f7 50%, 
+                #c084fc 75%, 
+                #e879f9 100%);
             color: white;
             padding: 30px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .header h1 {
@@ -48,34 +104,62 @@
         /* Pills Navigation */
         .nav-tabs {
             display: flex;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
+            background: rgba(248, 250, 252, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
             padding: 20px 30px 0;
-            gap: 10px;
+            gap: 15px;
         }
 
         .nav-pill {
-            padding: 12px 24px;
-            background: #e9ecef;
-            border: none;
-            border-radius: 25px;
+            padding: 14px 28px;
+            background: rgba(229, 231, 235, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
-            color: #6c757d;
-            transition: all 0.3s ease;
+            color: #6b7280;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 14px;
             position: relative;
+            overflow: hidden;
+        }
+
+        .nav-pill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(168, 85, 247, 0.1), 
+                transparent);
+            transition: left 0.5s ease;
         }
 
         .nav-pill:hover {
-            background: #dee2e6;
-            transform: translateY(-1px);
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        .nav-pill:hover::before {
+            left: 100%;
         }
 
         .nav-pill.active {
-            background: #4facfe;
+            background: linear-gradient(135deg, 
+                #8b5cf6 0%, 
+                #a855f7 50%, 
+                #c084fc 100%);
             color: white;
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
+            border-color: rgba(168, 85, 247, 0.6);
+            transform: translateY(-1px);
         }
 
         .nav-pill.active::after {
@@ -86,25 +170,40 @@
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-bottom: 6px solid white;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(255, 255, 255, 0.95);
         }
          
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 300px 400px;
+            grid-template-columns: 1fr 250px 400px;
             gap: 0;
             min-height: 600px;
         }
 
         .image-viewer {
-            background: #f0f0f0;
-            border-left: 1px solid #ddd;
-            padding: 20px;
+            background: rgba(240, 240, 250, 0.3);
+            backdrop-filter: blur(10px);
+            border-left: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+        }
+
+        .image-viewer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(139, 92, 246, 0.05) 0%, 
+                rgba(168, 85, 247, 0.03) 100%);
+            pointer-events: none;
         }
 
         #viewer-img {
@@ -118,6 +217,7 @@
             padding: 30px;
             overflow-y: auto;
             max-height: 80vh;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .tab-content {
@@ -135,8 +235,9 @@
         }
 
         .output-panel {
-            background: #f8f9fa;
-            border-left: 1px solid #e9ecef;
+            background: rgba(248, 250, 252, 0.4);
+            backdrop-filter: blur(15px);
+            border-left: 1px solid rgba(139, 92, 246, 0.2);
             padding: 30px;
             position: sticky;
             top: 0;
@@ -144,15 +245,20 @@
 
         .section {
             margin-bottom: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #4facfe;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border-left: 4px solid transparent;
+            border-image: linear-gradient(135deg, #8b5cf6, #a855f7, #c084fc) 1;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.1);
         }
 
         .section.collapsed {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(139, 92, 246, 0.05);
         }
 
         .section-header {
@@ -161,13 +267,35 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #f8f9fa;
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(139, 92, 246, 0.1), 
+                transparent);
+            transition: left 0.6s ease;
         }
 
         .section-header:hover {
-            background: #e9ecef;
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .section-header:hover::before {
+            left: 100%;
         }
 
         .section-header h3 {
@@ -180,51 +308,76 @@
         }
 
         .section-icon {
-            width: 20px;
-            height: 20px;
-            background: #4facfe;
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
             border-radius: 50%;
             display: inline-block;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
         }
 
         .collapse-icon {
-            font-size: 1.2em;
-            color: #6c757d;
-            transition: transform 0.3s ease;
+            font-size: 1.4em;
+            color: #8b5cf6;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(139, 92, 246, 0.1);
         }
 
         .section.collapsed .collapse-icon {
-            transform: rotate(-90deg);
+            transform: rotate(0deg);
+        }
+
+        .section:not(.collapsed) .collapse-icon {
+            transform: rotate(0deg);
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        .collapse-icon:hover {
+            background: rgba(139, 92, 246, 0.2);
+            transform: scale(1.1);
         }
 
         .section-content {
             padding: 0 20px 20px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .section.collapsed .section-content {
             max-height: 0;
             padding: 0 20px;
             opacity: 0;
+            transform: translateY(-10px);
         }
 
         .section:not(.collapsed) .section-content {
             max-height: 2000px;
             opacity: 1;
+            transform: translateY(0);
         }
 
         .basic-info-section {
-            background: #e8f4fd;
-            border-left-color: #0d6efd;
+            background: rgba(139, 92, 246, 0.08);
+            border-left: 4px solid transparent;
+            border-image: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7) 1;
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.15);
         }
 
         .basic-info-section .section-header {
-            background: #e8f4fd;
+            background: rgba(139, 92, 246, 0.12);
         }
 
         .basic-info-section .section-icon {
-            background: #0d6efd;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            box-shadow: 0 3px 12px rgba(99, 102, 241, 0.4);
         }
 
         .form-group {
@@ -240,17 +393,27 @@
 
         select, input[type="number"], input[type="text"] {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
+            padding: 12px 16px;
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
             font-size: 14px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            color: #374151;
         }
 
         select:focus, input[type="number"]:focus, input[type="text"]:focus {
             outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1), 0 4px 20px rgba(139, 92, 246, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-1px);
+        }
+
+        select:hover, input[type="number"]:hover, input[type="text"]:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 2px 10px rgba(139, 92, 246, 0.1);
         }
 
         .toggle-group {
@@ -261,32 +424,68 @@
         }
 
         .toggle-btn {
-            padding: 8px 16px;
-            border: 2px solid #e9ecef;
-            border-radius: 20px;
-            background: white;
+            padding: 10px 18px;
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 12px;
+            font-weight: 500;
             user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(139, 92, 246, 0.1), 
+                transparent);
+            transition: left 0.5s ease;
         }
 
         .toggle-btn:hover {
-            border-color: #4facfe;
-            background: #f0f8ff;
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .toggle-btn:hover::before {
+            left: 100%;
         }
 
         .toggle-btn.active {
-            background: #4facfe;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
             color: white;
-            border-color: #4facfe;
+            border-color: #8b5cf6;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .toggle-btn.active::before {
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
         }
 
         .output-section {
-            background: white;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.1);
         }
 
         .output-section h3 {
@@ -296,33 +495,75 @@
         }
 
         .prompt-output {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 12px;
             font-family: 'Courier New', monospace;
             font-size: 13px;
             line-height: 1.6;
             min-height: 200px;
             white-space: pre-wrap;
             word-wrap: break-word;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .prompt-output::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(139, 92, 246, 0.5), 
+                transparent);
         }
 
         .copy-btn {
-            background: #27ae60;
+            background: linear-gradient(135deg, #10b981, #06d6a0);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            padding: 12px 24px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
-            margin-top: 10px;
-            transition: all 0.3s ease;
+            margin-top: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            transition: left 0.5s ease;
         }
 
         .copy-btn:hover {
-            background: #219a52;
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #059669, #048c68);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .copy-btn:hover::before {
+            left: 100%;
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
         }
 
         .warning {
@@ -343,17 +584,25 @@
 
         /* Monster-specific styling */
         .monster-section {
-            border-left-color: #e74c3c;
+            border-left: 4px solid transparent;
+            border-image: linear-gradient(135deg, #ef4444, #f97316, #eab308) 1;
+            background: rgba(239, 68, 68, 0.08);
+            box-shadow: 0 6px 25px rgba(239, 68, 68, 0.1);
         }
 
         .monster-section .section-icon {
-            background: #e74c3c;
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            box-shadow: 0 3px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        .monster-section .section-header {
+            background: rgba(239, 68, 68, 0.1);
         }
 
         /* Responsive design */
         @media (max-width: 1024px) {
             .main-content {
-                grid-template-columns: 1fr 350px;
+                grid-template-columns: 1fr 300px;
             }
             
             .image-viewer {
@@ -420,7 +669,7 @@
     <div class="container">
         <div class="header">
             <h1>Akshoverse Character Creator</h1>
-            <p>BETA 1.4 - Enhanced Human & Monster Features Dataset (400+ Tags)</p>
+            <p>BETA 1.4.1 - Enhanced Human & Monster Features Dataset with Dawn Horizon UI (400+ Tags)</p>
         </div>
 
         <!-- Pills Navigation -->
@@ -441,11 +690,10 @@
             <div class="creator-panel">
                 <!-- Human Tab Content -->
                 <div id="human-tab" class="tab-content active">
-                    <!-- Character Name Section -->
-                    <div class="section">
-                        <div class="section-header" onclick="toggleSection(this)">
-                            <h3><span class="section-icon"></span>Character Name</h3>
-                            <span class="collapse-icon">▼</span>
+                    <!-- Basic Info Section -->
+                    <div class="section basic-info-section">
+                        <div class="section-header">
+                            <h3><span class="section-icon"></span>Basic Info</h3>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -453,15 +701,7 @@
                                 <input type="text" id="character-name" placeholder="Enter character name" 
                                        onchange="updateCharacterData('characterName', this.value)">
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Basic Info Section -->
-                    <div class="section basic-info-section">
-                        <div class="section-header">
-                            <h3><span class="section-icon"></span>Basic Info</h3>
-                        </div>
-                        <div class="section-content">
                             <div class="form-group">
                                 <label>Art Style</label>
                                 <div class="toggle-group">
@@ -565,7 +805,7 @@
                     <div class="section collapsed">
                         <div class="section-header" onclick="toggleSection(this)">
                             <h3><span class="section-icon"></span>Hair</h3>
-                            <span class="collapse-icon">▼</span>
+                            <span class="collapse-icon">+</span>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -657,7 +897,7 @@
                     <div class="section collapsed">
                         <div class="section-header" onclick="toggleSection(this)">
                             <h3><span class="section-icon"></span>Facial Features</h3>
-                            <span class="collapse-icon">▼</span>
+                            <span class="collapse-icon">+</span>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -799,7 +1039,7 @@
                     <div class="section collapsed">
                         <div class="section-header" onclick="toggleSection(this)">
                             <h3><span class="section-icon"></span>Body Build</h3>
-                            <span class="collapse-icon">▼</span>
+                            <span class="collapse-icon">+</span>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -847,7 +1087,7 @@
                     <div class="section collapsed">
                         <div class="section-header" onclick="toggleSection(this)">
                             <h3><span class="section-icon"></span>Clothing & Style</h3>
-                            <span class="collapse-icon">▼</span>
+                            <span class="collapse-icon">+</span>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -879,11 +1119,10 @@
 
                 <!-- Monster Tab Content -->
                 <div id="monster-tab" class="tab-content">
-                    <!-- Character Name Section -->
-                    <div class="section monster-section">
-                        <div class="section-header" onclick="toggleSection(this)">
-                            <h3><span class="section-icon"></span>Character Name</h3>
-                            <span class="collapse-icon">▼</span>
+                    <!-- Species Section -->
+                    <div class="section monster-section basic-info-section">
+                        <div class="section-header">
+                            <h3><span class="section-icon"></span>Species & Basic Info</h3>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -891,15 +1130,7 @@
                                 <input type="text" id="monster-character-name" placeholder="Enter character name" 
                                        onchange="updateMonsterData('characterName', this.value)">
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Species Section -->
-                    <div class="section monster-section basic-info-section">
-                        <div class="section-header">
-                            <h3><span class="section-icon"></span>Species & Basic Info</h3>
-                        </div>
-                        <div class="section-content">
                             <div class="form-group">
                                 <label for="monster-species">Monster Species</label>
                                 <select id="monster-species" onchange="updateMonsterData('species', this.value)">
@@ -951,7 +1182,7 @@
                     <div class="section monster-section collapsed">
                         <div class="section-header" onclick="toggleSection(this)">
                             <h3><span class="section-icon"></span>Ears</h3>
-                            <span class="collapse-icon">▼</span>
+                            <span class="collapse-icon">+</span>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -974,7 +1205,7 @@
                     <div class="section monster-section collapsed">
                         <div class="section-header" onclick="toggleSection(this)">
                             <h3><span class="section-icon"></span>Tails</h3>
-                            <span class="collapse-icon">▼</span>
+                            <span class="collapse-icon">+</span>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -996,7 +1227,7 @@
                     <div class="section monster-section collapsed">
                         <div class="section-header" onclick="toggleSection(this)">
                             <h3><span class="section-icon"></span>Horns</h3>
-                            <span class="collapse-icon">▼</span>
+                            <span class="collapse-icon">+</span>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -1017,7 +1248,7 @@
                     <div class="section monster-section collapsed">
                         <div class="section-header" onclick="toggleSection(this)">
                             <h3><span class="section-icon"></span>Wings</h3>
-                            <span class="collapse-icon">▼</span>
+                            <span class="collapse-icon">+</span>
                         </div>
                         <div class="section-content">
                             <div class="form-group">
@@ -1120,7 +1351,16 @@
         // Section collapse functionality
         function toggleSection(header) {
             const section = header.parentElement;
+            const collapseIcon = header.querySelector('.collapse-icon');
+            
             section.classList.toggle('collapsed');
+            
+            // Update collapse icon
+            if (section.classList.contains('collapsed')) {
+                collapseIcon.textContent = '+';
+            } else {
+                collapseIcon.textContent = '-';
+            }
         }
 
         // Character data storage
