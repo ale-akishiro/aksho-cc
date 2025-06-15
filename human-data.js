@@ -646,19 +646,6 @@ const HUMAN_DATA = {
                 { value: 'rectangle shape build', label: 'Rectangle Shape Build' },
                 { value: 'inverted triangle shape build', label: 'Inverted Triangle Shape Build' }
             ]
-        },
-        
-        posture: {
-            label: 'Posture & Carriage',
-            type: 'toggle',
-            options: [
-                { value: 'perfect posture', label: 'Perfect Posture' },
-                { value: 'slouched posture', label: 'Slouched Posture' },
-                { value: 'confident stance', label: 'Confident Stance' },
-                { value: 'shy posture', label: 'Shy Posture' },
-                { value: 'military bearing', label: 'Military Bearing' },
-                { value: 'relaxed posture', label: 'Relaxed Posture' }
-            ]
         }
     },
 
@@ -802,6 +789,7 @@ const HUMAN_DATA = {
                 // Anatomy
                 { value: 'innie vagina', label: 'Innie Vagina' },
                 { value: 'outie vagina', label: 'Outie Vagina' },
+                { value: 'defined clitoris', label: 'Defined Clitoris' },
                 // Colors
                 { value: 'pink vagina', label: 'Pink Vagina' },
                 { value: 'reddish vagina', label: 'Reddish Vagina' },
