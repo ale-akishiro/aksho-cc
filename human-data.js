@@ -142,14 +142,14 @@ const HUMAN_DATA = {
             type: 'select',
             options: [
                 { value: '', label: 'Select frame...' },
-                { value: 'small frame', label: 'Small Frame' },
-                { value: 'average frame', label: 'Average Frame' },
-                { value: 'big frame', label: 'Big Frame' },
-                { value: 'bulky frame', label: 'Bulky Frame' },
                 { value: 'petite frame', label: 'Petite Frame' },
+                { value: 'small frame', label: 'Small Frame' },
+                { value: 'lanky frame', label: 'Lanky Frame' },
+                { value: 'average frame', label: 'Average Frame' },
                 { value: 'broad frame', label: 'Broad Frame' },
+                { value: 'big frame', label: 'Big Frame' },
                 { value: 'stocky frame', label: 'Stocky Frame' },
-                { value: 'lanky frame', label: 'Lanky Frame' }
+                { value: 'bulky frame', label: 'Bulky Frame' }
             ]
         },
         
@@ -161,13 +161,13 @@ const HUMAN_DATA = {
                 { value: 'skinny', label: 'Skinny' },
                 { value: 'slender', label: 'Slender' },
                 { value: 'slim', label: 'Slim' },
+                { value: 'average build', label: 'Average' },
                 { value: 'fit', label: 'Fit' },
                 { value: 'toned', label: 'Toned' },
-                { value: 'athletic', label: 'Athletic' },
-                { value: 'average build', label: 'Average' },
                 { value: 'curvy', label: 'Curvy' },
                 { value: 'chubby', label: 'Chubby' },
                 { value: 'fat', label: 'Fat' },
+                { value: 'athletic', label: 'Athletic' },
                 { value: 'muscular', label: 'Muscular' },
                 { value: 'buff', label: 'Buff' },
                 { value: 'stocky', label: 'Stocky' }
@@ -201,12 +201,12 @@ const HUMAN_DATA = {
             type: 'select',
             options: [
                 { value: '', label: 'Select skin texture...' },
+                { value: 'soft skin', label: 'Soft Skin' },
                 { value: 'smooth skin', label: 'Smooth Skin' },
+                { value: 'youthful skin', label: 'Youthful Skin' },
+                { value: 'firm skin', label: 'Firm Skin' },
                 { value: 'rough skin', label: 'Rough Skin' },
                 { value: 'weathered skin', label: 'Weathered Skin' },
-                { value: 'soft skin', label: 'Soft Skin' },
-                { value: 'firm skin', label: 'Firm Skin' },
-                { value: 'youthful skin', label: 'Youthful Skin' },
                 { value: 'aged skin', label: 'Aged Skin' }
             ]
         },
