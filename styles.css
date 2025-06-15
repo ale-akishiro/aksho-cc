@@ -653,6 +653,24 @@ select:focus, input:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 
+/* Style optgroup labels (subcategory titles) to stand out */
+optgroup {
+    font-weight: 700;
+    color: #6366f1;
+    background: rgba(139, 92, 246, 0.05);
+    font-style: normal;
+    padding: 4px 8px;
+    margin: 2px 0;
+}
+
+/* Style options within optgroups */
+optgroup option {
+    font-weight: 400;
+    color: #374151;
+    background: white;
+    padding-left: 16px;
+}
+
 /* Toggle Buttons */
 .toggle-group {
     display: flex;
