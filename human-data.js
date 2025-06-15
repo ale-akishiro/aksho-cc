@@ -2,7 +2,7 @@
  * The Akshoverse Studio v1.0 - Human Character Data Module
  * 
  * Provides comprehensive human character creation data including:
- * - Complete human feature dataset (312+ tags)
+ * - Complete human feature dataset (312+ tags) - RESTORED FROM CCB1.3
  * - Form generation and management
  * - Human-specific validation
  * - Character data structures
@@ -17,21 +17,21 @@ const HUMAN_DATA = {
             label: 'Art Style',
             type: 'toggle',
             options: [
-                { value: '2.5d', label: '2.5D Style' },
+                { value: '2.5d', label: '2.5D' },
                 { value: 'anime style', label: 'Anime Style' },
                 { value: 'realistic style', label: 'Realistic Style' },
-                { value: 'semi-realistic style', label: 'Semi-Realistic Style' },
+                { value: 'semi-realistic style', label: 'Semi-Realistic' },
                 { value: 'cartoon style', label: 'Cartoon Style' },
                 { value: 'stylized', label: 'Stylized' }
             ]
         },
         
         gender: {
-            label: 'Gender & Identity',
+            label: 'Gender + Life Stage',
             type: 'select',
             required: true,
             options: [
-                { value: '', label: 'Select gender...' },
+                { value: '', label: 'Select gender and stage...' },
                 { value: 'adult female', label: 'Adult Female' },
                 { value: 'mature female', label: 'Mature Female' },
                 { value: 'elderly female', label: 'Elderly Female' },
@@ -42,12 +42,12 @@ const HUMAN_DATA = {
         },
         
         age: {
-            label: 'Age',
+            label: 'Age (18-100)',
             type: 'number',
             required: true,
             min: 18,
-            max: 120,
-            placeholder: 'Enter age (18+)'
+            max: 100,
+            placeholder: 'Enter age...'
         },
         
         ethnicity: {
@@ -140,7 +140,7 @@ const HUMAN_DATA = {
             label: 'Build Descriptors',
             type: 'select',
             options: [
-                { value: '', label: 'Select build...' },
+                { value: '', label: 'Select build descriptor...' },
                 { value: 'petite build', label: 'Petite Build' },
                 { value: 'small build', label: 'Small Build' },
                 { value: 'compact build', label: 'Compact Build' },
@@ -149,30 +149,27 @@ const HUMAN_DATA = {
                 { value: 'large build', label: 'Large Build' },
                 { value: 'imposing build', label: 'Imposing Build' }
             ]
-        }
-    },
-    
-    // Physical appearance features
-    appearance: {
+        },
+        
         skinTone: {
             label: 'Skin Tone',
             type: 'select',
             options: [
                 { value: '', label: 'Select skin tone...' },
-                { value: 'very pale skin', label: 'Very Pale' },
-                { value: 'pale skin', label: 'Pale' },
-                { value: 'fair skin', label: 'Fair' },
-                { value: 'light olive skin', label: 'Light Olive' },
-                { value: 'olive skin', label: 'Olive' },
-                { value: 'light brown skin', label: 'Light Brown' },
-                { value: 'sun kissed skin', label: 'Sun Kissed' },
-                { value: 'warm brown skin', label: 'Warm Brown' },
-                { value: 'medium brown skin', label: 'Medium Brown' },
-                { value: 'brown skin', label: 'Brown' },
-                { value: 'dark brown skin', label: 'Dark Brown' },
-                { value: 'deep brown skin', label: 'Deep Brown' },
-                { value: 'dark skin', label: 'Dark' },
-                { value: 'ebony skin', label: 'Ebony' }
+                { value: 'very pale skin', label: 'Very Pale Skin' },
+                { value: 'pale skin', label: 'Pale Skin' },
+                { value: 'fair skin', label: 'Fair Skin' },
+                { value: 'light olive skin', label: 'Light Olive Skin' },
+                { value: 'olive skin', label: 'Olive Skin' },
+                { value: 'light brown skin', label: 'Light Brown Skin' },
+                { value: 'sun kissed skin', label: 'Sun Kissed Skin' },
+                { value: 'warm brown skin', label: 'Warm Brown Skin' },
+                { value: 'medium brown skin', label: 'Medium Brown Skin' },
+                { value: 'brown skin', label: 'Brown Skin' },
+                { value: 'dark brown skin', label: 'Dark Brown Skin' },
+                { value: 'deep brown skin', label: 'Deep Brown Skin' },
+                { value: 'dark skin', label: 'Dark Skin' },
+                { value: 'ebony skin', label: 'Ebony Skin' }
             ]
         },
         
@@ -183,17 +180,20 @@ const HUMAN_DATA = {
                 { value: 'body blush', label: 'Body Blush' },
                 { value: 'sun tan', label: 'Sun Tan' },
                 { value: 'tan lines', label: 'Tan Lines' },
-                { value: 'farmers tan', label: "Farmer's Tan" },
+                { value: "farmer's tan", label: "Farmer's Tan" },
                 { value: 'smooth skin', label: 'Smooth Skin' },
                 { value: 'rough skin', label: 'Rough Skin' },
                 { value: 'weathered skin', label: 'Weathered Skin' },
                 { value: 'soft skin', label: 'Soft Skin' },
                 { value: 'firm skin', label: 'Firm Skin' },
-                { value: 'aged skin', label: 'Aged Skin' },
-                { value: 'youthful skin', label: 'Youthful Skin' }
+                { value: 'youthful skin', label: 'Youthful Skin' },
+                { value: 'aged skin', label: 'Aged Skin' }
             ]
-        },
-        
+        }
+    },
+
+    // Hair section
+    hair: {
         hairColor: {
             label: 'Hair Color',
             type: 'select',
@@ -201,58 +201,57 @@ const HUMAN_DATA = {
                 { value: '', label: 'Select hair color...' },
                 
                 // Blonde Family
-                { value: 'platinum blonde hair', label: 'Platinum Blonde' },
-                { value: 'ash blonde hair', label: 'Ash Blonde' },
-                { value: 'golden blonde hair', label: 'Golden Blonde' },
-                { value: 'strawberry blonde hair', label: 'Strawberry Blonde' },
-                { value: 'dirty blonde hair', label: 'Dirty Blonde' },
-                { value: 'bleached blonde hair', label: 'Bleached Blonde' },
+                { value: 'platinum blonde hair', label: 'Platinum Blonde Hair' },
+                { value: 'ash blonde hair', label: 'Ash Blonde Hair' },
+                { value: 'golden blonde hair', label: 'Golden Blonde Hair' },
+                { value: 'strawberry blonde hair', label: 'Strawberry Blonde Hair' },
+                { value: 'dirty blonde hair', label: 'Dirty Blonde Hair' },
+                { value: 'bleached blonde hair', label: 'Bleached Blonde Hair' },
                 
                 // Brown Family
-                { value: 'light brown hair', label: 'Light Brown' },
-                { value: 'medium brown hair', label: 'Medium Brown' },
-                { value: 'dark brown hair', label: 'Dark Brown' },
-                { value: 'chestnut brown hair', label: 'Chestnut Brown' },
-                { value: 'chocolate brown hair', label: 'Chocolate Brown' },
-                { value: 'auburn brown hair', label: 'Auburn Brown' },
+                { value: 'light brown hair', label: 'Light Brown Hair' },
+                { value: 'medium brown hair', label: 'Medium Brown Hair' },
+                { value: 'dark brown hair', label: 'Dark Brown Hair' },
+                { value: 'chestnut brown hair', label: 'Chestnut Brown Hair' },
+                { value: 'chocolate brown hair', label: 'Chocolate Brown Hair' },
+                { value: 'auburn brown hair', label: 'Auburn Brown Hair' },
                 
                 // Black Family
-                { value: 'jet black hair', label: 'Jet Black' },
-                { value: 'blue-black hair', label: 'Blue-Black' },
-                { value: 'brown-black hair', label: 'Brown-Black' },
-                { value: 'soft black hair', label: 'Soft Black' },
+                { value: 'jet black hair', label: 'Jet Black Hair' },
+                { value: 'blue-black hair', label: 'Blue-Black Hair' },
+                { value: 'brown-black hair', label: 'Brown-Black Hair' },
+                { value: 'soft black hair', label: 'Soft Black Hair' },
                 
                 // Red Family
-                { value: 'ginger hair', label: 'Ginger' },
-                { value: 'copper hair', label: 'Copper' },
-                { value: 'auburn hair', label: 'Auburn' },
-                { value: 'strawberry hair', label: 'Strawberry' },
-                { value: 'burgundy hair', label: 'Burgundy' },
-                { value: 'mahogany hair', label: 'Mahogany' },
+                { value: 'ginger hair', label: 'Ginger Hair' },
+                { value: 'copper hair', label: 'Copper Hair' },
+                { value: 'auburn hair', label: 'Auburn Hair' },
+                { value: 'strawberry hair', label: 'Strawberry Hair' },
+                { value: 'burgundy hair', label: 'Burgundy Hair' },
+                { value: 'mahogany hair', label: 'Mahogany Hair' },
                 
                 // Gray/White Family
-                { value: 'silver hair', label: 'Silver' },
-                { value: 'gray hair', label: 'Gray' },
-                { value: 'white hair', label: 'White' },
-                { value: 'salt and pepper hair', label: 'Salt and Pepper' },
-                { value: 'premature gray hair', label: 'Premature Gray' },
+                { value: 'silver hair', label: 'Silver Hair' },
+                { value: 'gray hair', label: 'Gray Hair' },
+                { value: 'white hair', label: 'White Hair' },
+                { value: 'salt and pepper hair', label: 'Salt and Pepper Hair' },
+                { value: 'premature gray hair', label: 'Premature Gray Hair' },
                 
                 // Unnatural Colors
-                { value: 'blue hair', label: 'Blue' },
-                { value: 'green hair', label: 'Green' },
-                { value: 'purple hair', label: 'Purple' },
-                { value: 'pink hair', label: 'Pink' },
-                { value: 'rainbow hair', label: 'Rainbow' },
-                { value: 'ombre hair', label: 'Ombre' },
-                { value: 'color-streaked hair', label: 'Color-Streaked' }
+                { value: 'blue hair', label: 'Blue Hair' },
+                { value: 'green hair', label: 'Green Hair' },
+                { value: 'purple hair', label: 'Purple Hair' },
+                { value: 'pink hair', label: 'Pink Hair' },
+                { value: 'rainbow hair', label: 'Rainbow Hair' },
+                { value: 'ombre hair', label: 'Ombre Hair' },
+                { value: 'color-streaked hair', label: 'Color-Streaked Hair' }
             ]
         },
         
         hairTexture: {
             label: 'Hair Texture',
-            type: 'select',
+            type: 'toggle',
             options: [
-                { value: '', label: 'Select hair texture...' },
                 { value: 'pin straight hair', label: 'Pin Straight' },
                 { value: 'straight hair', label: 'Straight' },
                 { value: 'slightly wavy hair', label: 'Slightly Wavy' },
@@ -262,14 +261,13 @@ const HUMAN_DATA = {
                 { value: 'coily hair', label: 'Coily' },
                 { value: 'kinky hair', label: 'Kinky' },
                 { value: 'afro texture hair', label: 'Afro Texture' },
-                { value: 'fine hair', label: 'Fine Hair' },
-                { value: 'medium hair', label: 'Medium Hair' },
-                { value: 'thick hair', label: 'Thick Hair' },
-                { value: 'coarse hair', label: 'Coarse Hair' },
-                { value: 'silky hair', label: 'Silky Hair' },
-                { value: 'wiry hair', label: 'Wiry Hair' },
-                { value: 'frizzy hair', label: 'Frizzy Hair' },
-                { value: 'smooth hair', label: 'Smooth Hair' }
+                { value: 'fine hair', label: 'Fine' },
+                { value: 'thick hair', label: 'Thick' },
+                { value: 'coarse hair', label: 'Coarse' },
+                { value: 'silky hair', label: 'Silky' },
+                { value: 'wiry hair', label: 'Wiry' },
+                { value: 'frizzy hair', label: 'Frizzy' },
+                { value: 'smooth hair', label: 'Smooth' }
             ]
         },
         
@@ -279,19 +277,21 @@ const HUMAN_DATA = {
             options: [
                 { value: '', label: 'Select hair length...' },
                 { value: 'bald', label: 'Bald' },
-                { value: 'very short hair', label: 'Very Short' },
-                { value: 'short hair', label: 'Short' },
-                { value: 'medium hair', label: 'Medium' },
-                { value: 'long hair', label: 'Long' },
-                { value: 'very long hair', label: 'Very Long' },
-                { value: 'absurdly long hair', label: 'Absurdly Long' }
+                { value: 'very short hair', label: 'Very Short Hair' },
+                { value: 'short hair', label: 'Short Hair' },
+                { value: 'medium hair', label: 'Medium Hair' },
+                { value: 'long hair', label: 'Long Hair' },
+                { value: 'very long hair', label: 'Very Long Hair' },
+                { value: 'absurdly long hair', label: 'Absurdly Long Hair' }
             ]
         },
         
-        hairstyles: {
-            label: 'Hairstyles',
-            type: 'toggle',
+        hairStyle: {
+            label: 'Hairstyle',
+            type: 'select',
             options: [
+                { value: '', label: 'Select hairstyle...' },
+                
                 // Professional Styles
                 { value: 'business cut', label: 'Business Cut' },
                 { value: 'corporate style', label: 'Corporate Style' },
@@ -329,94 +329,77 @@ const HUMAN_DATA = {
                 { value: 'emo fringe', label: 'Emo Fringe' },
                 { value: 'scene hair', label: 'Scene Hair' }
             ]
+        },
+        
+        bangs: {
+            label: 'Bangs & Fringe',
+            type: 'toggle',
+            options: [
+                { value: 'blunt bangs', label: 'Blunt Bangs' },
+                { value: 'arched bangs', label: 'Arched Bangs' },
+                { value: 'asymmetrical bangs', label: 'Asymmetrical Bangs' },
+                { value: 'side-swept bangs', label: 'Side-Swept Bangs' },
+                { value: 'wispy bangs', label: 'Wispy Bangs' },
+                { value: 'curtain bangs', label: 'Curtain Bangs' },
+                { value: 'choppy bangs', label: 'Choppy Bangs' },
+                { value: 'micro bangs', label: 'Micro Bangs' },
+                { value: 'long bangs', label: 'Long Bangs' },
+                { value: 'layered bangs', label: 'Layered Bangs' }
+            ]
+        },
+        
+        hairAccessories: {
+            label: 'Hair Accessories',
+            type: 'toggle',
+            options: [
+                { value: 'hair clips', label: 'Hair Clips' },
+                { value: 'hair pins', label: 'Hair Pins' },
+                { value: 'hair ties', label: 'Hair Ties' },
+                { value: 'headbands', label: 'Headbands' },
+                { value: 'hair scarves', label: 'Hair Scarves' },
+                { value: 'hair ribbons', label: 'Hair Ribbons' },
+                { value: 'hair flowers', label: 'Hair Flowers' },
+                { value: 'hair jewelry', label: 'Hair Jewelry' }
+            ]
         }
     },
-    
-    // Facial features
+
+    // Facial Features Expanded
     facialFeatures: {
         faceShape: {
             label: 'Face Shape',
             type: 'select',
             options: [
                 { value: '', label: 'Select face shape...' },
-                { value: 'oval face', label: 'Oval' },
-                { value: 'round face', label: 'Round' },
-                { value: 'square face', label: 'Square' },
-                { value: 'heart face', label: 'Heart' },
-                { value: 'diamond face', label: 'Diamond' },
-                { value: 'oblong face', label: 'Oblong' },
-                { value: 'triangular face', label: 'Triangular' },
-                { value: 'rectangular face', label: 'Rectangular' }
+                { value: 'oval face', label: 'Oval Face' },
+                { value: 'round face', label: 'Round Face' },
+                { value: 'square face', label: 'Square Face' },
+                { value: 'heart face', label: 'Heart Face' },
+                { value: 'diamond face', label: 'Diamond Face' },
+                { value: 'oblong face', label: 'Oblong Face' },
+                { value: 'triangular face', label: 'Triangular Face' },
+                { value: 'rectangular face', label: 'Rectangular Face' }
             ]
         },
         
-        eyeColor: {
-            label: 'Eye Color',
-            type: 'select',
-            options: [
-                { value: '', label: 'Select eye color...' },
-                
-                // Blue Family
-                { value: 'ice blue eyes', label: 'Ice Blue' },
-                { value: 'sky blue eyes', label: 'Sky Blue' },
-                { value: 'navy blue eyes', label: 'Navy Blue' },
-                { value: 'steel blue eyes', label: 'Steel Blue' },
-                { value: 'aqua blue eyes', label: 'Aqua Blue' },
-                
-                // Green Family
-                { value: 'emerald green eyes', label: 'Emerald Green' },
-                { value: 'forest green eyes', label: 'Forest Green' },
-                { value: 'hazel green eyes', label: 'Hazel Green' },
-                { value: 'olive green eyes', label: 'Olive Green' },
-                { value: 'mint green eyes', label: 'Mint Green' },
-                
-                // Brown Family
-                { value: 'amber eyes', label: 'Amber' },
-                { value: 'honey brown eyes', label: 'Honey Brown' },
-                { value: 'chocolate brown eyes', label: 'Chocolate Brown' },
-                { value: 'dark brown eyes', label: 'Dark Brown' },
-                { value: 'mahogany eyes', label: 'Mahogany' },
-                
-                // Gray Family
-                { value: 'light gray eyes', label: 'Light Gray' },
-                { value: 'dark gray eyes', label: 'Dark Gray' },
-                { value: 'blue-gray eyes', label: 'Blue-Gray' },
-                { value: 'green-gray eyes', label: 'Green-Gray' },
-                
-                // Rare Colors
-                { value: 'violet eyes', label: 'Violet' },
-                { value: 'golden eyes', label: 'Golden' },
-                { value: 'heterochromia', label: 'Heterochromia' },
-                { value: 'sectoral heterochromia', label: 'Sectoral Heterochromia' }
-            ]
-        },
-        
-        eyeFeatures: {
-            label: 'Eye Features',
+        forehead: {
+            label: 'Forehead',
             type: 'toggle',
             options: [
-                { value: 'almond eyes', label: 'Almond Eyes' },
-                { value: 'round eyes', label: 'Round Eyes' },
-                { value: 'hooded eyes', label: 'Hooded Eyes' },
-                { value: 'upturned eyes', label: 'Upturned Eyes' },
-                { value: 'downturned eyes', label: 'Downturned Eyes' },
-                { value: 'close-set eyes', label: 'Close-Set Eyes' },
-                { value: 'wide-set eyes', label: 'Wide-Set Eyes' },
-                { value: 'deep-set eyes', label: 'Deep-Set Eyes' },
-                { value: 'prominent eyes', label: 'Prominent Eyes' },
-                { value: 'monolid eyes', label: 'Monolid Eyes' },
-                { value: 'double eyelid', label: 'Double Eyelid' },
-                { value: 'long eyelashes', label: 'Long Eyelashes' },
-                { value: 'thick eyelashes', label: 'Thick Eyelashes' },
-                { value: 'curled eyelashes', label: 'Curled Eyelashes' }
+                { value: 'high forehead', label: 'High Forehead' },
+                { value: 'low forehead', label: 'Low Forehead' },
+                { value: 'wide forehead', label: 'Wide Forehead' },
+                { value: 'narrow forehead', label: 'Narrow Forehead' },
+                { value: 'prominent forehead', label: 'Prominent Forehead' },
+                { value: 'receding hairline', label: 'Receding Hairline' },
+                { value: "widow's peak", label: "Widow's Peak" }
             ]
         },
         
         eyebrows: {
-            label: 'Eyebrows',
-            type: 'select',
+            label: 'Eyebrow Variations',
+            type: 'toggle',
             options: [
-                { value: '', label: 'Select eyebrow type...' },
                 { value: 'thin eyebrows', label: 'Thin Eyebrows' },
                 { value: 'thick eyebrows', label: 'Thick Eyebrows' },
                 { value: 'arched eyebrows', label: 'Arched Eyebrows' },
@@ -430,8 +413,86 @@ const HUMAN_DATA = {
             ]
         },
         
-        noseType: {
-            label: 'Nose Type',
+        eyeShape: {
+            label: 'Eye Shape & Features',
+            type: 'toggle',
+            options: [
+                { value: 'almond eyes', label: 'Almond Eyes' },
+                { value: 'round eyes', label: 'Round Eyes' },
+                { value: 'hooded eyes', label: 'Hooded Eyes' },
+                { value: 'upturned eyes', label: 'Upturned Eyes' },
+                { value: 'downturned eyes', label: 'Downturned Eyes' },
+                { value: 'close-set eyes', label: 'Close-Set Eyes' },
+                { value: 'wide-set eyes', label: 'Wide-Set Eyes' },
+                { value: 'deep-set eyes', label: 'Deep-Set Eyes' },
+                { value: 'prominent eyes', label: 'Prominent Eyes' },
+                { value: 'monolid eyes', label: 'Monolid Eyes' },
+                { value: 'double eyelid', label: 'Double Eyelid' }
+            ]
+        },
+        
+        eyeColor: {
+            label: 'Eye Color',
+            type: 'select',
+            options: [
+                { value: '', label: 'Select eye color...' },
+                
+                // Blue Family
+                { value: 'ice blue eyes', label: 'Ice Blue Eyes' },
+                { value: 'sky blue eyes', label: 'Sky Blue Eyes' },
+                { value: 'navy blue eyes', label: 'Navy Blue Eyes' },
+                { value: 'steel blue eyes', label: 'Steel Blue Eyes' },
+                { value: 'aqua blue eyes', label: 'Aqua Blue Eyes' },
+                
+                // Green Family
+                { value: 'emerald green eyes', label: 'Emerald Green Eyes' },
+                { value: 'forest green eyes', label: 'Forest Green Eyes' },
+                { value: 'hazel green eyes', label: 'Hazel Green Eyes' },
+                { value: 'olive green eyes', label: 'Olive Green Eyes' },
+                { value: 'mint green eyes', label: 'Mint Green Eyes' },
+                
+                // Brown Family
+                { value: 'amber eyes', label: 'Amber Eyes' },
+                { value: 'honey brown eyes', label: 'Honey Brown Eyes' },
+                { value: 'chocolate brown eyes', label: 'Chocolate Brown Eyes' },
+                { value: 'dark brown eyes', label: 'Dark Brown Eyes' },
+                { value: 'mahogany eyes', label: 'Mahogany Eyes' },
+                
+                // Gray Family
+                { value: 'light gray eyes', label: 'Light Gray Eyes' },
+                { value: 'dark gray eyes', label: 'Dark Gray Eyes' },
+                { value: 'blue-gray eyes', label: 'Blue-Gray Eyes' },
+                { value: 'green-gray eyes', label: 'Green-Gray Eyes' },
+                
+                // Rare Colors
+                { value: 'violet eyes', label: 'Violet Eyes' },
+                { value: 'golden eyes', label: 'Golden Eyes' },
+                { value: 'heterochromia', label: 'Heterochromia' },
+                { value: 'sectoral heterochromia', label: 'Sectoral Heterochromia' }
+            ]
+        },
+        
+        eyeFeatures: {
+            label: 'Eye Features',
+            type: 'toggle',
+            options: [
+                { value: 'long eyelashes', label: 'Long Eyelashes' },
+                { value: 'short eyelashes', label: 'Short Eyelashes' },
+                { value: 'thick eyelashes', label: 'Thick Eyelashes' },
+                { value: 'sparse eyelashes', label: 'Sparse Eyelashes' },
+                { value: 'curled eyelashes', label: 'Curled Eyelashes' },
+                { value: 'straight eyelashes', label: 'Straight Eyelashes' },
+                { value: 'heavy eyelids', label: 'Heavy Eyelids' },
+                { value: 'light eyelids', label: 'Light Eyelids' },
+                { value: 'eyebags', label: 'Eyebags' },
+                { value: 'dark circles', label: 'Dark Circles' },
+                { value: "crow's feet", label: "Crow's Feet" },
+                { value: 'laugh lines', label: 'Laugh Lines' }
+            ]
+        },
+        
+        nose: {
+            label: 'Nose Variations',
             type: 'select',
             options: [
                 { value: '', label: 'Select nose type...' },
@@ -451,10 +512,9 @@ const HUMAN_DATA = {
         },
         
         lips: {
-            label: 'Lips',
-            type: 'select',
+            label: 'Lip Variations',
+            type: 'toggle',
             options: [
-                { value: '', label: 'Select lip type...' },
                 { value: 'thin lips', label: 'Thin Lips' },
                 { value: 'full lips', label: 'Full Lips' },
                 { value: 'pouty lips', label: 'Pouty Lips' },
@@ -463,98 +523,48 @@ const HUMAN_DATA = {
                 { value: 'bow-shaped lips', label: 'Bow-Shaped Lips' },
                 { value: 'asymmetrical lips', label: 'Asymmetrical Lips' },
                 { value: 'natural lips', label: 'Natural Lips' },
-                { value: 'defined cupids bow', label: "Defined Cupid's Bow" }
-            ]
-        }
-    },
-    
-    // Body build and proportions
-    bodyBuild: {
-        bodyFrame: {
-            label: 'Body Frame',
-            type: 'select',
-            options: [
-                { value: '', label: 'Select body frame...' },
-                { value: 'very small body frame', label: 'Very Small Frame' },
-                { value: 'small body frame', label: 'Small Frame' },
-                { value: 'medium body frame', label: 'Medium Frame' },
-                { value: 'big body frame', label: 'Big Frame' },
-                { value: 'very big body frame', label: 'Very Big Frame' }
+                { value: "defined cupid's bow", label: "Defined Cupid's Bow" }
             ]
         },
         
-        bodyShape: {
-            label: 'Body Shape',
-            type: 'select',
-            options: [
-                { value: '', label: 'Select body shape...' },
-                { value: 'skinny shape build', label: 'Skinny' },
-                { value: 'petite shape build', label: 'Petite' },
-                { value: 'slim shape build', label: 'Slim' },
-                { value: 'fit shape build', label: 'Fit' },
-                { value: 'slender shape build', label: 'Slender' },
-                { value: 'toned shape build', label: 'Toned' },
-                { value: 'curvy shape build', label: 'Curvy' },
-                { value: 'chubby shape build', label: 'Chubby' },
-                { value: 'fat shape build', label: 'Fat' },
-                { value: 'athletic shape build', label: 'Athletic' },
-                { value: 'pear shape build', label: 'Pear Shape' },
-                { value: 'apple shape build', label: 'Apple Shape' },
-                { value: 'hourglass shape build', label: 'Hourglass' },
-                { value: 'rectangle shape build', label: 'Rectangle' },
-                { value: 'inverted triangle shape build', label: 'Inverted Triangle' }
-            ]
-        },
-        
-        muscleDefinition: {
-            label: 'Muscle Definition',
-            type: 'select',
-            options: [
-                { value: '', label: 'Select muscle definition...' },
-                { value: 'no muscle definition', label: 'No Definition' },
-                { value: 'subtle muscle tone', label: 'Subtle Tone' },
-                { value: 'moderate muscle definition', label: 'Moderate Definition' },
-                { value: 'well-defined muscles', label: 'Well-Defined' },
-                { value: 'bodybuilder physique', label: 'Bodybuilder' },
-                { value: 'athletic build', label: 'Athletic Build' },
-                { value: 'dancers build', label: "Dancer's Build" }
-            ]
-        },
-        
-        chestFeatures: {
-            label: 'Chest Features',
-            type: 'select',
-            options: [
-                { value: '', label: 'Select chest type...' },
-                { value: 'flat chest', label: 'Flat Chest' },
-                { value: 'small breasts', label: 'Small Breasts' },
-                { value: 'medium breasts', label: 'Medium Breasts' },
-                { value: 'large breasts', label: 'Large Breasts' },
-                { value: 'huge breasts', label: 'Huge Breasts' },
-                { value: 'broad chest', label: 'Broad Chest' },
-                { value: 'narrow chest', label: 'Narrow Chest' },
-                { value: 'athletic chest', label: 'Athletic Chest' }
-            ]
-        }
-    },
-    
-    // Beauty marks and distinctive features
-    beautyMarks: {
-        freckles: {
-            label: 'Freckles & Spots',
+        cheeks: {
+            label: 'Cheek Features',
             type: 'toggle',
             options: [
-                { value: 'freckles', label: 'Freckles' },
-                { value: 'freckles on whole body', label: 'Freckles on Whole Body' },
-                { value: 'sun spots', label: 'Sun Spots' },
-                { value: 'age spots', label: 'Age Spots' }
+                { value: 'high cheekbones', label: 'High Cheekbones' },
+                { value: 'low cheekbones', label: 'Low Cheekbones' },
+                { value: 'hollow cheeks', label: 'Hollow Cheeks' },
+                { value: 'full cheeks', label: 'Full Cheeks' },
+                { value: 'dimples', label: 'Dimples' },
+                { value: 'smile lines', label: 'Smile Lines' },
+                { value: 'blush', label: 'Blush' }
             ]
         },
         
+        jawChin: {
+            label: 'Jaw & Chin',
+            type: 'toggle',
+            options: [
+                { value: 'strong jaw', label: 'Strong Jaw' },
+                { value: 'weak jaw', label: 'Weak Jaw' },
+                { value: 'square jaw', label: 'Square Jaw' },
+                { value: 'pointed chin', label: 'Pointed Chin' },
+                { value: 'cleft chin', label: 'Cleft Chin' },
+                { value: 'double chin', label: 'Double Chin' },
+                { value: 'defined jawline', label: 'Defined Jawline' },
+                { value: 'soft jawline', label: 'Soft Jawline' }
+            ]
+        }
+    },
+
+    // Beauty Marks & Skin Features
+    beautyMarks: {
         beautyMarks: {
             label: 'Beauty Marks & Moles',
             type: 'toggle',
             options: [
+                { value: 'freckles', label: 'Freckles' },
+                { value: 'freckles on whole body', label: 'Freckles on Whole Body' },
                 { value: 'beauty mark', label: 'Beauty Mark' },
                 { value: 'multiple beauty marks', label: 'Multiple Beauty Marks' },
                 { value: 'mole on neck', label: 'Mole on Neck' },
@@ -564,15 +574,299 @@ const HUMAN_DATA = {
                 { value: 'mole above chest', label: 'Mole Above Chest' },
                 { value: 'mole on cheek', label: 'Mole on Cheek' },
                 { value: 'mole on nose', label: 'Mole on Nose' },
-                { value: 'mole on shoulder', label: 'Mole on Shoulder' }
+                { value: 'mole on shoulder', label: 'Mole on Shoulder' },
+                { value: 'mole on arm', label: 'Mole on Arm' },
+                { value: 'mole on leg', label: 'Mole on Leg' }
+            ]
+        },
+        
+        skinConditions: {
+            label: 'Skin Conditions & Marks',
+            type: 'toggle',
+            options: [
+                { value: 'sun spots', label: 'Sun Spots' },
+                { value: 'age spots', label: 'Age Spots' },
+                { value: 'birthmarks', label: 'Birthmarks' },
+                { value: 'vitiligo', label: 'Vitiligo' },
+                { value: 'skin tags', label: 'Skin Tags' },
+                { value: 'stretch marks', label: 'Stretch Marks' },
+                { value: 'port wine stain', label: 'Port Wine Stain' },
+                { value: 'cafe au lait spots', label: 'Cafe Au Lait Spots' }
             ]
         }
     },
-    
-    // Body modifications
+
+    // Body Build Expanded
+    bodyBuild: {
+        bodyFrame: {
+            label: 'Body Frame',
+            type: 'select',
+            options: [
+                { value: '', label: 'Select body frame...' },
+                { value: 'very small body frame', label: 'Very Small Body Frame' },
+                { value: 'small body frame', label: 'Small Body Frame' },
+                { value: 'medium body frame', label: 'Medium Body Frame' },
+                { value: 'big body frame', label: 'Big Body Frame' },
+                { value: 'very big body frame', label: 'Very Big Body Frame' }
+            ]
+        },
+        
+        muscleDefinition: {
+            label: 'Muscle Definition',
+            type: 'toggle',
+            options: [
+                { value: 'no muscle definition', label: 'No Muscle Definition' },
+                { value: 'subtle muscle tone', label: 'Subtle Muscle Tone' },
+                { value: 'moderate muscle definition', label: 'Moderate Muscle Definition' },
+                { value: 'well-defined muscles', label: 'Well-Defined Muscles' },
+                { value: 'bodybuilder physique', label: 'Bodybuilder Physique' },
+                { value: 'athletic build', label: 'Athletic Build' },
+                { value: "dancer's build", label: "Dancer's Build" }
+            ]
+        },
+        
+        bodyShape: {
+            label: 'Body Build',
+            type: 'select',
+            options: [
+                { value: '', label: 'Select body shape...' },
+                { value: 'skinny shape build', label: 'Skinny Shape Build' },
+                { value: 'petite shape build', label: 'Petite Shape Build' },
+                { value: 'slim shape build', label: 'Slim Shape Build' },
+                { value: 'fit shape build', label: 'Fit Shape Build' },
+                { value: 'slender shape build', label: 'Slender Shape Build' },
+                { value: 'toned shape build', label: 'Toned Shape Build' },
+                { value: 'curvy shape build', label: 'Curvy Shape Build' },
+                { value: 'chubby shape build', label: 'Chubby Shape Build' },
+                { value: 'fat shape build', label: 'Fat Shape Build' },
+                { value: 'athletic shape build', label: 'Athletic Shape Build' },
+                { value: 'pear shape build', label: 'Pear Shape Build' },
+                { value: 'apple shape build', label: 'Apple Shape Build' },
+                { value: 'hourglass shape build', label: 'Hourglass Shape Build' },
+                { value: 'rectangle shape build', label: 'Rectangle Shape Build' },
+                { value: 'inverted triangle shape build', label: 'Inverted Triangle Shape Build' }
+            ]
+        },
+        
+        posture: {
+            label: 'Posture & Carriage',
+            type: 'toggle',
+            options: [
+                { value: 'perfect posture', label: 'Perfect Posture' },
+                { value: 'slouched posture', label: 'Slouched Posture' },
+                { value: 'confident stance', label: 'Confident Stance' },
+                { value: 'shy posture', label: 'Shy Posture' },
+                { value: 'military bearing', label: 'Military Bearing' },
+                { value: 'relaxed posture', label: 'Relaxed Posture' }
+            ]
+        }
+    },
+
+    // Torso Detailed
+    torsoDetailed: {
+        chestBreast: {
+            label: 'Chest/Breast Variations',
+            type: 'select',
+            options: [
+                { value: '', label: 'Select chest/breast type...' },
+                // Size
+                { value: 'flat chest', label: 'Flat Chest' },
+                { value: 'small breasts', label: 'Small Breasts' },
+                { value: 'medium breasts', label: 'Medium Breasts' },
+                { value: 'large breasts', label: 'Large Breasts' },
+                { value: 'huge breasts', label: 'Huge Breasts' },
+                { value: 'gigantic breasts', label: 'Gigantic Breasts' },
+                // Shape
+                { value: 'perky', label: 'Perky' },
+                { value: 'soft', label: 'Soft' },
+                { value: 'natural', label: 'Natural' },
+                { value: 'saggy', label: 'Saggy' },
+                { value: 'round shape', label: 'Round Shape' },
+                { value: 'teardrop shape', label: 'Teardrop Shape' },
+                { value: 'athletic chest', label: 'Athletic Chest' },
+                { value: 'broad chest', label: 'Broad Chest' },
+                { value: 'narrow chest', label: 'Narrow Chest' }
+            ]
+        },
+        
+        torsoFeatures: {
+            label: 'Torso Features',
+            type: 'toggle',
+            options: [
+                { value: 'broad shoulders', label: 'Broad Shoulders' },
+                { value: 'narrow shoulders', label: 'Narrow Shoulders' },
+                { value: 'sloped shoulders', label: 'Sloped Shoulders' },
+                { value: 'square shoulders', label: 'Square Shoulders' },
+                { value: 'long torso', label: 'Long Torso' },
+                { value: 'short torso', label: 'Short Torso' },
+                { value: 'proportional torso', label: 'Proportional Torso' },
+                { value: 'visible ribs', label: 'Visible Ribs' },
+                { value: 'soft stomach', label: 'Soft Stomach' },
+                { value: 'flat stomach', label: 'Flat Stomach' },
+                { value: 'toned abs', label: 'Toned Abs' },
+                { value: 'belly', label: 'Belly' },
+                { value: 'love handles', label: 'Love Handles' }
+            ]
+        },
+        
+        waist: {
+            label: 'Waist Variations',
+            type: 'select',
+            options: [
+                { value: '', label: 'Select waist type...' },
+                { value: 'no waist definition', label: 'No Waist Definition' },
+                { value: 'narrow waist', label: 'Narrow Waist' },
+                { value: 'slight waist', label: 'Slight Waist' },
+                { value: 'defined waist', label: 'Defined Waist' },
+                { value: 'cinched waist', label: 'Cinched Waist' },
+                { value: 'thick waist', label: 'Thick Waist' },
+                { value: 'natural waist', label: 'Natural Waist' }
+            ]
+        }
+    },
+
+    // Lower Body Detailed
+    lowerBodyDetailed: {
+        hips: {
+            label: 'Hip Variations',
+            type: 'select',
+            options: [
+                { value: '', label: 'Select hip type...' },
+                { value: 'narrow hips', label: 'Narrow Hips' },
+                { value: 'average hips', label: 'Average Hips' },
+                { value: 'wide hips', label: 'Wide Hips' },
+                { value: 'flared hips', label: 'Flared Hips' },
+                { value: 'boyish hips', label: 'Boyish Hips' },
+                { value: 'childbearing hips', label: 'Childbearing Hips' }
+            ]
+        },
+        
+        buttocks: {
+            label: 'Buttocks Features',
+            type: 'select',
+            options: [
+                { value: '', label: 'Select buttocks type...' },
+                { value: 'flat butt', label: 'Flat Butt' },
+                { value: 'small butt', label: 'Small Butt' },
+                { value: 'average butt', label: 'Average Butt' },
+                { value: 'large butt', label: 'Large Butt' },
+                { value: 'round butt', label: 'Round Butt' },
+                { value: 'square butt', label: 'Square Butt' },
+                { value: 'heart-shaped butt', label: 'Heart-Shaped Butt' },
+                { value: 'bubble butt', label: 'Bubble Butt' }
+            ]
+        },
+        
+        thighs: {
+            label: 'Thigh Types',
+            type: 'toggle',
+            options: [
+                { value: 'skinny thighs', label: 'Skinny Thighs' },
+                { value: 'athletic thighs', label: 'Athletic Thighs' },
+                { value: 'thick thighs', label: 'Thick Thighs' },
+                { value: 'muscular thighs', label: 'Muscular Thighs' },
+                { value: 'soft thighs', label: 'Soft Thighs' },
+                { value: 'proportional thighs', label: 'Proportional Thighs' }
+            ]
+        },
+        
+        legs: {
+            label: 'Leg Features',
+            type: 'toggle',
+            options: [
+                { value: 'long legs', label: 'Long Legs' },
+                { value: 'short legs', label: 'Short Legs' },
+                { value: 'proportional legs', label: 'Proportional Legs' },
+                { value: 'bow legs', label: 'Bow Legs' },
+                { value: 'knock knees', label: 'Knock Knees' },
+                { value: 'straight legs', label: 'Straight Legs' },
+                { value: 'muscular calves', label: 'Muscular Calves' },
+                { value: 'skinny calves', label: 'Skinny Calves' },
+                { value: 'ankle thickness', label: 'Ankle Thickness' },
+                { value: 'foot size', label: 'Foot Size' },
+                { value: 'arch height', label: 'Arch Height' }
+            ]
+        },
+        
+        genitalFeatures: {
+            label: 'Genital Features (Adult)',
+            type: 'toggle',
+            options: [
+                // Grooming
+                { value: 'shaved pubes', label: 'Shaved Pubes' },
+                { value: 'small pubes', label: 'Small Pubes' },
+                { value: 'heart pubes', label: 'Heart Pubes' },
+                { value: 'line shaped pubes', label: 'Line Shaped Pubes' },
+                { value: 'full pubes', label: 'Full Pubes' },
+                { value: 'sparse pubic hair', label: 'Sparse Pubic Hair' },
+                // Anatomy
+                { value: 'innie vagina', label: 'Innie Vagina' },
+                { value: 'outie vagina', label: 'Outie Vagina' },
+                // Colors
+                { value: 'pink vagina', label: 'Pink Vagina' },
+                { value: 'reddish vagina', label: 'Reddish Vagina' },
+                { value: 'brown vagina', label: 'Brown Vagina' },
+                { value: 'dark vagina', label: 'Dark Vagina' }
+            ]
+        }
+    },
+
+    // Hands & Feet
+    extremities: {
+        hands: {
+            label: 'Hand Features',
+            type: 'toggle',
+            options: [
+                { value: 'small hands', label: 'Small Hands' },
+                { value: 'large hands', label: 'Large Hands' },
+                { value: 'long fingers', label: 'Long Fingers' },
+                { value: 'short fingers', label: 'Short Fingers' },
+                { value: 'thick fingers', label: 'Thick Fingers' },
+                { value: 'delicate fingers', label: 'Delicate Fingers' },
+                { value: 'calloused hands', label: 'Calloused Hands' },
+                { value: 'soft hands', label: 'Soft Hands' },
+                { value: 'veiny hands', label: 'Veiny Hands' },
+                { value: 'wrinkled hands', label: 'Wrinkled Hands' }
+            ]
+        },
+        
+        nails: {
+            label: 'Nail Features',
+            type: 'toggle',
+            options: [
+                { value: 'short nails', label: 'Short Nails' },
+                { value: 'long nails', label: 'Long Nails' },
+                { value: 'manicured nails', label: 'Manicured Nails' },
+                { value: 'natural nails', label: 'Natural Nails' },
+                { value: 'painted nails', label: 'Painted Nails' },
+                { value: 'chipped nails', label: 'Chipped Nails' },
+                { value: 'bitten nails', label: 'Bitten Nails' },
+                { value: 'artificial nails', label: 'Artificial Nails' }
+            ]
+        },
+        
+        feet: {
+            label: 'Foot Features',
+            type: 'toggle',
+            options: [
+                { value: 'small feet', label: 'Small Feet' },
+                { value: 'large feet', label: 'Large Feet' },
+                { value: 'wide feet', label: 'Wide Feet' },
+                { value: 'narrow feet', label: 'Narrow Feet' },
+                { value: 'high arches', label: 'High Arches' },
+                { value: 'flat feet', label: 'Flat Feet' },
+                { value: 'long toes', label: 'Long Toes' },
+                { value: 'short toes', label: 'Short Toes' },
+                { value: 'pedicured feet', label: 'Pedicured Feet' },
+                { value: 'callused feet', label: 'Callused Feet' }
+            ]
+        }
+    },
+
+    // Body Modifications & Markings
     bodyModifications: {
         tattoos: {
-            label: 'Tattoos',
+            label: 'Tattoo Categories',
             type: 'toggle',
             options: [
                 // Size
@@ -583,7 +877,6 @@ const HUMAN_DATA = {
                 { value: 'half sleeve', label: 'Half Sleeve' },
                 { value: 'back piece', label: 'Back Piece' },
                 { value: 'chest piece', label: 'Chest Piece' },
-                
                 // Style
                 { value: 'traditional tattoo', label: 'Traditional Tattoo' },
                 { value: 'tribal tattoo', label: 'Tribal Tattoo' },
@@ -591,401 +884,143 @@ const HUMAN_DATA = {
                 { value: 'watercolor tattoo', label: 'Watercolor Tattoo' },
                 { value: 'geometric tattoo', label: 'Geometric Tattoo' },
                 { value: 'text tattoo', label: 'Text Tattoo' },
-                
+                { value: 'portrait tattoo', label: 'Portrait Tattoo' },
                 // Location
                 { value: 'arm tattoo', label: 'Arm Tattoo' },
                 { value: 'leg tattoo', label: 'Leg Tattoo' },
                 { value: 'back tattoo', label: 'Back Tattoo' },
                 { value: 'chest tattoo', label: 'Chest Tattoo' },
                 { value: 'shoulder tattoo', label: 'Shoulder Tattoo' },
-                { value: 'neck tattoo', label: 'Neck Tattoo' }
+                { value: 'neck tattoo', label: 'Neck Tattoo' },
+                { value: 'hand tattoo', label: 'Hand Tattoo' },
+                { value: 'face tattoo', label: 'Face Tattoo' },
+                // Cultural
+                { value: 'maori tattoo', label: 'Maori Tattoo' },
+                { value: 'polynesian tattoo', label: 'Polynesian Tattoo' },
+                { value: 'japanese tattoo', label: 'Japanese Tattoo' },
+                { value: 'mandala tattoo', label: 'Mandala Tattoo' },
+                { value: 'henna tattoo', label: 'Henna Tattoo' }
             ]
         },
         
         piercings: {
-            label: 'Piercings',
+            label: 'Piercing Options',
             type: 'toggle',
             options: [
-                // Ear Piercings
+                // Ear
                 { value: 'lobe piercing', label: 'Lobe Piercing' },
                 { value: 'multiple lobe piercings', label: 'Multiple Lobe Piercings' },
                 { value: 'cartilage piercing', label: 'Cartilage Piercing' },
                 { value: 'industrial piercing', label: 'Industrial Piercing' },
                 { value: 'tragus piercing', label: 'Tragus Piercing' },
                 { value: 'helix piercing', label: 'Helix Piercing' },
-                
-                // Facial Piercings
+                // Facial
                 { value: 'nose piercing', label: 'Nose Piercing' },
                 { value: 'septum piercing', label: 'Septum Piercing' },
                 { value: 'eyebrow piercing', label: 'Eyebrow Piercing' },
                 { value: 'lip piercing', label: 'Lip Piercing' },
                 { value: 'tongue piercing', label: 'Tongue Piercing' },
-                
-                // Body Piercings
+                { value: 'cheek piercing', label: 'Cheek Piercing' },
+                // Body
                 { value: 'navel piercing', label: 'Navel Piercing' },
-                { value: 'nipple piercing', label: 'Nipple Piercing' }
+                { value: 'nipple piercing', label: 'Nipple Piercing' },
+                { value: 'surface piercing', label: 'Surface Piercing' },
+                { value: 'dermal piercing', label: 'Dermal Piercing' },
+                { value: 'genital piercing', label: 'Genital Piercing' }
+            ]
+        },
+        
+        scars: {
+            label: 'Scar Types',
+            type: 'toggle',
+            options: [
+                { value: 'surgical scars', label: 'Surgical Scars' },
+                { value: 'accident scars', label: 'Accident Scars' },
+                { value: 'burn scars', label: 'Burn Scars' },
+                { value: 'acne scars', label: 'Acne Scars' },
+                { value: 'stretch marks', label: 'Stretch Marks' },
+                { value: 'keloid scars', label: 'Keloid Scars' },
+                { value: 'self-harm scars', label: 'Self-Harm Scars' },
+                { value: 'battle scars', label: 'Battle Scars' },
+                { value: 'chicken pox scars', label: 'Chicken Pox Scars' }
+            ]
+        }
+    },
+
+    // Clothing & Accessories
+    accessories: {
+        jewelry: {
+            label: 'Jewelry Categories',
+            type: 'toggle',
+            options: [
+                // Necklaces
+                { value: 'choker', label: 'Choker' },
+                { value: 'pendant', label: 'Pendant' },
+                { value: 'chain', label: 'Chain' },
+                { value: 'pearl necklace', label: 'Pearl Necklace' },
+                { value: 'statement necklace', label: 'Statement Necklace' },
+                // Earrings
+                { value: 'studs', label: 'Studs' },
+                { value: 'hoops', label: 'Hoops' },
+                { value: 'dangles', label: 'Dangles' },
+                { value: 'chandelier earrings', label: 'Chandelier Earrings' },
+                { value: 'ear cuffs', label: 'Ear Cuffs' },
+                // Rings
+                { value: 'wedding ring', label: 'Wedding Ring' },
+                { value: 'engagement ring', label: 'Engagement Ring' },
+                { value: 'class ring', label: 'Class Ring' },
+                { value: 'statement ring', label: 'Statement Ring' },
+                { value: 'multiple rings', label: 'Multiple Rings' },
+                // Bracelets
+                { value: 'bangles', label: 'Bangles' },
+                { value: 'charm bracelet', label: 'Charm Bracelet' },
+                { value: 'watch', label: 'Watch' },
+                { value: 'fitness tracker', label: 'Fitness Tracker' },
+                { value: 'cuff bracelet', label: 'Cuff Bracelet' },
+                // Other
+                { value: 'ankle bracelet', label: 'Ankle Bracelet' },
+                { value: 'toe ring', label: 'Toe Ring' },
+                { value: 'hair jewelry', label: 'Hair Jewelry' },
+                { value: 'body chains', label: 'Body Chains' }
+            ]
+        },
+        
+        eyewear: {
+            label: 'Eyewear',
+            type: 'toggle',
+            options: [
+                { value: 'glasses', label: 'Glasses' },
+                { value: 'sunglasses', label: 'Sunglasses' },
+                { value: 'reading glasses', label: 'Reading Glasses' },
+                { value: 'square glasses', label: 'Square Glasses' },
+                { value: 'round glasses', label: 'Round Glasses' },
+                { value: 'oval glasses', label: 'Oval Glasses' },
+                { value: 'cat eye glasses', label: 'Cat Eye Glasses' },
+                { value: 'aviator glasses', label: 'Aviator Glasses' },
+                { value: 'thick frame glasses', label: 'Thick Frame Glasses' },
+                { value: 'thin frame glasses', label: 'Thin Frame Glasses' },
+                { value: 'wire frame glasses', label: 'Wire Frame Glasses' },
+                { value: 'black frame glasses', label: 'Black Frame Glasses' },
+                { value: 'colored frame glasses', label: 'Colored Frame Glasses' }
+            ]
+        },
+        
+        clothingStyle: {
+            label: 'Clothing Style',
+            type: 'toggle',
+            options: [
+                { value: 'casual style', label: 'Casual Style' },
+                { value: 'formal style', label: 'Formal Style' },
+                { value: 'business casual style', label: 'Business Casual Style' },
+                { value: 'alternative style', label: 'Alternative Style' },
+                { value: 'vintage style', label: 'Vintage Style' },
+                { value: 'modern style', label: 'Modern Style' }
             ]
         }
     }
 };
 
-// === HUMAN FORM GENERATION ===
-
-/**
- * Generate HTML form for human character creation
- * @returns {string} - HTML form content
- */
-function generateHumanForm() {
-    let formHTML = '';
-    
-    // Basic Info Section
-    formHTML += `
-        <div class="section">
-            <h3><span class="section-icon"></span>Basic Information</h3>
-            
-            <div class="form-group">
-                <label>Character Name (Optional)</label>
-                <input type="text" id="character-name" placeholder="Enter character name..." maxlength="50">
-            </div>
-    `;
-    
-    // Add form fields from data
-    Object.entries(HUMAN_DATA.basicInfo).forEach(([fieldKey, field]) => {
-        formHTML += generateFormField(fieldKey, field);
-    });
-    
-    formHTML += '</div>';
-    
-    // Appearance Section
-    formHTML += `
-        <div class="section">
-            <h3><span class="section-icon"></span>Physical Appearance</h3>
-    `;
-    
-    Object.entries(HUMAN_DATA.appearance).forEach(([fieldKey, field]) => {
-        formHTML += generateFormField(fieldKey, field);
-    });
-    
-    formHTML += '</div>';
-    
-    // Facial Features Section
-    formHTML += `
-        <div class="section">
-            <h3><span class="section-icon"></span>Facial Features</h3>
-    `;
-    
-    Object.entries(HUMAN_DATA.facialFeatures).forEach(([fieldKey, field]) => {
-        formHTML += generateFormField(fieldKey, field);
-    });
-    
-    formHTML += '</div>';
-    
-    // Body Build Section
-    formHTML += `
-        <div class="section">
-            <h3><span class="section-icon"></span>Body Build & Proportions</h3>
-    `;
-    
-    Object.entries(HUMAN_DATA.bodyBuild).forEach(([fieldKey, field]) => {
-        formHTML += generateFormField(fieldKey, field);
-    });
-    
-    formHTML += '</div>';
-    
-    // Beauty Marks Section
-    formHTML += `
-        <div class="section">
-            <h3><span class="section-icon"></span>Beauty Marks & Features</h3>
-    `;
-    
-    Object.entries(HUMAN_DATA.beautyMarks).forEach(([fieldKey, field]) => {
-        formHTML += generateFormField(fieldKey, field);
-    });
-    
-    formHTML += '</div>';
-    
-    // Body Modifications Section
-    formHTML += `
-        <div class="section">
-            <h3><span class="section-icon"></span>Body Modifications</h3>
-    `;
-    
-    Object.entries(HUMAN_DATA.bodyModifications).forEach(([fieldKey, field]) => {
-        formHTML += generateFormField(fieldKey, field);
-    });
-    
-    formHTML += '</div>';
-    
-    // Custom Tags Section
-    formHTML += `
-        <div class="section">
-            <h3><span class="section-icon"></span>Custom Tags</h3>
-            
-            <div class="form-group">
-                <label>Additional Tags (Optional)</label>
-                <textarea id="custom-tags" placeholder="Enter custom tags separated by commas..." rows="3" maxlength="1000"></textarea>
-                <small style="color: #6b7280; font-size: 12px;">Add any additional tags not covered above. Separate multiple tags with commas.</small>
-            </div>
-        </div>
-    `;
-    
-    return formHTML;
+// Export the human data for use in other modules
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = HUMAN_DATA;
 }
-
-/**
- * Generate individual form field based on field configuration
- * @param {string} fieldKey - Field identifier
- * @param {Object} field - Field configuration
- * @returns {string} - HTML for form field
- */
-function generateFormField(fieldKey, field) {
-    let fieldHTML = `
-        <div class="form-group">
-            <label${field.required ? ' class="required"' : ''}>${field.label}${field.required ? ' *' : ''}</label>
-    `;
-    
-    switch (field.type) {
-        case 'select':
-            fieldHTML += `<select id="${fieldKey}"${field.required ? ' required' : ''}>`;
-            field.options.forEach(option => {
-                fieldHTML += `<option value="${option.value}">${option.label}</option>`;
-            });
-            fieldHTML += '</select>';
-            break;
-            
-        case 'number':
-            fieldHTML += `<input type="number" id="${fieldKey}" min="${field.min || ''}" max="${field.max || ''}" placeholder="${field.placeholder || ''}"${field.required ? ' required' : ''}>`;
-            break;
-            
-        case 'toggle':
-            fieldHTML += '<div class="toggle-group">';
-            field.options.forEach(option => {
-                fieldHTML += `<div class="toggle-btn" data-category="${fieldKey}" data-value="${option.value}">${option.label}</div>`;
-            });
-            fieldHTML += '</div>';
-            break;
-            
-        default:
-            fieldHTML += `<input type="text" id="${fieldKey}" placeholder="${field.placeholder || ''}"${field.required ? ' required' : ''}>`;
-    }
-    
-    fieldHTML += '</div>';
-    return fieldHTML;
-}
-
-/**
- * Initialize human character form
- */
-function initializeHumanForm() {
-    const humanTab = document.getElementById('human-tab');
-    if (humanTab) {
-        humanTab.innerHTML = generateHumanForm();
-        
-        // Setup real-time validation
-        if (window.AkshoValidation) {
-            window.AkshoValidation.setupRealTimeValidation(humanTab, 'human');
-        }
-        
-        // Setup event listeners for human-specific interactions
-        setupHumanFormInteractions();
-    }
-}
-
-/**
- * Setup human-specific form interactions
- */
-function setupHumanFormInteractions() {
-    // Age validation with special handling
-    const ageInput = document.getElementById('age');
-    if (ageInput) {
-        ageInput.addEventListener('input', function() {
-            const age = parseInt(this.value);
-            if (age && age < 18) {
-                this.classList.add('field-error');
-                showFieldError(this, 'Age must be 18 or older for content safety.');
-            } else {
-                this.classList.remove('field-error');
-                clearFieldErrors(this);
-            }
-        });
-    }
-    
-    // Ethnicity-based suggestions
-    const ethnicitySelect = document.getElementById('ethnicity');
-    if (ethnicitySelect) {
-        ethnicitySelect.addEventListener('change', function() {
-            updateEthnicityBasedSuggestions(this.value);
-        });
-    }
-    
-    // Hair feature coordination
-    setupHairFeatureCoordination();
-    
-    // Eye feature coordination
-    setupEyeFeatureCoordination();
-}
-
-/**
- * Update suggestions based on selected ethnicity
- * @param {string} ethnicity - Selected ethnicity
- */
-function updateEthnicityBasedSuggestions(ethnicity) {
-    // This could provide culturally appropriate suggestions
-    // Implementation would depend on specific requirements
-    console.log(`Ethnicity selected: ${ethnicity}`);
-}
-
-/**
- * Setup hair feature coordination
- */
-function setupHairFeatureCoordination() {
-    const hairColorSelect = document.getElementById('hairColor');
-    const hairTextureSelect = document.getElementById('hairTexture');
-    
-    if (hairColorSelect && hairTextureSelect) {
-        // Add logic to suggest compatible combinations
-        hairColorSelect.addEventListener('change', function() {
-            // Could suggest appropriate textures based on color choice
-        });
-    }
-}
-
-/**
- * Setup eye feature coordination
- */
-function setupEyeFeatureCoordination() {
-    // Add logic for eye color and feature compatibility
-}
-
-/**
- * Show field error message
- * @param {Element} field - Form field element
- * @param {string} message - Error message
- */
-function showFieldError(field, message) {
-    clearFieldErrors(field);
-    
-    const errorElement = createElement('div', {
-        className: 'error-message field-error-message'
-    }, message);
-    
-    field.parentNode.appendChild(errorElement);
-}
-
-/**
- * Clear field error messages
- * @param {Element} field - Form field element
- */
-function clearFieldErrors(field) {
-    const existingErrors = field.parentNode.querySelectorAll('.field-error-message');
-    existingErrors.forEach(error => error.remove());
-}
-
-/**
- * Get human character data from form
- * @returns {Object} - Character data object
- */
-function getHumanCharacterData() {
-    const data = {
-        type: 'human',
-        name: '',
-        selectedTags: new Set(),
-        customTags: '',
-        formData: {}
-    };
-    
-    // Get character name
-    const nameInput = document.getElementById('character-name');
-    if (nameInput) {
-        data.name = nameInput.value.trim();
-    }
-    
-    // Get selected dropdown values
-    const selects = document.querySelectorAll('#human-tab select');
-    selects.forEach(select => {
-        if (select.value) {
-            data.selectedTags.add(select.value);
-            data.formData[select.id] = select.value;
-        }
-    });
-    
-    // Get number inputs
-    const numberInputs = document.querySelectorAll('#human-tab input[type="number"]');
-    numberInputs.forEach(input => {
-        if (input.value) {
-            data.formData[input.id] = parseInt(input.value);
-        }
-    });
-    
-    // Get active toggle buttons
-    const activeToggles = document.querySelectorAll('#human-tab .toggle-btn.active');
-    activeToggles.forEach(toggle => {
-        data.selectedTags.add(toggle.dataset.value);
-    });
-    
-    // Get custom tags
-    const customTagsInput = document.getElementById('custom-tags');
-    if (customTagsInput && customTagsInput.value.trim()) {
-        data.customTags = customTagsInput.value.trim();
-        // Parse and add custom tags to selected tags
-        const customTagsArray = parseTags(customTagsInput.value);
-        customTagsArray.forEach(tag => data.selectedTags.add(tag));
-    }
-    
-    return data;
-}
-
-/**
- * Validate human character data
- * @param {Object} characterData - Character data to validate
- * @returns {Object} - Validation result
- */
-function validateHumanCharacter(characterData) {
-    if (window.AkshoValidation) {
-        return window.AkshoValidation.validateCharacter(characterData, 'human');
-    }
-    
-    // Basic validation fallback
-    const errors = [];
-    
-    if (characterData.formData.age && characterData.formData.age < 18) {
-        errors.push('Age must be 18 or older');
-    }
-    
-    if (!characterData.formData.gender) {
-        errors.push('Gender selection is required');
-    }
-    
-    return {
-        valid: errors.length === 0,
-        errors: errors.length > 0 ? { general: errors } : {},
-        warnings: {},
-        cleanData: characterData
-    };
-}
-
-// === EXPORT HUMAN DATA MODULE ===
-
-window.AkshoHumanData = {
-    // Data structures
-    HUMAN_DATA,
-    
-    // Form generation
-    generateHumanForm,
-    generateFormField,
-    initializeHumanForm,
-    
-    // Form interactions
-    setupHumanFormInteractions,
-    updateEthnicityBasedSuggestions,
-    setupHairFeatureCoordination,
-    setupEyeFeatureCoordination,
-    
-    // Data management
-    getHumanCharacterData,
-    validateHumanCharacter,
-    
-    // UI helpers
-    showFieldError,
-    clearFieldErrors
-};
