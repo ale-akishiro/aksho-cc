@@ -265,6 +265,17 @@ class AkshoStudio {
                 }, 300));
                 input.dataset.listenerAdded = 'true';
             });
+            
+            // Specifically ensure character name input has listener
+            const characterNameInput = document.getElementById('character-name');
+            if (characterNameInput && !characterNameInput.dataset.listenerAdded) {
+                console.log('Adding specific listener to character-name input');
+                characterNameInput.addEventListener('input', debounce((event) => {
+                    console.log('Character name changed:', event.target.value);
+                    this.handleTextInputChange(event.target);
+                }, 300));
+                characterNameInput.dataset.listenerAdded = 'true';
+            }
         }, 100);
     }
 
@@ -659,19 +670,28 @@ class AkshoStudio {
             const nameInput = document.getElementById('character-name');
             const characterName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : '';
             
-            // Combine all tags
+            // Combine and order tags properly
             const allTags = [...this.state.selectedTags, ...customTags];
+            const orderedTags = this.orderTagsForPrompt(allTags);
             
             // Update UI
-            if (allTags.length === 0 && !characterName) {
+            if (orderedTags.length === 0 && !characterName) {
                 outputText.textContent = 'Select options to generate tags...';
                 summaryText.textContent = 'Character details will appear here...';
                 return;
             }
             
-            // Generate output
-            const tagString = allTags.join(', ');
-            outputText.textContent = tagString;
+            // Generate output with character name first
+            let finalOutput = '';
+            if (characterName) {
+                finalOutput = `${characterName}.\n`;
+            }
+            
+            // Add tags (starting with art style)
+            const tagString = orderedTags.join(', ');
+            finalOutput += tagString;
+            
+            outputText.textContent = finalOutput;
             
             // Generate summary
             let summary = '';
@@ -679,14 +699,14 @@ class AkshoStudio {
                 summary += `Name: ${characterName}\n`;
             }
             summary += `Type: ${capitalize(this.state.currentTab)} Character\n`;
-            summary += `Tags: ${allTags.length}\n`;
+            summary += `Tags: ${orderedTags.length}\n`;
             
             if (characterData.species) {
                 summary += `Species: ${characterData.species}\n`;
             }
             
-            if (allTags.length > 0) {
-                summary += `\nSelected Features:\n${allTags.map(tag => `• ${tag}`).join('\n')}`;
+            if (orderedTags.length > 0) {
+                summary += `\nSelected Features:\n${orderedTags.map(tag => `• ${tag}`).join('\n')}`;
             }
             
             summaryText.textContent = summary;
@@ -698,6 +718,17 @@ class AkshoStudio {
         } catch (error) {
             console.error('Failed to update output:', error);
         }
+    }
+
+    /**
+     * Order tags for proper prompt structure (based on original ccb1.3 structure)
+     * @param {Array} tags - Array of tag strings
+     * @returns {Array} Ordered tags - just return as-is for now
+     */
+    orderTagsForPrompt(tags) {
+        // Return tags in their current order for now
+        // Will implement proper ordering based on original ccb1.3 structure
+        return tags;
     }
 
     /**
@@ -925,9 +956,16 @@ class AkshoStudio {
     }
 
     /**
-     * Load saved state
+     * Load saved state (DISABLED - only save on tab switching, not page refresh)
      */
     loadSavedState() {
+        // Disabled auto-loading to prevent tags persisting on page refresh
+        // State should only persist when switching between tabs, not on page reload
+        console.log('🚫 Auto-loading saved state disabled - fresh start on page refresh');
+        return;
+        
+        // Original code commented out:
+        /*
         try {
             const savedState = loadFromStorage('akshoverse-studio-state');
             if (savedState && savedState.timestamp) {
@@ -956,6 +994,7 @@ class AkshoStudio {
         } catch (error) {
             console.error('Failed to load saved state:', error);
         }
+        */
     }
 
     /**
