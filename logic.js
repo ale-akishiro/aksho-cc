@@ -965,6 +965,62 @@ class AkshoStudio {
     }
 
     /**
+     * Clear the prompt output
+     */
+    clearPrompt() {
+        try {
+            const outputText = document.getElementById('output-text');
+            const summaryText = document.getElementById('summary-text');
+            
+            outputText.textContent = 'Select options to generate tags...';
+            summaryText.textContent = 'Character details will appear here...';
+            
+            // Clear all form selections
+            this.clearAllFormSelections();
+            
+            // Show success feedback
+            const btn = document.querySelector('.clear-btn');
+            const originalText = btn.textContent;
+            btn.textContent = '✓ CLEARED!';
+            btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+            }, 2000);
+            
+        } catch (error) {
+            console.error('Failed to clear prompt:', error);
+        }
+    }
+
+    /**
+     * Clear all form selections
+     */
+    clearAllFormSelections() {
+        // Clear all select dropdowns
+        document.querySelectorAll('select').forEach(select => {
+            select.selectedIndex = 0;
+        });
+        
+        // Clear all text inputs
+        document.querySelectorAll('input[type="text"], input[type="number"], textarea').forEach(input => {
+            input.value = '';
+        });
+        
+        // Clear all toggle buttons
+        document.querySelectorAll('.toggle-btn.active').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Clear state
+        this.state.selectedTags.clear();
+        this.state.characterData = {};
+        
+        console.log('All form selections cleared');
+    }
+
+    /**
      * Fallback clipboard copy for older browsers
      */
     fallbackCopyToClipboard() {
@@ -1273,6 +1329,17 @@ function copyToClipboard() {
     if (window.akshoStudio) {
         window.akshoStudio.copyToClipboard();
     }
+}
+
+function clearPrompt() {
+    if (window.akshoStudio) {
+        window.akshoStudio.clearPrompt();
+    }
+}
+
+function exportToFile() {
+    // Placeholder for future implementation
+    console.log('Export to file functionality coming soon!');
 }
 
 // === APPLICATION INITIALIZATION ===

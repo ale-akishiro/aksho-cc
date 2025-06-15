@@ -1346,9 +1346,9 @@ function initializeHumanForm() {
         return;
     }
 
-    // Initialize subcategories as disabled by default
+    // Initialize subcategories as enabled by default
     if (window.subcategoriesEnabled === undefined) {
-        window.subcategoriesEnabled = false;
+        window.subcategoriesEnabled = true;
     }
 
     console.log('Initializing human form with data:', Object.keys(HUMAN_DATA));
@@ -1356,7 +1356,7 @@ function initializeHumanForm() {
     try {
         container.innerHTML = `
             <div class="global-controls">
-                <button class="subcategory-toggle subcategory-off" onclick="toggleSubcategories()" title="Click to enable subcategories (switch to grouped view)">
+                <button class="subcategory-toggle subcategory-on" onclick="toggleSubcategories()" title="Click to disable subcategories (switch to flat list view)">
                     SUBCATEGORIES
                 </button>
             </div>

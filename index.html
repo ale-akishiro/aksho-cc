@@ -206,7 +206,11 @@
                 <div class="output-section">
                     <h3>Generated Tags</h3>
                     <div class="output-text" id="output-text">Select options to generate tags...</div>
-                    <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Tags</button>
+                    <div class="output-buttons">
+                        <button class="copy-btn" onclick="copyToClipboard()">📋 COPY TAGS</button>
+                        <button class="clear-btn" onclick="clearPrompt()">🗑️ CLEAR PROMPT</button>
+                        <button class="export-btn coming-soon" onclick="exportToFile()" disabled>📄 EXPORT TO FILE</button>
+                    </div>
                 </div>
 
                 <div class="output-section">
