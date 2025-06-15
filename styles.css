@@ -704,10 +704,49 @@ optgroup option {
     letter-spacing: 0.02em;
     text-transform: uppercase;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+}
+
+.hover-tooltip {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(17, 24, 39, 0.95);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hover-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: rgba(17, 24, 39, 0.95);
 }
 
 .subcategory-toggle:hover {
     transform: translateY(-1px);
+}
+
+.subcategory-toggle:hover .hover-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-2px);
 }
 
 .subcategory-toggle:active {

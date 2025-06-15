@@ -1213,6 +1213,7 @@ function initializeHumanForm() {
             <div class="global-controls">
                 <button class="subcategory-toggle subcategory-off" onclick="toggleSubcategories()" title="Click to enable subcategories (switch to grouped view)">
                     SUBCATEGORIES
+                    <span class="hover-tooltip">CLICK TO ENABLE SUBCATEGORIES ON DROPDOWNS</span>
                 </button>
             </div>
 
@@ -1473,15 +1474,18 @@ function toggleSubcategories() {
  */
 function updateToggleButtonState() {
     const button = document.querySelector('.subcategory-toggle');
-    if (button) {
+    const tooltip = document.querySelector('.hover-tooltip');
+    if (button && tooltip) {
         if (window.subcategoriesEnabled) {
             button.title = 'Click to disable subcategories (switch to flat list view)';
             button.classList.add('subcategory-on');
             button.classList.remove('subcategory-off');
+            tooltip.textContent = 'CLICK TO DISABLE SUBCATEGORIES ON DROPDOWNS';
         } else {
             button.title = 'Click to enable subcategories (switch to grouped view)';
             button.classList.add('subcategory-off');
             button.classList.remove('subcategory-on');
+            tooltip.textContent = 'CLICK TO ENABLE SUBCATEGORIES ON DROPDOWNS';
         }
     }
 }
