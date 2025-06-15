@@ -676,12 +676,7 @@ class AkshoStudio {
             
             // Combine and order tags properly
             const allTags = [...this.state.selectedTags, ...customTags];
-            
-            // Add age to tags if present
-            if (age && age >= 18) {
-                allTags.push(`${age} years old`);
-            }
-            const orderedTags = this.orderTagsForPrompt(allTags);
+            const orderedTags = this.orderTagsForPrompt(allTags, age);
             
             // Update UI
             if (orderedTags.length === 0 && !characterName) {
@@ -732,12 +727,42 @@ class AkshoStudio {
     /**
      * Order tags for proper prompt structure (based on original ccb1.3 structure)
      * @param {Array} tags - Array of tag strings
-     * @returns {Array} Ordered tags - just return as-is for now
+     * @param {number|null} age - Age value to insert after gender
+     * @returns {Array} Ordered tags
      */
-    orderTagsForPrompt(tags) {
-        // Return tags in their current order for now
-        // Will implement proper ordering based on original ccb1.3 structure
-        return tags;
+    orderTagsForPrompt(tags, age = null) {
+        const orderedTags = [];
+        const remainingTags = [...tags];
+        
+        // 1. Art style first (if present)
+        const artStyleTags = ['2.5d', 'anime style', 'realistic style', 'semi-realistic style', 'cartoon style', 'stylized'];
+        for (const artStyle of artStyleTags) {
+            const index = remainingTags.indexOf(artStyle);
+            if (index !== -1) {
+                orderedTags.push(remainingTags.splice(index, 1)[0]);
+                break; // Only one art style
+            }
+        }
+        
+        // 2. Gender + Life Stage
+        const genderTags = ['adult female', 'mature female', 'elderly female', 'adult male', 'mature male', 'elderly male'];
+        for (const gender of genderTags) {
+            const index = remainingTags.indexOf(gender);
+            if (index !== -1) {
+                orderedTags.push(remainingTags.splice(index, 1)[0]);
+                
+                // 3. Age immediately after gender (if present)
+                if (age && age >= 18) {
+                    orderedTags.push(`${age} years old`);
+                }
+                break; // Only one gender
+            }
+        }
+        
+        // 4. Add all remaining tags
+        orderedTags.push(...remainingTags);
+        
+        return orderedTags;
     }
 
     /**
