@@ -54,71 +54,216 @@ const HUMAN_DATA = {
         ethnicity: {
             label: 'ETHNICITY & HERITAGE',
             type: 'select',
-            options: [
+            useSubcategories: true,
+            optgroups: [
+                {
+                    label: 'European Heritage',
+                    options: [
+                        { value: 'european', label: 'EUROPEAN' },
+                        { value: 'scandinavian', label: 'SCANDINAVIAN' },
+                        { value: 'mediterranean', label: 'MEDITERRANEAN' },
+                        { value: 'slavic', label: 'SLAVIC' },
+                        { value: 'celtic', label: 'CELTIC' },
+                        { value: 'germanic', label: 'GERMANIC' }
+                    ]
+                },
+                {
+                    label: 'East Asian Heritage',
+                    options: [
+                        { value: 'east asian', label: 'EAST ASIAN' },
+                        { value: 'chinese', label: 'CHINESE' },
+                        { value: 'japanese', label: 'JAPANESE' },
+                        { value: 'korean', label: 'KOREAN' },
+                        { value: 'vietnamese', label: 'VIETNAMESE' },
+                        { value: 'thai', label: 'THAI' },
+                        { value: 'filipino', label: 'FILIPINO' }
+                    ]
+                },
+                {
+                    label: 'South Asian Heritage',
+                    options: [
+                        { value: 'south asian', label: 'SOUTH ASIAN' },
+                        { value: 'indian', label: 'INDIAN' },
+                        { value: 'pakistani', label: 'PAKISTANI' },
+                        { value: 'bengali', label: 'BENGALI' },
+                        { value: 'sri lankan', label: 'SRI LANKAN' },
+                        { value: 'nepalese', label: 'NEPALESE' }
+                    ]
+                },
+                {
+                    label: 'Middle Eastern Heritage',
+                    options: [
+                        { value: 'middle eastern', label: 'MIDDLE EASTERN' },
+                        { value: 'arabic', label: 'ARABIC' },
+                        { value: 'persian', label: 'PERSIAN' },
+                        { value: 'turkish', label: 'TURKISH' },
+                        { value: 'israeli', label: 'ISRAELI' },
+                        { value: 'armenian', label: 'ARMENIAN' }
+                    ]
+                },
+                {
+                    label: 'African Heritage',
+                    options: [
+                        { value: 'african', label: 'AFRICAN' },
+                        { value: 'west african', label: 'WEST AFRICAN' },
+                        { value: 'east african', label: 'EAST AFRICAN' },
+                        { value: 'north african', label: 'NORTH AFRICAN' },
+                        { value: 'ethiopian', label: 'ETHIOPIAN' },
+                        { value: 'somali', label: 'SOMALI' }
+                    ]
+                },
+                {
+                    label: 'Latino/Hispanic Heritage',
+                    options: [
+                        { value: 'latino/hispanic', label: 'LATINO/HISPANIC' },
+                        { value: 'mexican', label: 'MEXICAN' },
+                        { value: 'brazilian', label: 'BRAZILIAN' },
+                        { value: 'argentinian', label: 'ARGENTINIAN' },
+                        { value: 'colombian', label: 'COLOMBIAN' },
+                        { value: 'puerto rican', label: 'PUERTO RICAN' }
+                    ]
+                },
+                {
+                    label: 'Indigenous Heritage',
+                    options: [
+                        { value: 'native american', label: 'NATIVE AMERICAN' },
+                        { value: 'inuit', label: 'INUIT' },
+                        { value: 'polynesian', label: 'POLYNESIAN' },
+                        { value: 'aboriginal australian', label: 'ABORIGINAL AUSTRALIAN' },
+                        { value: 'maori', label: 'MAORI' }
+                    ]
+                },
+                {
+                    label: 'Mixed Heritage',
+                    options: [
+                        { value: 'mixed heritage', label: 'MIXED HERITAGE' },
+                        { value: 'multiracial', label: 'MULTIRACIAL' },
+                        { value: 'eurasian', label: 'EURASIAN' },
+                        { value: 'afro-latino', label: 'AFRO-LATINO' },
+                        { value: 'indo-european', label: 'INDO-EUROPEAN' }
+                    ]
+                }
+            ],
+            flatOptions: [
                 { value: '', label: 'SELECT ETHNICITY...' },
-                
-                // European Heritage
                 { value: 'european', label: 'EUROPEAN' },
                 { value: 'scandinavian', label: 'SCANDINAVIAN' },
                 { value: 'mediterranean', label: 'MEDITERRANEAN' },
                 { value: 'slavic', label: 'SLAVIC' },
                 { value: 'celtic', label: 'CELTIC' },
                 { value: 'germanic', label: 'GERMANIC' },
-                
-                // East Asian Heritage
-                { value: 'east asian', label: 'East Asian' },
-                { value: 'chinese', label: 'Chinese' },
-                { value: 'japanese', label: 'Japanese' },
-                { value: 'korean', label: 'Korean' },
-                { value: 'vietnamese', label: 'Vietnamese' },
-                { value: 'thai', label: 'Thai' },
-                { value: 'filipino', label: 'Filipino' },
-                
-                // South Asian Heritage
-                { value: 'south asian', label: 'South Asian' },
-                { value: 'indian', label: 'Indian' },
-                { value: 'pakistani', label: 'Pakistani' },
-                { value: 'bengali', label: 'Bengali' },
-                { value: 'sri lankan', label: 'Sri Lankan' },
-                { value: 'nepalese', label: 'Nepalese' },
-                
-                // Middle Eastern Heritage
-                { value: 'middle eastern', label: 'Middle Eastern' },
-                { value: 'arabic', label: 'Arabic' },
-                { value: 'persian', label: 'Persian' },
-                { value: 'turkish', label: 'Turkish' },
-                { value: 'israeli', label: 'Israeli' },
-                { value: 'armenian', label: 'Armenian' },
-                
-                // African Heritage
-                { value: 'african', label: 'African' },
-                { value: 'west african', label: 'West African' },
-                { value: 'east african', label: 'East African' },
-                { value: 'north african', label: 'North African' },
-                { value: 'ethiopian', label: 'Ethiopian' },
-                { value: 'somali', label: 'Somali' },
-                
-                // Latino/Hispanic Heritage
-                { value: 'latino/hispanic', label: 'Latino/Hispanic' },
-                { value: 'mexican', label: 'Mexican' },
-                { value: 'brazilian', label: 'Brazilian' },
-                { value: 'argentinian', label: 'Argentinian' },
-                { value: 'colombian', label: 'Colombian' },
-                { value: 'puerto rican', label: 'Puerto Rican' },
-                
-                // Indigenous Heritage
-                { value: 'native american', label: 'Native American' },
-                { value: 'inuit', label: 'Inuit' },
-                { value: 'polynesian', label: 'Polynesian' },
-                { value: 'aboriginal australian', label: 'Aboriginal Australian' },
-                { value: 'maori', label: 'Maori' },
-                
-                // Mixed Heritage
-                { value: 'mixed heritage', label: 'Mixed Heritage' },
-                { value: 'multiracial', label: 'Multiracial' },
-                { value: 'eurasian', label: 'Eurasian' },
-                { value: 'afro-latino', label: 'Afro-Latino' },
-                { value: 'indo-european', label: 'Indo-European' }
+                { value: 'east asian', label: 'EAST ASIAN' },
+                { value: 'chinese', label: 'CHINESE' },
+                { value: 'japanese', label: 'JAPANESE' },
+                { value: 'korean', label: 'KOREAN' },
+                { value: 'vietnamese', label: 'VIETNAMESE' },
+                { value: 'thai', label: 'THAI' },
+                { value: 'filipino', label: 'FILIPINO' },
+                { value: 'south asian', label: 'SOUTH ASIAN' },
+                { value: 'indian', label: 'INDIAN' },
+                { value: 'pakistani', label: 'PAKISTANI' },
+                { value: 'bengali', label: 'BENGALI' },
+                { value: 'sri lankan', label: 'SRI LANKAN' },
+                { value: 'nepalese', label: 'NEPALESE' },
+                { value: 'middle eastern', label: 'MIDDLE EASTERN' },
+                { value: 'arabic', label: 'ARABIC' },
+                { value: 'persian', label: 'PERSIAN' },
+                { value: 'turkish', label: 'TURKISH' },
+                { value: 'israeli', label: 'ISRAELI' },
+                { value: 'armenian', label: 'ARMENIAN' },
+                { value: 'african', label: 'AFRICAN' },
+                { value: 'west african', label: 'WEST AFRICAN' },
+                { value: 'east african', label: 'EAST AFRICAN' },
+                { value: 'north african', label: 'NORTH AFRICAN' },
+                { value: 'ethiopian', label: 'ETHIOPIAN' },
+                { value: 'somali', label: 'SOMALI' },
+                { value: 'latino/hispanic', label: 'LATINO/HISPANIC' },
+                { value: 'mexican', label: 'MEXICAN' },
+                { value: 'brazilian', label: 'BRAZILIAN' },
+                { value: 'argentinian', label: 'ARGENTINIAN' },
+                { value: 'colombian', label: 'COLOMBIAN' },
+                { value: 'puerto rican', label: 'PUERTO RICAN' },
+                { value: 'native american', label: 'NATIVE AMERICAN' },
+                { value: 'inuit', label: 'INUIT' },
+                { value: 'polynesian', label: 'POLYNESIAN' },
+                { value: 'aboriginal australian', label: 'ABORIGINAL AUSTRALIAN' },
+                { value: 'maori', label: 'MAORI' },
+                { value: 'mixed heritage', label: 'MIXED HERITAGE' },
+                { value: 'multiracial', label: 'MULTIRACIAL' },
+                { value: 'eurasian', label: 'EURASIAN' },
+                { value: 'afro-latino', label: 'AFRO-LATINO' },
+                { value: 'indo-european', label: 'INDO-EUROPEAN' }
+            ]
+        },
+
+        skinTone: {
+            label: 'SKIN TONE',
+            type: 'select',
+            useSubcategories: true,
+            optgroups: [
+                {
+                    label: 'Light Tones',
+                    options: [
+                        { value: 'pale skin', label: 'PALE SKIN' },
+                        { value: 'fair skin', label: 'FAIR SKIN' },
+                        { value: 'light skin', label: 'LIGHT SKIN' },
+                        { value: 'porcelain skin', label: 'PORCELAIN SKIN' },
+                        { value: 'ivory skin', label: 'IVORY SKIN' }
+                    ]
+                },
+                {
+                    label: 'Medium Tones',
+                    options: [
+                        { value: 'medium skin', label: 'MEDIUM SKIN' },
+                        { value: 'olive skin', label: 'OLIVE SKIN' },
+                        { value: 'golden skin', label: 'GOLDEN SKIN' },
+                        { value: 'honey skin', label: 'HONEY SKIN' },
+                        { value: 'bronze skin', label: 'BRONZE SKIN' }
+                    ]
+                },
+                {
+                    label: 'Dark Tones',
+                    options: [
+                        { value: 'tan skin', label: 'TAN SKIN' },
+                        { value: 'brown skin', label: 'BROWN SKIN' },
+                        { value: 'deep brown skin', label: 'DEEP BROWN SKIN' },
+                        { value: 'dark skin', label: 'DARK SKIN' },
+                        { value: 'ebony skin', label: 'EBONY SKIN' }
+                    ]
+                },
+                {
+                    label: 'Special Tones',
+                    options: [
+                        { value: 'rosy skin', label: 'ROSY SKIN' },
+                        { value: 'warm skin', label: 'WARM SKIN' },
+                        { value: 'cool skin', label: 'COOL SKIN' },
+                        { value: 'sallow skin', label: 'SALLOW SKIN' },
+                        { value: 'ruddy skin', label: 'RUDDY SKIN' }
+                    ]
+                }
+            ],
+            flatOptions: [
+                { value: '', label: 'SELECT SKIN TONE...' },
+                { value: 'pale skin', label: 'PALE SKIN' },
+                { value: 'fair skin', label: 'FAIR SKIN' },
+                { value: 'light skin', label: 'LIGHT SKIN' },
+                { value: 'porcelain skin', label: 'PORCELAIN SKIN' },
+                { value: 'ivory skin', label: 'IVORY SKIN' },
+                { value: 'medium skin', label: 'MEDIUM SKIN' },
+                { value: 'olive skin', label: 'OLIVE SKIN' },
+                { value: 'golden skin', label: 'GOLDEN SKIN' },
+                { value: 'honey skin', label: 'HONEY SKIN' },
+                { value: 'bronze skin', label: 'BRONZE SKIN' },
+                { value: 'tan skin', label: 'TAN SKIN' },
+                { value: 'brown skin', label: 'BROWN SKIN' },
+                { value: 'deep brown skin', label: 'DEEP BROWN SKIN' },
+                { value: 'dark skin', label: 'DARK SKIN' },
+                { value: 'ebony skin', label: 'EBONY SKIN' },
+                { value: 'rosy skin', label: 'ROSY SKIN' },
+                { value: 'warm skin', label: 'WARM SKIN' },
+                { value: 'cool skin', label: 'COOL SKIN' },
+                { value: 'sallow skin', label: 'SALLOW SKIN' },
+                { value: 'ruddy skin', label: 'RUDDY SKIN' }
             ]
         },
         
@@ -1317,7 +1462,6 @@ function generateFormSection(sectionData) {
         
         if (field.type === 'select') {
             html += `<select data-field="${key}">`;
-            html += `<option value="">Select ${field.label.toLowerCase()}...</option>`;
             
             // Handle fields with subcategory toggle support
             if (field.useSubcategories && field.optgroups && field.flatOptions) {
