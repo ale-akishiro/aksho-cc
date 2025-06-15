@@ -1201,21 +1201,26 @@ function initializeHumanForm() {
         return;
     }
 
+    // Initialize subcategories as disabled by default
+    if (window.subcategoriesEnabled === undefined) {
+        window.subcategoriesEnabled = false;
+    }
+
     console.log('Initializing human form with data:', Object.keys(HUMAN_DATA));
     
     try {
         container.innerHTML = `
             <div class="global-controls">
-                <button class="subcategory-toggle" onclick="toggleSubcategories()" title="Toggle grouped subcategories for all sections">
-                    📁 Groups
+                <button class="subcategory-toggle subcategory-off" onclick="toggleSubcategories()" title="Click to enable subcategories (switch to grouped view)">
+                    📄 SUBCATEGORIES OFF
                 </button>
             </div>
 
             <div class="section">
-                <h3>Character Information</h3>
+                <h3>CHARACTER INFORMATION</h3>
                 <div class="form-group">
-                    <label for="character-name">Character Name</label>
-                    <input type="text" id="character-name" placeholder="Enter character name...">
+                    <label for="character-name">CHARACTER NAME</label>
+                    <input type="text" id="character-name" placeholder="ENTER CHARACTER NAME...">
                 </div>
             </div>
 
@@ -1435,13 +1440,20 @@ function toggleSubcategories() {
     // Toggle global subcategory state
     window.subcategoriesEnabled = !window.subcategoriesEnabled;
     
-    // Update button text and title
+    // Update button text, title, and visual state
     const button = document.querySelector('.subcategory-toggle');
     if (button) {
-        button.textContent = window.subcategoriesEnabled ? '📁 Groups' : '📄 List';
-        button.title = window.subcategoriesEnabled ? 
-            'Switch to flat list view for all sections' : 
-            'Switch to grouped subcategories view for all sections';
+        if (window.subcategoriesEnabled) {
+            button.textContent = '📁 SUBCATEGORIES ON';
+            button.title = 'Click to disable subcategories (switch to flat list view)';
+            button.classList.add('subcategory-on');
+            button.classList.remove('subcategory-off');
+        } else {
+            button.textContent = '📄 SUBCATEGORIES OFF';
+            button.title = 'Click to enable subcategories (switch to grouped view)';
+            button.classList.add('subcategory-off');
+            button.classList.remove('subcategory-on');
+        }
     }
     
     // Regenerate the entire form to apply the change to all sections
