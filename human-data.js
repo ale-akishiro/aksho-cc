@@ -343,8 +343,9 @@ const HUMAN_DATA = {
         
         bangs: {
             label: 'Bangs & Fringe',
-            type: 'toggle',
+            type: 'select',
             options: [
+                { value: '', label: 'Select bangs type...' },
                 { value: 'blunt bangs', label: 'Blunt Bangs' },
                 { value: 'arched bangs', label: 'Arched Bangs' },
                 { value: 'asymmetrical bangs', label: 'Asymmetrical Bangs' },
@@ -355,6 +356,25 @@ const HUMAN_DATA = {
                 { value: 'micro bangs', label: 'Micro Bangs' },
                 { value: 'long bangs', label: 'Long Bangs' },
                 { value: 'layered bangs', label: 'Layered Bangs' }
+            ]
+        },
+        
+        sidelocks: {
+            label: 'Sidelocks',
+            type: 'select',
+            options: [
+                { value: '', label: 'Select sidelocks...' },
+                { value: 'very short sidelocks', label: 'Very Short Sidelocks' },
+                { value: 'short sidelocks', label: 'Short Sidelocks' },
+                { value: 'medium sidelocks', label: 'Medium Sidelocks' },
+                { value: 'long sidelocks', label: 'Long Sidelocks' },
+                { value: 'very long sidelocks', label: 'Very Long Sidelocks' },
+                { value: 'single sidelock', label: 'Single Sidelock' },
+                { value: 'very short single sidelock', label: 'Very Short Single Sidelock' },
+                { value: 'short single sidelock', label: 'Short Single Sidelock' },
+                { value: 'medium single sidelock', label: 'Medium Single Sidelock' },
+                { value: 'long single sidelock', label: 'Long Single Sidelock' },
+                { value: 'very long single sidelock', label: 'Very Long Single Sidelock' }
             ]
         },
         

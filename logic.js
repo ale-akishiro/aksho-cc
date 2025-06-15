@@ -670,9 +670,10 @@ class AkshoStudio {
             const nameInput = document.getElementById('character-name');
             const characterName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : '';
             
-            // Get age if present
-            const ageInput = document.getElementById('age') || document.querySelector('input[data-field="age"]');
+            // Get age if present - check both possible selectors
+            const ageInput = document.querySelector('input[data-field="age"]') || document.getElementById('age');
             const age = ageInput && ageInput.value ? parseInt(ageInput.value) : null;
+            console.log('Age input found:', ageInput, 'Age value:', age);
             
             // Combine and order tags properly
             const allTags = [...this.state.selectedTags, ...customTags];
