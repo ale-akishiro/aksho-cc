@@ -1020,7 +1020,160 @@ const HUMAN_DATA = {
     }
 };
 
-// Export the human data for use in other modules
+// === FORM GENERATION FUNCTIONS ===
+
+/**
+ * Initialize human character creation form
+ */
+function initializeHumanForm() {
+    const container = document.getElementById('human-tab');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="section">
+            <h3>Character Information</h3>
+            <div class="form-group">
+                <label for="character-name">Character Name</label>
+                <input type="text" id="character-name" placeholder="Enter character name...">
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Basic Information</h3>
+            ${generateFormSection(HUMAN_DATA.basicInfo)}
+        </div>
+
+        <div class="section">
+            <h3>Physical Appearance</h3>
+            ${generateFormSection(HUMAN_DATA.physicalAppearance)}
+        </div>
+
+        <div class="section">
+            <h3>Hair Features</h3>
+            ${generateFormSection(HUMAN_DATA.hairFeatures)}
+        </div>
+
+        <div class="section">
+            <h3>Facial Features</h3>
+            ${generateFormSection(HUMAN_DATA.facialFeatures)}
+        </div>
+
+        <div class="section">
+            <h3>Body Build</h3>
+            ${generateFormSection(HUMAN_DATA.bodyBuild)}
+        </div>
+
+        <div class="section">
+            <h3>Body Modifications</h3>
+            ${generateFormSection(HUMAN_DATA.bodyModifications)}
+        </div>
+
+        <div class="section">
+            <h3>Accessories</h3>
+            ${generateFormSection(HUMAN_DATA.accessories)}
+        </div>
+
+        <div class="section">
+            <h3>Custom Tags</h3>
+            <div class="form-group">
+                <label for="custom-tags">Additional Tags (comma-separated)</label>
+                <textarea id="custom-tags" placeholder="Enter custom tags separated by commas..."></textarea>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Generate form section HTML
+ * @param {Object} sectionData - Section data object
+ * @returns {string} HTML string
+ */
+function generateFormSection(sectionData) {
+    let html = '';
+    
+    Object.entries(sectionData).forEach(([key, field]) => {
+        html += `<div class="form-group">`;
+        html += `<label>${field.label}</label>`;
+        
+        if (field.type === 'select') {
+            html += `<select data-field="${key}">`;
+            field.options.forEach(option => {
+                html += `<option value="${option.value}">${option.label}</option>`;
+            });
+            html += `</select>`;
+        } else if (field.type === 'toggle') {
+            html += `<div class="toggle-group">`;
+            field.options.forEach(option => {
+                html += `<button class="toggle-btn" data-value="${option.value}" type="button">${option.label}</button>`;
+            });
+            html += `</div>`;
+        } else if (field.type === 'number') {
+            html += `<input type="number" data-field="${key}" min="${field.min || ''}" max="${field.max || ''}" placeholder="${field.placeholder || ''}">`;
+        }
+        
+        html += `</div>`;
+    });
+    
+    return html;
+}
+
+/**
+ * Get current human character data
+ * @returns {Object} Character data object
+ */
+function getHumanCharacterData() {
+    const data = {};
+    
+    // Get character name
+    const nameInput = document.getElementById('character-name');
+    if (nameInput) {
+        data.name = nameInput.value;
+    }
+    
+    // Get selected tags from UI
+    const selectedTags = new Set();
+    document.querySelectorAll('#human-tab .toggle-btn.active').forEach(btn => {
+        selectedTags.add(btn.dataset.value);
+    });
+    
+    document.querySelectorAll('#human-tab select').forEach(select => {
+        if (select.value) {
+            selectedTags.add(select.value);
+        }
+    });
+    
+    document.querySelectorAll('#human-tab input[type="number"]').forEach(input => {
+        if (input.value) {
+            data[input.dataset.field] = input.value;
+        }
+    });
+    
+    data.selectedTags = selectedTags;
+    
+    // Get custom tags
+    const customTagsInput = document.getElementById('custom-tags');
+    if (customTagsInput) {
+        data.customTags = customTagsInput.value;
+    }
+    
+    return data;
+}
+
+// === EXPORT MODULE ===
+
+window.AkshoHumanData = {
+    HUMAN_DATA,
+    initializeHumanForm,
+    generateFormSection,
+    getHumanCharacterData
+};
+
+// Export for Node.js compatibility
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = HUMAN_DATA;
+    module.exports = {
+        HUMAN_DATA,
+        initializeHumanForm,
+        generateFormSection,
+        getHumanCharacterData
+    };
 }
