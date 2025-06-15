@@ -14,56 +14,56 @@ const HUMAN_DATA = {
     // Basic character information
     basicInfo: {
         artStyle: {
-            label: 'Art Style',
+            label: 'ART STYLE',
             type: 'select',
             options: [
-                { value: '', label: 'Select art style...' },
+                { value: '', label: 'SELECT ART STYLE...' },
                 { value: '2.5d', label: '2.5D' },
-                { value: 'anime style', label: 'Anime Style' },
-                { value: 'realistic style', label: 'Realistic Style' },
-                { value: 'semi-realistic style', label: 'Semi-Realistic' },
-                { value: 'cartoon style', label: 'Cartoon Style' },
-                { value: 'stylized', label: 'Stylized' }
+                { value: 'anime style', label: 'ANIME STYLE' },
+                { value: 'realistic style', label: 'REALISTIC STYLE' },
+                { value: 'semi-realistic style', label: 'SEMI-REALISTIC' },
+                { value: 'cartoon style', label: 'CARTOON STYLE' },
+                { value: 'stylized', label: 'STYLIZED' }
             ]
         },
         
         gender: {
-            label: 'Gender + Life Stage',
+            label: 'GENDER + LIFE STAGE',
             type: 'select',
             required: true,
             options: [
-                { value: '', label: 'Select gender and stage...' },
-                { value: 'adult female', label: 'Adult Female' },
-                { value: 'mature female', label: 'Mature Female' },
-                { value: 'elderly female', label: 'Elderly Female' },
-                { value: 'adult male', label: 'Adult Male' },
-                { value: 'mature male', label: 'Mature Male' },
-                { value: 'elderly male', label: 'Elderly Male' }
+                { value: '', label: 'SELECT GENDER AND STAGE...' },
+                { value: 'adult female', label: 'ADULT FEMALE' },
+                { value: 'mature female', label: 'MATURE FEMALE' },
+                { value: 'elderly female', label: 'ELDERLY FEMALE' },
+                { value: 'adult male', label: 'ADULT MALE' },
+                { value: 'mature male', label: 'MATURE MALE' },
+                { value: 'elderly male', label: 'ELDERLY MALE' }
             ]
         },
         
         age: {
-            label: 'Age (18-100)',
+            label: 'AGE (18-100)',
             type: 'number',
             required: true,
             min: 18,
             max: 100,
-            placeholder: 'Enter age...'
+            placeholder: 'ENTER AGE...'
         },
         
         ethnicity: {
-            label: 'Ethnicity & Heritage',
+            label: 'ETHNICITY & HERITAGE',
             type: 'select',
             options: [
-                { value: '', label: 'Select ethnicity...' },
+                { value: '', label: 'SELECT ETHNICITY...' },
                 
                 // European Heritage
-                { value: 'european', label: 'European' },
-                { value: 'scandinavian', label: 'Scandinavian' },
-                { value: 'mediterranean', label: 'Mediterranean' },
-                { value: 'slavic', label: 'Slavic' },
-                { value: 'celtic', label: 'Celtic' },
-                { value: 'germanic', label: 'Germanic' },
+                { value: 'european', label: 'EUROPEAN' },
+                { value: 'scandinavian', label: 'SCANDINAVIAN' },
+                { value: 'mediterranean', label: 'MEDITERRANEAN' },
+                { value: 'slavic', label: 'SLAVIC' },
+                { value: 'celtic', label: 'CELTIC' },
+                { value: 'germanic', label: 'GERMANIC' },
                 
                 // East Asian Heritage
                 { value: 'east asian', label: 'East Asian' },
@@ -123,10 +123,10 @@ const HUMAN_DATA = {
         },
         
         height: {
-            label: 'Height',
+            label: 'HEIGHT',
             type: 'select',
             options: [
-                { value: '', label: 'Select height...' },
+                { value: '', label: 'SELECT HEIGHT...' },
                 { value: 'very short height', label: 'Very Short' },
                 { value: 'short height', label: 'Short' },
                 { value: 'below average height', label: 'Below Average' },
@@ -138,10 +138,10 @@ const HUMAN_DATA = {
         },
         
         frame: {
-            label: 'Frame',
+            label: 'FRAME',
             type: 'select',
             options: [
-                { value: '', label: 'Select frame...' },
+                { value: '', label: 'SELECT FRAME...' },
                 { value: 'petite frame', label: 'Petite Frame' },
                 { value: 'small frame', label: 'Small Frame' },
                 { value: 'lanky frame', label: 'Lanky Frame' },
@@ -1222,10 +1222,6 @@ function initializeHumanForm() {
                     <label for="character-name">CHARACTER NAME</label>
                     <input type="text" id="character-name" placeholder="ENTER CHARACTER NAME...">
                 </div>
-            </div>
-
-            <div class="section">
-                <h3>Basic Information</h3>
                 ${generateFormSection(HUMAN_DATA.basicInfo)}
             </div>
 
