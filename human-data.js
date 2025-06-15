@@ -259,8 +259,9 @@ const HUMAN_DATA = {
         
         hairTexture: {
             label: 'Hair Texture',
-            type: 'toggle',
+            type: 'select',
             options: [
+                { value: '', label: 'Select hair texture...' },
                 { value: 'pin straight hair', label: 'Pin Straight' },
                 { value: 'straight hair', label: 'Straight' },
                 { value: 'slightly wavy hair', label: 'Slightly Wavy' },

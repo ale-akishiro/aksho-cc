@@ -759,10 +759,94 @@ class AkshoStudio {
             }
         }
         
-        // 4. Add all remaining tags
-        orderedTags.push(...remainingTags);
+        // 4. Hair texture + length merging logic
+        const mergedTags = this.mergeHairTextureAndLength(remainingTags);
+        
+        // 5. Add all remaining tags
+        orderedTags.push(...mergedTags);
         
         return orderedTags;
+    }
+
+    /**
+     * Merge hair texture and length tags to save context
+     * @param {Array} tags - Array of tag strings
+     * @returns {Array} Tags with merged hair texture/length combinations
+     */
+    mergeHairTextureAndLength(tags) {
+        const mergedTags = [...tags];
+        
+        // Hair texture options (remove " hair" suffix for merging)
+        const textureMap = {
+            'pin straight hair': 'pin straight',
+            'straight hair': 'straight', 
+            'slightly wavy hair': 'slightly wavy',
+            'wavy hair': 'wavy',
+            'loose curls': 'loose curls',
+            'tight curls': 'tight curls',
+            'coily hair': 'coily',
+            'kinky hair': 'kinky',
+            'afro texture hair': 'afro texture',
+            'fine hair': 'fine',
+            'thick hair': 'thick',
+            'coarse hair': 'coarse',
+            'silky hair': 'silky',
+            'wiry hair': 'wiry',
+            'frizzy hair': 'frizzy',
+            'smooth hair': 'smooth'
+        };
+        
+        // Hair length options (remove " hair" suffix for merging)
+        const lengthMap = {
+            'very short hair': 'very short',
+            'short hair': 'short',
+            'medium hair': 'medium',
+            'long hair': 'long',
+            'very long hair': 'very long',
+            'absurdly long hair': 'absurdly long'
+        };
+        
+        // Find texture and length tags
+        let textureTag = null;
+        let lengthTag = null;
+        let textureIndex = -1;
+        let lengthIndex = -1;
+        
+        for (const [fullTexture, shortTexture] of Object.entries(textureMap)) {
+            const index = mergedTags.indexOf(fullTexture);
+            if (index !== -1) {
+                textureTag = shortTexture;
+                textureIndex = index;
+                break;
+            }
+        }
+        
+        for (const [fullLength, shortLength] of Object.entries(lengthMap)) {
+            const index = mergedTags.indexOf(fullLength);
+            if (index !== -1) {
+                lengthTag = shortLength;
+                lengthIndex = index;
+                break;
+            }
+        }
+        
+        // If both texture and length exist, merge them
+        if (textureTag && lengthTag) {
+            // Remove both individual tags
+            if (textureIndex > lengthIndex) {
+                mergedTags.splice(textureIndex, 1);
+                mergedTags.splice(lengthIndex, 1);
+            } else {
+                mergedTags.splice(lengthIndex, 1);
+                mergedTags.splice(textureIndex, 1);
+            }
+            
+            // Add merged tag at the position of the first removed tag
+            const insertPosition = Math.min(textureIndex, lengthIndex);
+            mergedTags.splice(insertPosition, 0, `${textureTag} ${lengthTag} hair`);
+        }
+        
+        return mergedTags;
     }
 
     /**
