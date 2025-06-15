@@ -1212,8 +1212,8 @@ function initializeHumanForm() {
         container.innerHTML = `
             <div class="global-controls">
                 <button class="subcategory-toggle subcategory-off" onclick="toggleSubcategories()" title="Click to enable subcategories (switch to grouped view)">
+                    <span class="toggle-text">SUBCATEGORIES</span>
                     <span class="toggle-indicator">✕</span>
-                    SUBCATEGORIES
                 </button>
             </div>
 

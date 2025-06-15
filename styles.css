@@ -694,70 +694,76 @@ optgroup option {
 }
 
 .subcategory-toggle {
-    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
-    color: white;
+    background: transparent;
     border: none;
-    padding: 6px 12px;
+    padding: 0;
     border-radius: 15px;
-    font-size: 11px;
-    font-weight: 600;
     font-family: 'Space Grotesk', sans-serif;
     cursor: pointer;
-    transition: all 0.3s ease;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
     display: flex;
     align-items: center;
-    gap: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.toggle-text {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+    color: white;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border-radius: 15px 5px 5px 15px;
+    flex: 4;
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
 .toggle-indicator {
-    font-size: 14px;
+    background: #6b7280;
+    color: #ef4444;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
     font-weight: 700;
+    border-radius: 50%;
+    margin-left: -5px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
+    z-index: 2;
+    position: relative;
 }
 
 .subcategory-toggle:hover {
     transform: translateY(-1px);
+}
+
+.subcategory-toggle:hover .toggle-text {
     box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
-    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
 }
 
 .subcategory-toggle:active {
     transform: translateY(0);
 }
 
-.subcategory-toggle.subcategory-on {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
-}
-
+/* ON state - purple indicator */
 .subcategory-toggle.subcategory-on .toggle-indicator {
-    color: #8b5cf6;
-    text-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
-    transform: scale(1.1) rotate(360deg);
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+    color: white;
+    transform: scale(1.05) rotate(360deg);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
 }
 
-.subcategory-toggle.subcategory-on:hover {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-}
-
-.subcategory-toggle.subcategory-off {
-    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-    box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
-}
-
+/* OFF state - gray indicator */
 .subcategory-toggle.subcategory-off .toggle-indicator {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
     color: #ef4444;
-    text-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
     transform: scale(1) rotate(0deg);
-}
-
-.subcategory-toggle.subcategory-off:hover {
-    background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
-    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
+    box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
 }
 
 /* Toggle Buttons */
