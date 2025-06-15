@@ -1212,7 +1212,8 @@ function initializeHumanForm() {
         container.innerHTML = `
             <div class="global-controls">
                 <button class="subcategory-toggle subcategory-off" onclick="toggleSubcategories()" title="Click to enable subcategories (switch to grouped view)">
-                    📄 SUBCATEGORIES OFF
+                    <span class="toggle-indicator">✕</span>
+                    SUBCATEGORIES
                 </button>
             </div>
 
@@ -1440,16 +1441,17 @@ function toggleSubcategories() {
     // Toggle global subcategory state
     window.subcategoriesEnabled = !window.subcategoriesEnabled;
     
-    // Update button text, title, and visual state
+    // Update button indicator, title, and visual state
     const button = document.querySelector('.subcategory-toggle');
-    if (button) {
+    const indicator = document.querySelector('.toggle-indicator');
+    if (button && indicator) {
         if (window.subcategoriesEnabled) {
-            button.textContent = '📁 SUBCATEGORIES ON';
+            indicator.textContent = '○';
             button.title = 'Click to disable subcategories (switch to flat list view)';
             button.classList.add('subcategory-on');
             button.classList.remove('subcategory-off');
         } else {
-            button.textContent = '📄 SUBCATEGORIES OFF';
+            indicator.textContent = '✕';
             button.title = 'Click to enable subcategories (switch to grouped view)';
             button.classList.add('subcategory-off');
             button.classList.remove('subcategory-on');

@@ -706,6 +706,16 @@ optgroup option {
     transition: all 0.3s ease;
     letter-spacing: 0.02em;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.toggle-indicator {
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
 }
 
 .subcategory-toggle:hover {
@@ -723,6 +733,12 @@ optgroup option {
     box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
+.subcategory-toggle.subcategory-on .toggle-indicator {
+    color: #8b5cf6;
+    text-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
+    transform: scale(1.1) rotate(360deg);
+}
+
 .subcategory-toggle.subcategory-on:hover {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
@@ -731,6 +747,12 @@ optgroup option {
 .subcategory-toggle.subcategory-off {
     background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
     box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+}
+
+.subcategory-toggle.subcategory-off .toggle-indicator {
+    color: #ef4444;
+    text-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+    transform: scale(1) rotate(0deg);
 }
 
 .subcategory-toggle.subcategory-off:hover {
