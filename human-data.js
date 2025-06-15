@@ -1283,6 +1283,11 @@ function initializeHumanForm() {
             </div>
         `;
         
+        // Set the correct initial button state
+        setTimeout(() => {
+            updateToggleButtonState();
+        }, 0);
+        
         console.log('Human form HTML generated successfully');
     } catch (error) {
         console.error('Error generating human form:', error);
@@ -1440,20 +1445,6 @@ function toggleSubcategories() {
     // Toggle global subcategory state
     window.subcategoriesEnabled = !window.subcategoriesEnabled;
     
-    // Update button title and visual state
-    const button = document.querySelector('.subcategory-toggle');
-    if (button) {
-        if (window.subcategoriesEnabled) {
-            button.title = 'Click to disable subcategories (switch to flat list view)';
-            button.classList.add('subcategory-on');
-            button.classList.remove('subcategory-off');
-        } else {
-            button.title = 'Click to enable subcategories (switch to grouped view)';
-            button.classList.add('subcategory-off');
-            button.classList.remove('subcategory-on');
-        }
-    }
-    
     // Regenerate the entire form to apply the change to all sections
     if (window.AkshoHumanData) {
         // Store current form values before regenerating
@@ -1471,7 +1462,28 @@ function toggleSubcategories() {
         }
     }
     
+    // Update button state AFTER regeneration
+    updateToggleButtonState();
+    
     console.log('Global subcategories toggled:', window.subcategoriesEnabled ? 'ON' : 'OFF');
+}
+
+/**
+ * Update the toggle button visual state
+ */
+function updateToggleButtonState() {
+    const button = document.querySelector('.subcategory-toggle');
+    if (button) {
+        if (window.subcategoriesEnabled) {
+            button.title = 'Click to disable subcategories (switch to flat list view)';
+            button.classList.add('subcategory-on');
+            button.classList.remove('subcategory-off');
+        } else {
+            button.title = 'Click to enable subcategories (switch to grouped view)';
+            button.classList.add('subcategory-off');
+            button.classList.remove('subcategory-on');
+        }
+    }
 }
 
 /**
@@ -1522,7 +1534,8 @@ window.AkshoHumanData = {
     getHumanCharacterData,
     clearSavedState,
     toggleSubcategories,
-    restoreFormValues
+    restoreFormValues,
+    updateToggleButtonState
 };
 
 // Make toggleSubcategories globally available for onclick
