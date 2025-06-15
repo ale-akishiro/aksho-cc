@@ -1027,60 +1027,71 @@ const HUMAN_DATA = {
  */
 function initializeHumanForm() {
     const container = document.getElementById('human-tab');
-    if (!container) return;
+    if (!container) {
+        console.error('Human tab container not found');
+        return;
+    }
 
-    container.innerHTML = `
-        <div class="section">
-            <h3>Character Information</h3>
-            <div class="form-group">
-                <label for="character-name">Character Name</label>
-                <input type="text" id="character-name" placeholder="Enter character name...">
+    console.log('Initializing human form with data:', Object.keys(HUMAN_DATA));
+    
+    try {
+        container.innerHTML = `
+            <div class="section">
+                <h3>Character Information</h3>
+                <div class="form-group">
+                    <label for="character-name">Character Name</label>
+                    <input type="text" id="character-name" placeholder="Enter character name...">
+                </div>
             </div>
-        </div>
 
-        <div class="section">
-            <h3>Basic Information</h3>
-            ${generateFormSection(HUMAN_DATA.basicInfo)}
-        </div>
-
-        <div class="section">
-            <h3>Physical Appearance</h3>
-            ${generateFormSection(HUMAN_DATA.physicalAppearance)}
-        </div>
-
-        <div class="section">
-            <h3>Hair Features</h3>
-            ${generateFormSection(HUMAN_DATA.hairFeatures)}
-        </div>
-
-        <div class="section">
-            <h3>Facial Features</h3>
-            ${generateFormSection(HUMAN_DATA.facialFeatures)}
-        </div>
-
-        <div class="section">
-            <h3>Body Build</h3>
-            ${generateFormSection(HUMAN_DATA.bodyBuild)}
-        </div>
-
-        <div class="section">
-            <h3>Body Modifications</h3>
-            ${generateFormSection(HUMAN_DATA.bodyModifications)}
-        </div>
-
-        <div class="section">
-            <h3>Accessories</h3>
-            ${generateFormSection(HUMAN_DATA.accessories)}
-        </div>
-
-        <div class="section">
-            <h3>Custom Tags</h3>
-            <div class="form-group">
-                <label for="custom-tags">Additional Tags (comma-separated)</label>
-                <textarea id="custom-tags" placeholder="Enter custom tags separated by commas..."></textarea>
+            <div class="section">
+                <h3>Basic Information</h3>
+                ${generateFormSection(HUMAN_DATA.basicInfo)}
             </div>
-        </div>
-    `;
+
+            <div class="section">
+                <h3>Physical Appearance</h3>
+                ${generateFormSection(HUMAN_DATA.physicalAppearance)}
+            </div>
+
+            <div class="section">
+                <h3>Hair Features</h3>
+                ${generateFormSection(HUMAN_DATA.hairFeatures)}
+            </div>
+
+            <div class="section">
+                <h3>Facial Features</h3>
+                ${generateFormSection(HUMAN_DATA.facialFeatures)}
+            </div>
+
+            <div class="section">
+                <h3>Body Build</h3>
+                ${generateFormSection(HUMAN_DATA.bodyBuild)}
+            </div>
+
+            <div class="section">
+                <h3>Body Modifications</h3>
+                ${generateFormSection(HUMAN_DATA.bodyModifications)}
+            </div>
+
+            <div class="section">
+                <h3>Accessories</h3>
+                ${generateFormSection(HUMAN_DATA.accessories)}
+            </div>
+
+            <div class="section">
+                <h3>Custom Tags</h3>
+                <div class="form-group">
+                    <label for="custom-tags">Additional Tags (comma-separated)</label>
+                    <textarea id="custom-tags" placeholder="Enter custom tags separated by commas..."></textarea>
+                </div>
+            </div>
+        `;
+        
+        console.log('Human form HTML generated successfully');
+    } catch (error) {
+        console.error('Error generating human form:', error);
+    }
 }
 
 /**
@@ -1089,23 +1100,44 @@ function initializeHumanForm() {
  * @returns {string} HTML string
  */
 function generateFormSection(sectionData) {
+    if (!sectionData) {
+        console.error('generateFormSection called with null/undefined sectionData');
+        return '';
+    }
+    
+    console.log('Generating form section for:', Object.keys(sectionData));
     let html = '';
     
     Object.entries(sectionData).forEach(([key, field]) => {
+        if (!field) {
+            console.warn(`Field ${key} is null/undefined`);
+            return;
+        }
+        
+        console.log(`Processing field ${key}:`, field.label, field.type, field.options?.length || 0, 'options');
+        
         html += `<div class="form-group">`;
         html += `<label>${field.label}</label>`;
         
         if (field.type === 'select') {
             html += `<select data-field="${key}">`;
-            field.options.forEach(option => {
-                html += `<option value="${option.value}">${option.label}</option>`;
-            });
+            if (field.options && Array.isArray(field.options)) {
+                field.options.forEach(option => {
+                    html += `<option value="${option.value}">${option.label}</option>`;
+                });
+            } else {
+                console.warn(`Field ${key} has no valid options array`);
+            }
             html += `</select>`;
         } else if (field.type === 'toggle') {
             html += `<div class="toggle-group">`;
-            field.options.forEach(option => {
-                html += `<button class="toggle-btn" data-value="${option.value}" type="button">${option.label}</button>`;
-            });
+            if (field.options && Array.isArray(field.options)) {
+                field.options.forEach(option => {
+                    html += `<button class="toggle-btn" data-value="${option.value}" type="button">${option.label}</button>`;
+                });
+            } else {
+                console.warn(`Field ${key} has no valid options array`);
+            }
             html += `</div>`;
         } else if (field.type === 'number') {
             html += `<input type="number" data-field="${key}" min="${field.min || ''}" max="${field.max || ''}" placeholder="${field.placeholder || ''}">`;
@@ -1114,6 +1146,7 @@ function generateFormSection(sectionData) {
         html += `</div>`;
     });
     
+    console.log(`Generated HTML length: ${html.length}`);
     return html;
 }
 
@@ -1159,13 +1192,26 @@ function getHumanCharacterData() {
     return data;
 }
 
+/**
+ * Clear saved state (for debugging)
+ */
+function clearSavedState() {
+    try {
+        localStorage.removeItem('akshoverse-studio-state');
+        console.log('Cleared saved state');
+    } catch (error) {
+        console.error('Error clearing saved state:', error);
+    }
+}
+
 // === EXPORT MODULE ===
 
 window.AkshoHumanData = {
     HUMAN_DATA,
     initializeHumanForm,
     generateFormSection,
-    getHumanCharacterData
+    getHumanCharacterData,
+    clearSavedState
 };
 
 // Export for Node.js compatibility
