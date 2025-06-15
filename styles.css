@@ -671,6 +671,43 @@ optgroup option {
     padding-left: 16px;
 }
 
+/* Section Header with Toggle Button */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h3 {
+    margin-bottom: 0;
+}
+
+.subcategory-toggle {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.subcategory-toggle:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+}
+
+.subcategory-toggle:active {
+    transform: translateY(0);
+}
+
 /* Toggle Buttons */
 .toggle-group {
     display: flex;
