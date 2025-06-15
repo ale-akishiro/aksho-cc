@@ -548,6 +548,15 @@ const MONSTER_FEATURES = {
 function generateMonsterForm() {
     let formHTML = `
         <div class="section">
+            <h3><span class="section-icon"></span>Basic Information</h3>
+            
+            <div class="form-group">
+                <label>Character Name</label>
+                <input type="text" id="character-name" placeholder="Enter character name..." maxlength="50" required>
+            </div>
+        </div>
+        
+        <div class="section">
             <h3><span class="section-icon"></span>Monster Species Selection</h3>
             
             <div class="form-group">

@@ -174,9 +174,10 @@ function validateAge(age) {
 function validateCharacterName(name) {
     const result = { valid: true, value: null, errors: [], warnings: [] };
     
-    // Name is optional, so empty is valid
+    // Name is now required
     if (!name || name.trim() === '') {
-        result.value = '';
+        result.valid = false;
+        result.errors.push('Character name is required');
         return result;
     }
     

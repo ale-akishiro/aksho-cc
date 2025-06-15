@@ -30,6 +30,9 @@
             <button class="nav-pill" data-tab="monster" onclick="switchTab('monster')" aria-label="Monster character creation tab">
                 👹 MONSTER
             </button>
+            <button class="nav-pill" data-tab="nai-generation" onclick="switchTab('nai-generation')" aria-label="NAI Generation tab">
+                🎨 NAI GENERATION
+            </button>
             <button class="nav-pill coming-soon" data-tab="furry" onclick="switchTab('furry')" aria-label="Furry tab - Coming Soon">
                 🐺 FURRY
             </button>
@@ -143,6 +146,92 @@
                 <!-- Monster Tab Content -->
                 <div id="monster-tab" class="tab-content">
                     <!-- This will be populated by monster-data.js -->
+                </div>
+
+                <!-- NAI Generation Tab Content -->
+                <div id="nai-generation-tab" class="tab-content">
+                    <div class="section">
+                        <h3>🔐 API AUTHENTICATION</h3>
+                        <div class="form-group">
+                            <label for="nai-api-key">NOVELAI API KEY</label>
+                            <input type="password" id="nai-api-key" placeholder="PASTE YOUR NOVELAI API KEY HERE..." 
+                                   autocomplete="off" data-lpignore="true">
+                            <div class="api-key-status" id="api-key-status">
+                                🔒 API KEY NOT ENTERED - ENTER YOUR KEY TO GENERATE IMAGES
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>🎨 IMAGE GENERATION</h3>
+                        <div class="form-group">
+                            <label>CURRENT PROMPT</label>
+                            <div class="prompt-preview" id="nai-prompt-preview">
+                                No prompt generated yet. Create a character to see the prompt.
+                            </div>
+                            <div class="generation-controls">
+                                <button class="generate-btn" id="generate-btn" onclick="generateNAIImage()" disabled>
+                                    🎨 GENERATE IMAGE
+                                </button>
+                                <button class="copy-prompt-btn" onclick="copyPromptToClipboard()">
+                                    📋 COPY PROMPT
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>⚙️ GENERATION SETTINGS</h3>
+                        <div class="settings-grid">
+                            <div class="form-group">
+                                <label for="nai-width">WIDTH</label>
+                                <select id="nai-width">
+                                    <option value="832">832px</option>
+                                    <option value="1024">1024px</option>
+                                    <option value="1216">1216px</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nai-height">HEIGHT</label>
+                                <select id="nai-height">
+                                    <option value="1216">1216px</option>
+                                    <option value="1024">1024px</option>
+                                    <option value="832">832px</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nai-steps">STEPS</label>
+                                <select id="nai-steps">
+                                    <option value="28">28 (Recommended)</option>
+                                    <option value="20">20 (Fast)</option>
+                                    <option value="35">35 (High Quality)</option>
+                                    <option value="50">50 (Maximum)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nai-scale">CFG SCALE</label>
+                                <select id="nai-scale">
+                                    <option value="5">5 (Recommended)</option>
+                                    <option value="3">3 (Low)</option>
+                                    <option value="7">7 (High)</option>
+                                    <option value="10">10 (Maximum)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>🖼️ GENERATED IMAGE</h3>
+                        <div class="image-result" id="image-result">
+                            <div class="placeholder-text">
+                                Generated images will appear here. Enter your API key and click "GENERATE IMAGE" to start.
+                            </div>
+                        </div>
+                        <div class="image-actions" id="image-actions" style="display: none;">
+                            <button class="download-btn" onclick="downloadImage()">⬇️ DOWNLOAD IMAGE</button>
+                            <button class="regenerate-btn" onclick="generateNAIImage()">🔄 REGENERATE</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Coming Soon Tabs -->

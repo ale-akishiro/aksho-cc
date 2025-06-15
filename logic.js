@@ -12,6 +12,10 @@
 
 // === APPLICATION STATE ===
 
+// NAI API variables (memory-only for privacy)
+let naiApiKey = null;
+let currentGeneratedImage = null;
+
 const AppState = {
     // Current application state
     currentTab: 'home',
@@ -348,6 +352,9 @@ class AkshoStudio {
             case 'home':
                 this.setupHomeTabFeatures();
                 break;
+            case 'nai-generation':
+                this.setupNAITabFeatures();
+                break;
             case 'aksho-style':
             case 'furry':
             case 'closet':
@@ -444,6 +451,33 @@ class AkshoStudio {
         if (imageViewer) {
             imageViewer.style.display = 'none';
         }
+    }
+
+    /**
+     * Setup NAI tab features
+     */
+    setupNAITabFeatures() {
+        // Remove HOME layout class and restore 2-column layout
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.classList.remove('home-layout');
+        }
+        
+        // Hide output panel and image viewer for NAI tab
+        const outputPanel = document.querySelector('.output-panel');
+        const imageViewer = document.querySelector('.image-viewer');
+        
+        if (outputPanel) {
+            outputPanel.style.display = 'none';
+        }
+        
+        if (imageViewer) {
+            imageViewer.style.display = 'none';
+        }
+        
+        // Setup NAI-specific features
+        setupNAIKeyMonitoring();
+        updateNAIPromptPreview();
     }
 
     /**
@@ -715,6 +749,11 @@ class AkshoStudio {
             }
             
             summaryText.textContent = summary;
+            
+            // Update NAI prompt preview if available
+            if (typeof updateNAIPromptPreview === 'function') {
+                updateNAIPromptPreview();
+            }
             
             // Track performance
             const endTime = performance.now();
@@ -1340,6 +1379,228 @@ function clearPrompt() {
 function exportToFile() {
     // Placeholder for future implementation
     console.log('Export to file functionality coming soon!');
+}
+
+// === NAI GENERATION FUNCTIONS ===
+
+/**
+ * Global NAI state - stored only in memory for privacy
+ */
+let naiApiKey = null;
+let currentGeneratedImage = null;
+
+/**
+ * Monitor API key input and update UI
+ */
+function setupNAIKeyMonitoring() {
+    const apiKeyInput = document.getElementById('nai-api-key');
+    const statusDiv = document.getElementById('api-key-status');
+    const generateBtn = document.getElementById('generate-btn');
+    
+    if (!apiKeyInput || !statusDiv || !generateBtn) return;
+    
+    apiKeyInput.addEventListener('input', function() {
+        const key = this.value.trim();
+        
+        if (key.length === 0) {
+            naiApiKey = null;
+            statusDiv.textContent = '🔒 API KEY NOT ENTERED - ENTER YOUR KEY TO GENERATE IMAGES';
+            statusDiv.className = 'api-key-status';
+            generateBtn.disabled = true;
+        } else if (key.length < 20) {
+            naiApiKey = null;
+            statusDiv.textContent = '⚠️ API KEY TOO SHORT - PLEASE ENTER A VALID NOVELAI API KEY';
+            statusDiv.className = 'api-key-status';
+            generateBtn.disabled = true;
+        } else {
+            naiApiKey = key;
+            statusDiv.textContent = '✅ API KEY ENTERED - READY TO GENERATE IMAGES';
+            statusDiv.className = 'api-key-status valid';
+            generateBtn.disabled = false;
+        }
+        
+        // Update prompt preview when key is valid
+        if (naiApiKey) {
+            updateNAIPromptPreview();
+        }
+    });
+}
+
+/**
+ * Update the prompt preview in NAI tab
+ */
+function updateNAIPromptPreview() {
+    const promptPreview = document.getElementById('nai-prompt-preview');
+    const outputText = document.getElementById('output-text');
+    
+    if (!promptPreview || !outputText) return;
+    
+    const currentPrompt = outputText.textContent;
+    
+    if (currentPrompt === 'Select options to generate tags...') {
+        promptPreview.textContent = 'No prompt generated yet. Create a character to see the prompt.';
+    } else {
+        promptPreview.textContent = currentPrompt;
+    }
+}
+
+/**
+ * Generate image using NovelAI API
+ */
+async function generateNAIImage() {
+    if (!naiApiKey) {
+        alert('Please enter your NovelAI API key first.');
+        return;
+    }
+    
+    const generateBtn = document.getElementById('generate-btn');
+    const imageResult = document.getElementById('image-result');
+    const imageActions = document.getElementById('image-actions');
+    const promptPreview = document.getElementById('nai-prompt-preview');
+    
+    // Get generation settings
+    const width = parseInt(document.getElementById('nai-width').value);
+    const height = parseInt(document.getElementById('nai-height').value);
+    const steps = parseInt(document.getElementById('nai-steps').value);
+    const scale = parseInt(document.getElementById('nai-scale').value);
+    
+    const prompt = promptPreview.textContent;
+    
+    if (prompt === 'No prompt generated yet. Create a character to see the prompt.') {
+        alert('Please create a character prompt first by using the Human or Monster tabs.');
+        return;
+    }
+    
+    // Update UI to show generating state
+    generateBtn.disabled = true;
+    generateBtn.classList.add('generating');
+    generateBtn.textContent = '🎨 GENERATING...';
+    
+    imageResult.innerHTML = '<div class="loading-spinner"></div><div class="placeholder-text">Generating your image, please wait...</div>';
+    imageActions.style.display = 'none';
+    
+    try {
+        console.log('Sending request to NovelAI with prompt:', prompt);
+        
+        const response = await fetch('https://api.novelai.net/ai/generate-image', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${naiApiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                input: prompt,
+                model: 'nai-diffusion-3',
+                action: 'generate',
+                parameters: {
+                    width: width,
+                    height: height,
+                    scale: scale,
+                    sampler: 'k_euler',
+                    steps: steps,
+                    seed: Math.floor(Math.random() * 4294967295),
+                    n_samples: 1,
+                    ucPreset: 0,
+                    qualityToggle: false,
+                    sm: false,
+                    sm_dyn: false,
+                    dynamic_thresholding: false,
+                    controlnet_strength: 1.0,
+                    legacy: false,
+                    add_original_image: false,
+                    cfg_rescale: 0.0,
+                    noise_schedule: 'native'
+                }
+            })
+        });
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`API request failed: ${response.status} - ${errorText}`);
+        }
+        
+        // Handle the response - NovelAI returns a ZIP file with images
+        const blob = await response.blob();
+        
+        // For now, we'll create an object URL and display it
+        // In a full implementation, you'd extract the image from the ZIP
+        const imageUrl = URL.createObjectURL(blob);
+        currentGeneratedImage = imageUrl;
+        
+        // Display the generated image
+        imageResult.innerHTML = `<img src="${imageUrl}" alt="Generated character image">`;
+        imageActions.style.display = 'flex';
+        
+        console.log('Image generated successfully');
+        
+    } catch (error) {
+        console.error('Error generating image:', error);
+        
+        let errorMessage = 'Failed to generate image. ';
+        if (error.message.includes('401')) {
+            errorMessage += 'Invalid API key. Please check your NovelAI API key.';
+        } else if (error.message.includes('402')) {
+            errorMessage += 'Insufficient credits. Please check your NovelAI account balance.';
+        } else if (error.message.includes('429')) {
+            errorMessage += 'Rate limit exceeded. Please wait a moment and try again.';
+        } else {
+            errorMessage += error.message;
+        }
+        
+        imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626;">${errorMessage}</div>`;
+        imageActions.style.display = 'none';
+    } finally {
+        // Reset button state
+        generateBtn.disabled = false;
+        generateBtn.classList.remove('generating');
+        generateBtn.textContent = '🎨 GENERATE IMAGE';
+    }
+}
+
+/**
+ * Copy prompt to clipboard
+ */
+function copyPromptToClipboard() {
+    const promptPreview = document.getElementById('nai-prompt-preview');
+    const prompt = promptPreview.textContent;
+    
+    if (prompt === 'No prompt generated yet. Create a character to see the prompt.') {
+        alert('No prompt to copy. Please create a character first.');
+        return;
+    }
+    
+    navigator.clipboard.writeText(prompt).then(() => {
+        // Show feedback
+        const btn = document.querySelector('.copy-prompt-btn');
+        const originalText = btn.textContent;
+        btn.textContent = '✅ COPIED!';
+        btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+        
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy prompt:', err);
+        alert('Failed to copy prompt to clipboard.');
+    });
+}
+
+/**
+ * Download generated image
+ */
+function downloadImage() {
+    if (!currentGeneratedImage) {
+        alert('No image to download.');
+        return;
+    }
+    
+    const link = document.createElement('a');
+    link.href = currentGeneratedImage;
+    link.download = `akshoverse-generated-${Date.now()}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 // === APPLICATION INITIALIZATION ===
