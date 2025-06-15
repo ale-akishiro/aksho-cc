@@ -1444,7 +1444,7 @@ function updateNAIPromptPreview() {
 }
 
 /**
- * Generate image using built-in NovelAI proxy
+ * Generate image using NovelAI - show CORS limitation message
  */
 async function generateNAIImage() {
     if (!naiApiKey) {
@@ -1457,12 +1457,6 @@ async function generateNAIImage() {
     const imageActions = document.getElementById('image-actions');
     const promptPreview = document.getElementById('nai-prompt-preview');
     
-    // Get generation settings
-    const width = parseInt(document.getElementById('nai-width').value);
-    const height = parseInt(document.getElementById('nai-height').value);
-    const steps = parseInt(document.getElementById('nai-steps').value);
-    const scale = parseInt(document.getElementById('nai-scale').value);
-    
     const prompt = promptPreview.textContent;
     
     if (prompt === 'No prompt generated yet. Create a character to see the prompt.') {
@@ -1470,83 +1464,20 @@ async function generateNAIImage() {
         return;
     }
     
-    // Update UI to show generating state
-    generateBtn.disabled = true;
-    generateBtn.classList.add('generating');
-    generateBtn.textContent = '🎨 GENERATING...';
+    // Show CORS limitation message
+    const errorMessage = `🚫 Direct API Access Blocked
+
+Browser security prevents direct NovelAI API access from web pages.
+
+💡 SOLUTION:
+1. Click "COPY PROMPT" below
+2. Go to NovelAI website
+3. Paste the prompt and generate
+
+📋 The copied prompt is identical to what would be sent via API and includes all your character details and settings.`;
     
-    imageResult.innerHTML = '<div class="loading-spinner"></div><div class="placeholder-text">Generating your image via built-in proxy...</div>';
+    imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626; white-space: pre-line; text-align: left; font-size: 13px;">${errorMessage}</div>`;
     imageActions.style.display = 'none';
-    
-    try {
-        console.log('🚀 Using built-in Service Worker proxy for NovelAI');
-        
-        // Use built-in Service Worker proxy
-        const response = await fetch('/nai-proxy/generate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                apiKey: naiApiKey,
-                prompt: prompt,
-                settings: {
-                    width: width,
-                    height: height,
-                    scale: scale,
-                    steps: steps,
-                    sampler: 'k_euler'
-                }
-            })
-        });
-        
-        if (!response.ok) {
-            throw new Error(`Proxy response: ${response.status}`);
-        }
-        
-        const result = await response.json();
-        
-        if (result.success && result.image) {
-            // Display the generated image
-            currentGeneratedImage = result.image;
-            imageResult.innerHTML = `<img src="${result.image}" alt="Generated character image">`;
-            imageActions.style.display = 'flex';
-            
-            console.log('✅ Image generated successfully via built-in proxy');
-            return;
-        } else {
-            throw new Error(result.error || 'Unknown proxy error');
-        }
-        
-    } catch (error) {
-        console.error('❌ Built-in proxy failed:', error);
-        
-        let errorMessage = '🚫 Built-in proxy failed to generate image.\n\n';
-        
-        if (error.message.includes('401') || error.message.includes('Invalid API key')) {
-            errorMessage += '🔑 Invalid API key. Please check your NovelAI API key.';
-        } else if (error.message.includes('402') || error.message.includes('Insufficient credits')) {
-            errorMessage += '💳 Insufficient credits. Please check your NovelAI account balance.';
-        } else if (error.message.includes('429') || error.message.includes('Rate limit')) {
-            errorMessage += '⏰ Rate limit exceeded. Please wait a moment and try again.';
-        } else {
-            errorMessage += '💡 Possible solutions:\n';
-            errorMessage += '1. Check your internet connection\n';
-            errorMessage += '2. Verify your NovelAI API key\n';
-            errorMessage += '3. Try refreshing the page to reload the proxy\n';
-            errorMessage += '4. Use "COPY PROMPT" and paste into NovelAI website\n\n';
-            errorMessage += `📋 For now, copy the prompt and use it directly on NovelAI.\n\nError: ${error.message}`;
-        }
-        
-        imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626; white-space: pre-line; text-align: left; font-size: 13px;">${errorMessage}</div>`;
-        imageActions.style.display = 'none';
-        
-    } finally {
-        // Reset button state
-        generateBtn.disabled = false;
-        generateBtn.classList.remove('generating');
-        generateBtn.textContent = '🎨 GENERATE IMAGE';
-    }
 }
 
 /**
