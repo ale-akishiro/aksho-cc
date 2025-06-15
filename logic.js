@@ -1444,7 +1444,7 @@ function updateNAIPromptPreview() {
 }
 
 /**
- * Generate image using NovelAI API (with proxy support)
+ * Generate image using built-in NovelAI proxy
  */
 async function generateNAIImage() {
     if (!naiApiKey) {
@@ -1475,145 +1475,72 @@ async function generateNAIImage() {
     generateBtn.classList.add('generating');
     generateBtn.textContent = '🎨 GENERATING...';
     
-    imageResult.innerHTML = '<div class="loading-spinner"></div><div class="placeholder-text">Generating your image, please wait...</div>';
+    imageResult.innerHTML = '<div class="loading-spinner"></div><div class="placeholder-text">Generating your image via built-in proxy...</div>';
     imageActions.style.display = 'none';
     
-    // Try proxy first, fallback to direct API
-    const proxyUrls = [
-        '/nai-proxy/generate-image',                 // Built-in Service Worker proxy
-        'http://localhost:3001/api/generate-image',  // Local development
-        '/api/generate-image',                       // Same domain deployment
-        'https://akshoverse-proxy.herokuapp.com/api/generate-image',  // Example Heroku deployment
-    ];
-    
-    let lastError = null;
-    let useDirectAPI = false;
-    
-    // Try proxy endpoints first
-    for (const proxyUrl of proxyUrls) {
-        try {
-            console.log(`Trying proxy: ${proxyUrl}`);
-            
-            const response = await fetch(proxyUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    apiKey: naiApiKey,
-                    prompt: prompt,
-                    settings: {
-                        width: width,
-                        height: height,
-                        scale: scale,
-                        steps: steps,
-                        sampler: 'k_euler'
-                    }
-                })
-            });
-            
-            if (response.ok) {
-                const result = await response.json();
-                
-                if (result.success && result.image) {
-                    // Display the generated image
-                    currentGeneratedImage = result.image;
-                    imageResult.innerHTML = `<img src="${result.image}" alt="Generated character image">`;
-                    imageActions.style.display = 'flex';
-                    
-                    console.log('Image generated successfully via proxy');
-                    return; // Success! Exit function
-                } else {
-                    throw new Error(result.error || 'Unknown proxy error');
-                }
-            } else {
-                const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-                throw new Error(errorData.error || `HTTP ${response.status}`);
-            }
-            
-        } catch (error) {
-            console.warn(`Proxy ${proxyUrl} failed:`, error.message);
-            lastError = error;
-            continue; // Try next proxy
-        }
-    }
-    
-    // If all proxies failed, try direct API as last resort
-    console.log('All proxies failed, attempting direct API call...');
-    
     try {
-        const response = await fetch('https://api.novelai.net/ai/generate-image', {
+        console.log('🚀 Using built-in Service Worker proxy for NovelAI');
+        
+        // Use built-in Service Worker proxy
+        const response = await fetch('/nai-proxy/generate', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${naiApiKey}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                input: prompt,
-                model: 'nai-diffusion-3',
-                action: 'generate',
-                parameters: {
+                apiKey: naiApiKey,
+                prompt: prompt,
+                settings: {
                     width: width,
                     height: height,
                     scale: scale,
-                    sampler: 'k_euler',
                     steps: steps,
-                    seed: Math.floor(Math.random() * 4294967295),
-                    n_samples: 1,
-                    ucPreset: 0,
-                    qualityToggle: false,
-                    sm: false,
-                    sm_dyn: false,
-                    dynamic_thresholding: false,
-                    controlnet_strength: 1.0,
-                    legacy: false,
-                    add_original_image: false,
-                    cfg_rescale: 0.0,
-                    noise_schedule: 'native'
+                    sampler: 'k_euler'
                 }
             })
         });
         
         if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`API request failed: ${response.status} - ${errorText}`);
+            throw new Error(`Proxy response: ${response.status}`);
         }
         
-        // Handle the response - NovelAI returns a ZIP file with images
-        const blob = await response.blob();
-        const imageUrl = URL.createObjectURL(blob);
-        currentGeneratedImage = imageUrl;
+        const result = await response.json();
         
-        // Display the generated image
-        imageResult.innerHTML = `<img src="${imageUrl}" alt="Generated character image">`;
-        imageActions.style.display = 'flex';
-        
-        console.log('Image generated successfully via direct API');
+        if (result.success && result.image) {
+            // Display the generated image
+            currentGeneratedImage = result.image;
+            imageResult.innerHTML = `<img src="${result.image}" alt="Generated character image">`;
+            imageActions.style.display = 'flex';
+            
+            console.log('✅ Image generated successfully via built-in proxy');
+            return;
+        } else {
+            throw new Error(result.error || 'Unknown proxy error');
+        }
         
     } catch (error) {
-        console.error('All generation methods failed:', error);
+        console.error('❌ Built-in proxy failed:', error);
         
-        let errorMessage = '❌ Image generation failed. ';
+        let errorMessage = '🚫 Built-in proxy failed to generate image.\n\n';
         
-        if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
-            errorMessage = '🚫 Connection Error: Cannot reach NovelAI API.\n\n';
-            errorMessage += '💡 Solutions:\n';
-            errorMessage += '1. Check your internet connection\n';
-            errorMessage += '2. Verify your NovelAI API key is valid\n';
-            errorMessage += '3. Use "COPY PROMPT" and paste into NovelAI website\n\n';
-            errorMessage += '📋 Built-in proxy tried but connection failed. Copy the prompt and use it directly on NovelAI.';
-        } else if (error.message.includes('401') || error.message.includes('INVALID_API_KEY')) {
-            errorMessage += 'Invalid API key. Please check your NovelAI API key.';
-        } else if (error.message.includes('402') || error.message.includes('INSUFFICIENT_CREDITS')) {
-            errorMessage += 'Insufficient credits. Please check your NovelAI account balance.';
-        } else if (error.message.includes('429') || error.message.includes('RATE_LIMITED')) {
-            errorMessage += 'Rate limit exceeded. Please wait a moment and try again.';
+        if (error.message.includes('401') || error.message.includes('Invalid API key')) {
+            errorMessage += '🔑 Invalid API key. Please check your NovelAI API key.';
+        } else if (error.message.includes('402') || error.message.includes('Insufficient credits')) {
+            errorMessage += '💳 Insufficient credits. Please check your NovelAI account balance.';
+        } else if (error.message.includes('429') || error.message.includes('Rate limit')) {
+            errorMessage += '⏰ Rate limit exceeded. Please wait a moment and try again.';
         } else {
-            errorMessage += `${error.message}\n\nLast proxy error: ${lastError?.message || 'Unknown'}`;
+            errorMessage += '💡 Possible solutions:\n';
+            errorMessage += '1. Check your internet connection\n';
+            errorMessage += '2. Verify your NovelAI API key\n';
+            errorMessage += '3. Try refreshing the page to reload the proxy\n';
+            errorMessage += '4. Use "COPY PROMPT" and paste into NovelAI website\n\n';
+            errorMessage += `📋 For now, copy the prompt and use it directly on NovelAI.\n\nError: ${error.message}`;
         }
         
         imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626; white-space: pre-line; text-align: left; font-size: 13px;">${errorMessage}</div>`;
         imageActions.style.display = 'none';
+        
     } finally {
         // Reset button state
         generateBtn.disabled = false;
