@@ -137,18 +137,40 @@ const HUMAN_DATA = {
             ]
         },
         
-        build: {
-            label: 'Build Descriptors',
+        frame: {
+            label: 'Frame',
             type: 'select',
             options: [
-                { value: '', label: 'Select build descriptor...' },
-                { value: 'petite build', label: 'Petite Build' },
-                { value: 'small build', label: 'Small Build' },
-                { value: 'compact build', label: 'Compact Build' },
-                { value: 'average build', label: 'Average Build' },
-                { value: 'sturdy build', label: 'Sturdy Build' },
-                { value: 'large build', label: 'Large Build' },
-                { value: 'imposing build', label: 'Imposing Build' }
+                { value: '', label: 'Select frame...' },
+                { value: 'small frame', label: 'Small Frame' },
+                { value: 'average frame', label: 'Average Frame' },
+                { value: 'big frame', label: 'Big Frame' },
+                { value: 'bulky frame', label: 'Bulky Frame' },
+                { value: 'petite frame', label: 'Petite Frame' },
+                { value: 'broad frame', label: 'Broad Frame' },
+                { value: 'stocky frame', label: 'Stocky Frame' },
+                { value: 'lanky frame', label: 'Lanky Frame' }
+            ]
+        },
+        
+        build: {
+            label: 'Build',
+            type: 'select',
+            options: [
+                { value: '', label: 'Select build...' },
+                { value: 'skinny', label: 'Skinny' },
+                { value: 'slender', label: 'Slender' },
+                { value: 'slim', label: 'Slim' },
+                { value: 'fit', label: 'Fit' },
+                { value: 'toned', label: 'Toned' },
+                { value: 'athletic', label: 'Athletic' },
+                { value: 'average build', label: 'Average' },
+                { value: 'curvy', label: 'Curvy' },
+                { value: 'chubby', label: 'Chubby' },
+                { value: 'fat', label: 'Fat' },
+                { value: 'muscular', label: 'Muscular' },
+                { value: 'buff', label: 'Buff' },
+                { value: 'stocky', label: 'Stocky' }
             ]
         },
         
@@ -175,7 +197,7 @@ const HUMAN_DATA = {
         },
         
         skinTexture: {
-            label: 'Skin Texture',
+            label: 'Skin Texture *optional',
             type: 'select',
             options: [
                 { value: '', label: 'Select skin texture...' },
