@@ -694,76 +694,46 @@ optgroup option {
 }
 
 .subcategory-toggle {
-    background: transparent;
     border: none;
-    padding: 0;
-    border-radius: 15px;
-    font-family: 'Space Grotesk', sans-serif;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-}
-
-.toggle-text {
-    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
-    color: white;
     padding: 6px 12px;
+    border-radius: 15px;
     font-size: 11px;
     font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: pointer;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    border-radius: 15px 5px 5px 15px;
-    flex: 4;
-    text-align: center;
     transition: all 0.3s ease;
-}
-
-.toggle-indicator {
-    background: #6b7280;
-    color: #ef4444;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    border-radius: 50%;
-    margin-left: -5px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-    z-index: 2;
-    position: relative;
 }
 
 .subcategory-toggle:hover {
     transform: translateY(-1px);
 }
 
-.subcategory-toggle:hover .toggle-text {
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
-}
-
 .subcategory-toggle:active {
     transform: translateY(0);
 }
 
-/* ON state - purple indicator */
-.subcategory-toggle.subcategory-on .toggle-indicator {
+/* ON state - purple like copy button */
+.subcategory-toggle.subcategory-on {
     background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
     color: white;
-    transform: scale(1.05) rotate(360deg);
-    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
 }
 
-/* OFF state - gray indicator */
-.subcategory-toggle.subcategory-off .toggle-indicator {
+.subcategory-toggle.subcategory-on:hover {
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+/* OFF state - gray */
+.subcategory-toggle.subcategory-off {
     background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-    color: #ef4444;
-    transform: scale(1) rotate(0deg);
+    color: #e5e7eb;
     box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+}
+
+.subcategory-toggle.subcategory-off:hover {
+    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
 }
 
 /* Toggle Buttons */
