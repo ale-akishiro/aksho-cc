@@ -886,6 +886,17 @@ class AkshoStudio {
      * @param {KeyboardEvent} event - Keyboard event
      */
     handleKeyboardShortcuts(event) {
+        // Don't trigger shortcuts if user is typing in an input field
+        const activeElement = document.activeElement;
+        if (activeElement && (
+            activeElement.tagName === 'INPUT' || 
+            activeElement.tagName === 'TEXTAREA' || 
+            activeElement.tagName === 'SELECT' ||
+            activeElement.isContentEditable
+        )) {
+            return; // Don't interfere with typing
+        }
+        
         // Tab switching with number keys
         if (event.key >= '1' && event.key <= '8') {
             const tabButtons = document.querySelectorAll('.nav-pill');

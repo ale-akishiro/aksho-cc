@@ -15,8 +15,9 @@ const HUMAN_DATA = {
     basicInfo: {
         artStyle: {
             label: 'Art Style',
-            type: 'toggle',
+            type: 'select',
             options: [
+                { value: '', label: 'Select art style...' },
                 { value: '2.5d', label: '2.5D' },
                 { value: 'anime style', label: 'Anime Style' },
                 { value: 'realistic style', label: 'Realistic Style' },
@@ -173,14 +174,11 @@ const HUMAN_DATA = {
             ]
         },
         
-        skinFeatures: {
-            label: 'Skin Features',
-            type: 'toggle',
+        skinTexture: {
+            label: 'Skin Texture',
+            type: 'select',
             options: [
-                { value: 'body blush', label: 'Body Blush' },
-                { value: 'sun tan', label: 'Sun Tan' },
-                { value: 'tan lines', label: 'Tan Lines' },
-                { value: "farmer's tan", label: "Farmer's Tan" },
+                { value: '', label: 'Select skin texture...' },
                 { value: 'smooth skin', label: 'Smooth Skin' },
                 { value: 'rough skin', label: 'Rough Skin' },
                 { value: 'weathered skin', label: 'Weathered Skin' },
@@ -188,6 +186,17 @@ const HUMAN_DATA = {
                 { value: 'firm skin', label: 'Firm Skin' },
                 { value: 'youthful skin', label: 'Youthful Skin' },
                 { value: 'aged skin', label: 'Aged Skin' }
+            ]
+        },
+        
+        skinFeatures: {
+            label: 'Skin Features',
+            type: 'toggle',
+            options: [
+                { value: 'body blush', label: 'Body Blush' },
+                { value: 'sun tan', label: 'Sun Tan' },
+                { value: 'tan lines', label: 'Tan Lines' },
+                { value: "farmer's tan", label: "Farmer's Tan" }
             ]
         }
     },
