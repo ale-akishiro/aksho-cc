@@ -1536,7 +1536,14 @@ async function generateNAIImage() {
         console.error('Error generating image:', error);
         
         let errorMessage = 'Failed to generate image. ';
-        if (error.message.includes('401')) {
+        if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
+            errorMessage = '🚫 CORS Error: Direct browser access to NovelAI API is blocked. ';
+            errorMessage += 'To use this feature, you need to:\n\n';
+            errorMessage += '1. Use a browser extension that disables CORS (not recommended for security)\n';
+            errorMessage += '2. Set up a backend proxy server\n';
+            errorMessage += '3. Use the "Copy Prompt" button and paste into NovelAI directly\n\n';
+            errorMessage += 'For now, please copy the prompt and use it in the NovelAI website directly.';
+        } else if (error.message.includes('401')) {
             errorMessage += 'Invalid API key. Please check your NovelAI API key.';
         } else if (error.message.includes('402')) {
             errorMessage += 'Insufficient credits. Please check your NovelAI account balance.';
@@ -1546,7 +1553,7 @@ async function generateNAIImage() {
             errorMessage += error.message;
         }
         
-        imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626;">${errorMessage}</div>`;
+        imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626; white-space: pre-line; text-align: left; font-size: 13px;">${errorMessage}</div>`;
         imageActions.style.display = 'none';
     } finally {
         // Reset button state
