@@ -1444,7 +1444,7 @@ function updateNAIPromptPreview() {
 }
 
 /**
- * Generate image using NovelAI - show CORS limitation message
+ * Generate image using Vercel proxy
  */
 async function generateNAIImage() {
     if (!naiApiKey) {
@@ -1457,6 +1457,12 @@ async function generateNAIImage() {
     const imageActions = document.getElementById('image-actions');
     const promptPreview = document.getElementById('nai-prompt-preview');
     
+    // Get generation settings
+    const width = parseInt(document.getElementById('nai-width').value);
+    const height = parseInt(document.getElementById('nai-height').value);
+    const steps = parseInt(document.getElementById('nai-steps').value);
+    const scale = parseInt(document.getElementById('nai-scale').value);
+    
     const prompt = promptPreview.textContent;
     
     if (prompt === 'No prompt generated yet. Create a character to see the prompt.') {
@@ -1464,20 +1470,89 @@ async function generateNAIImage() {
         return;
     }
     
-    // Show CORS limitation message
-    const errorMessage = `🚫 Direct API Access Blocked
-
-Browser security prevents direct NovelAI API access from web pages.
-
-💡 SOLUTION:
-1. Click "COPY PROMPT" below
-2. Go to NovelAI website
-3. Paste the prompt and generate
-
-📋 The copied prompt is identical to what would be sent via API and includes all your character details and settings.`;
+    // Update UI to show generating state
+    generateBtn.disabled = true;
+    generateBtn.classList.add('generating');
+    generateBtn.textContent = '🎨 GENERATING...';
     
-    imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626; white-space: pre-line; text-align: left; font-size: 13px;">${errorMessage}</div>`;
+    imageResult.innerHTML = '<div class="loading-spinner"></div><div class="placeholder-text">Generating via Vercel proxy...</div>';
     imageActions.style.display = 'none';
+    
+    try {
+        console.log('🚀 Using Vercel proxy for NovelAI generation');
+        
+        // Use Vercel serverless function proxy
+        const response = await fetch('/api/generate-image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                apiKey: naiApiKey,
+                prompt: prompt,
+                settings: {
+                    width: width,
+                    height: height,
+                    scale: scale,
+                    steps: steps,
+                    sampler: 'k_euler'
+                }
+            })
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            throw new Error(errorData.error || `HTTP ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (result.success && result.image) {
+            // Display the generated image
+            currentGeneratedImage = result.image;
+            imageResult.innerHTML = `<img src="${result.image}" alt="Generated character image">`;
+            imageActions.style.display = 'flex';
+            
+            console.log('✅ Image generated successfully via Vercel proxy');
+            return;
+        } else {
+            throw new Error(result.error || 'Unknown proxy error');
+        }
+        
+    } catch (error) {
+        console.error('❌ Vercel proxy failed:', error);
+        
+        let errorMessage = '🚫 Image generation failed.\n\n';
+        
+        if (error.message.includes('Invalid API key') || error.message.includes('INVALID_API_KEY')) {
+            errorMessage += '🔑 Invalid API key. Please check your NovelAI API key.';
+        } else if (error.message.includes('Insufficient credits') || error.message.includes('INSUFFICIENT_CREDITS')) {
+            errorMessage += '💳 Insufficient credits. Please check your NovelAI account balance.';
+        } else if (error.message.includes('Rate limit') || error.message.includes('RATE_LIMITED')) {
+            errorMessage += '⏰ Rate limit exceeded. Please wait a moment and try again.';
+        } else if (error.message.includes('404') || error.message.includes('Not Found')) {
+            errorMessage += '⚠️ Vercel proxy not deployed yet.\n\n';
+            errorMessage += '💡 Solutions:\n';
+            errorMessage += '1. Deploy to Vercel (see deployment instructions)\n';
+            errorMessage += '2. Use "COPY PROMPT" and paste into NovelAI website\n\n';
+            errorMessage += '📋 Copy prompt works immediately without deployment.';
+        } else {
+            errorMessage += '💡 Possible solutions:\n';
+            errorMessage += '1. Check your internet connection\n';
+            errorMessage += '2. Verify the Vercel proxy is deployed\n';
+            errorMessage += '3. Use "COPY PROMPT" as reliable fallback\n\n';
+            errorMessage += `📋 Error: ${error.message}`;
+        }
+        
+        imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626; white-space: pre-line; text-align: left; font-size: 13px;">${errorMessage}</div>`;
+        imageActions.style.display = 'none';
+        
+    } finally {
+        // Reset button state
+        generateBtn.disabled = false;
+        generateBtn.classList.remove('generating');
+        generateBtn.textContent = '🎨 GENERATE IMAGE';
+    }
 }
 
 /**

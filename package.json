@@ -1,0 +1,21 @@
+{
+  "name": "akshoverse-studio",
+  "version": "1.0.0",
+  "description": "Akshoverse Studio with NovelAI proxy for Vercel",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "novelai",
+    "character-creation",
+    "proxy",
+    "vercel"
+  ],
+  "author": "Akshoverse Studio",
+  "license": "MIT",
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  }
+}

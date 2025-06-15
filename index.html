@@ -165,19 +165,19 @@
                     <div class="section">
                         <h3>🎨 IMAGE GENERATION</h3>
                         <div class="form-group">
-                            <div class="copy-prompt-notice" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; font-size: 11px; color: #059669;">
-                                📋 COPY PROMPT: Use this to get the exact prompt for NovelAI website generation.
+                            <div class="vercel-proxy-notice" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; font-size: 11px; color: #059669;">
+                                🚀 VERCEL PROXY: Direct image generation via free serverless backend. Deploy to activate!
                             </div>
                             <label>CURRENT PROMPT</label>
                             <div class="prompt-preview" id="nai-prompt-preview">
                                 No prompt generated yet. Create a character to see the prompt.
                             </div>
                             <div class="generation-controls">
-                                <button class="copy-prompt-btn" onclick="copyPromptToClipboard()" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); font-weight: 700;">
-                                    📋 COPY PROMPT (RECOMMENDED)
-                                </button>
                                 <button class="generate-btn" id="generate-btn" onclick="generateNAIImage()" disabled>
-                                    ⚠️ TRY DIRECT (LIMITED)
+                                    🎨 GENERATE IMAGE
+                                </button>
+                                <button class="copy-prompt-btn" onclick="copyPromptToClipboard()">
+                                    📋 COPY PROMPT
                                 </button>
                             </div>
                         </div>
