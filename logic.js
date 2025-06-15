@@ -1444,7 +1444,7 @@ function updateNAIPromptPreview() {
 }
 
 /**
- * Generate image using NovelAI API
+ * Generate image using NovelAI API (with proxy support)
  */
 async function generateNAIImage() {
     if (!naiApiKey) {
@@ -1478,9 +1478,69 @@ async function generateNAIImage() {
     imageResult.innerHTML = '<div class="loading-spinner"></div><div class="placeholder-text">Generating your image, please wait...</div>';
     imageActions.style.display = 'none';
     
+    // Try proxy first, fallback to direct API
+    const proxyUrls = [
+        'http://localhost:3001/api/generate-image',  // Local development
+        '/api/generate-image',                       // Same domain deployment
+        'https://akshoverse-proxy.herokuapp.com/api/generate-image',  // Example Heroku deployment
+    ];
+    
+    let lastError = null;
+    let useDirectAPI = false;
+    
+    // Try proxy endpoints first
+    for (const proxyUrl of proxyUrls) {
+        try {
+            console.log(`Trying proxy: ${proxyUrl}`);
+            
+            const response = await fetch(proxyUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    apiKey: naiApiKey,
+                    prompt: prompt,
+                    settings: {
+                        width: width,
+                        height: height,
+                        scale: scale,
+                        steps: steps,
+                        sampler: 'k_euler'
+                    }
+                })
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                
+                if (result.success && result.image) {
+                    // Display the generated image
+                    currentGeneratedImage = result.image;
+                    imageResult.innerHTML = `<img src="${result.image}" alt="Generated character image">`;
+                    imageActions.style.display = 'flex';
+                    
+                    console.log('Image generated successfully via proxy');
+                    return; // Success! Exit function
+                } else {
+                    throw new Error(result.error || 'Unknown proxy error');
+                }
+            } else {
+                const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                throw new Error(errorData.error || `HTTP ${response.status}`);
+            }
+            
+        } catch (error) {
+            console.warn(`Proxy ${proxyUrl} failed:`, error.message);
+            lastError = error;
+            continue; // Try next proxy
+        }
+    }
+    
+    // If all proxies failed, try direct API as last resort
+    console.log('All proxies failed, attempting direct API call...');
+    
     try {
-        console.log('Sending request to NovelAI with prompt:', prompt);
-        
         const response = await fetch('https://api.novelai.net/ai/generate-image', {
             method: 'POST',
             headers: {
@@ -1520,9 +1580,6 @@ async function generateNAIImage() {
         
         // Handle the response - NovelAI returns a ZIP file with images
         const blob = await response.blob();
-        
-        // For now, we'll create an object URL and display it
-        // In a full implementation, you'd extract the image from the ZIP
         const imageUrl = URL.createObjectURL(blob);
         currentGeneratedImage = imageUrl;
         
@@ -1530,27 +1587,28 @@ async function generateNAIImage() {
         imageResult.innerHTML = `<img src="${imageUrl}" alt="Generated character image">`;
         imageActions.style.display = 'flex';
         
-        console.log('Image generated successfully');
+        console.log('Image generated successfully via direct API');
         
     } catch (error) {
-        console.error('Error generating image:', error);
+        console.error('All generation methods failed:', error);
         
-        let errorMessage = 'Failed to generate image. ';
+        let errorMessage = '❌ Image generation failed. ';
+        
         if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
-            errorMessage = '🚫 CORS Error: Direct browser access to NovelAI API is blocked. ';
-            errorMessage += 'To use this feature, you need to:\n\n';
-            errorMessage += '1. Use a browser extension that disables CORS (not recommended for security)\n';
-            errorMessage += '2. Set up a backend proxy server\n';
-            errorMessage += '3. Use the "Copy Prompt" button and paste into NovelAI directly\n\n';
-            errorMessage += 'For now, please copy the prompt and use it in the NovelAI website directly.';
-        } else if (error.message.includes('401')) {
+            errorMessage = '🚫 Connection Error: Cannot reach NovelAI API or proxy server.\n\n';
+            errorMessage += '💡 Solutions:\n';
+            errorMessage += '1. Set up the proxy server (see deployment instructions)\n';
+            errorMessage += '2. Use "COPY PROMPT" and paste into NovelAI website\n';
+            errorMessage += '3. Check your internet connection\n\n';
+            errorMessage += '📋 For now, copy the prompt and use it directly on NovelAI.';
+        } else if (error.message.includes('401') || error.message.includes('INVALID_API_KEY')) {
             errorMessage += 'Invalid API key. Please check your NovelAI API key.';
-        } else if (error.message.includes('402')) {
+        } else if (error.message.includes('402') || error.message.includes('INSUFFICIENT_CREDITS')) {
             errorMessage += 'Insufficient credits. Please check your NovelAI account balance.';
-        } else if (error.message.includes('429')) {
+        } else if (error.message.includes('429') || error.message.includes('RATE_LIMITED')) {
             errorMessage += 'Rate limit exceeded. Please wait a moment and try again.';
         } else {
-            errorMessage += error.message;
+            errorMessage += `${error.message}\n\nLast proxy error: ${lastError?.message || 'Unknown'}`;
         }
         
         imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626; white-space: pre-line; text-align: left; font-size: 13px;">${errorMessage}</div>`;

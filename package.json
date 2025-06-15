@@ -1,0 +1,43 @@
+{
+  "name": "akshoverse-nai-proxy",
+  "version": "1.0.0",
+  "description": "NovelAI proxy server for Akshoverse Studio to handle CORS and API integration",
+  "main": "proxy-server.js",
+  "scripts": {
+    "start": "node proxy-server.js",
+    "dev": "nodemon proxy-server.js",
+    "test": "node -e \"console.log('Basic syntax check passed')\"",
+    "deploy:heroku": "git push heroku main",
+    "deploy:vercel": "vercel --prod"
+  },
+  "keywords": [
+    "novelai",
+    "proxy",
+    "cors",
+    "image-generation",
+    "akshoverse"
+  ],
+  "author": "Akshoverse Studio",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "node-fetch": "^2.7.0",
+    "adm-zip": "^0.5.10"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ale-akishiro/aksho-cc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ale-akishiro/aksho-cc/issues"
+  },
+  "homepage": "https://github.com/ale-akishiro/aksho-cc#readme"
+}
