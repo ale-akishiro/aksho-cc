@@ -1385,9 +1385,8 @@ function exportToFile() {
 
 /**
  * Global NAI state - stored only in memory for privacy
+ * (Variables declared at top of file)
  */
-let naiApiKey = null;
-let currentGeneratedImage = null;
 
 /**
  * Monitor API key input and update UI
