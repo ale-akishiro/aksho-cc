@@ -1,6 +1,4 @@
-# The Akshoverse Studio - Testing Branch
-
-🚧 **This is the TESTING branch** - Contains latest development changes and major UI overhaul.
+# The Akshoverse Studio - Testing Enviroment
 
 ## Current Version: TE v1.1
 
