@@ -1480,6 +1480,7 @@ async function generateNAIImage() {
     
     // Try proxy first, fallback to direct API
     const proxyUrls = [
+        '/nai-proxy/generate-image',                 // Built-in Service Worker proxy
         'http://localhost:3001/api/generate-image',  // Local development
         '/api/generate-image',                       // Same domain deployment
         'https://akshoverse-proxy.herokuapp.com/api/generate-image',  // Example Heroku deployment
@@ -1595,12 +1596,12 @@ async function generateNAIImage() {
         let errorMessage = '❌ Image generation failed. ';
         
         if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
-            errorMessage = '🚫 Connection Error: Cannot reach NovelAI API or proxy server.\n\n';
+            errorMessage = '🚫 Connection Error: Cannot reach NovelAI API.\n\n';
             errorMessage += '💡 Solutions:\n';
-            errorMessage += '1. Set up the proxy server (see deployment instructions)\n';
-            errorMessage += '2. Use "COPY PROMPT" and paste into NovelAI website\n';
-            errorMessage += '3. Check your internet connection\n\n';
-            errorMessage += '📋 For now, copy the prompt and use it directly on NovelAI.';
+            errorMessage += '1. Check your internet connection\n';
+            errorMessage += '2. Verify your NovelAI API key is valid\n';
+            errorMessage += '3. Use "COPY PROMPT" and paste into NovelAI website\n\n';
+            errorMessage += '📋 Built-in proxy tried but connection failed. Copy the prompt and use it directly on NovelAI.';
         } else if (error.message.includes('401') || error.message.includes('INVALID_API_KEY')) {
             errorMessage += 'Invalid API key. Please check your NovelAI API key.';
         } else if (error.message.includes('402') || error.message.includes('INSUFFICIENT_CREDITS')) {

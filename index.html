@@ -166,7 +166,7 @@
                         <h3>🎨 IMAGE GENERATION</h3>
                         <div class="form-group">
                             <div class="proxy-notice" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; font-size: 11px; color: #059669;">
-                                ✅ PROXY INTEGRATION: Automatically tries proxy server, falls back to direct API or copy prompt.
+                                🚀 BUILT-IN PROXY: Service Worker bypasses CORS automatically. No external setup required!
                             </div>
                             <label>CURRENT PROMPT</label>
                             <div class="prompt-preview" id="nai-prompt-preview">
@@ -320,5 +320,18 @@
     <script src="human-data.js"></script>
     <script src="monster-data.js"></script>
     <script src="logic.js"></script>
+    
+    <!-- Service Worker Registration for Built-in NAI Proxy -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/nai-proxy-worker.js')
+                .then((registration) => {
+                    console.log('✅ Built-in NAI Proxy Service Worker registered:', registration);
+                })
+                .catch((error) => {
+                    console.warn('⚠️ Service Worker registration failed:', error);
+                });
+        }
+    </script>
 </body>
 </html>
