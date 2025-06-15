@@ -228,6 +228,7 @@ const HUMAN_DATA = {
         hairColor: {
             label: 'Hair Color',
             type: 'select',
+            useSubcategories: true,
             optgroups: [
                 {
                     label: 'White & Gray Range',
@@ -326,6 +327,78 @@ const HUMAN_DATA = {
                         { value: 'lowlighted hair', label: 'Lowlighted Hair' }
                     ]
                 }
+            ],
+            // Flat version without subcategories (for toggle feature)
+            flatOptions: [
+                // White/Gray
+                { value: 'white hair', label: 'White Hair' },
+                { value: 'platinum white hair', label: 'Platinum White Hair' },
+                { value: 'silver hair', label: 'Silver Hair' },
+                { value: 'light gray hair', label: 'Light Gray Hair' },
+                { value: 'gray hair', label: 'Gray Hair' },
+                { value: 'dark gray hair', label: 'Dark Gray Hair' },
+                { value: 'salt and pepper hair', label: 'Salt and Pepper Hair' },
+                { value: 'premature gray hair', label: 'Premature Gray Hair' },
+                // Blonde
+                { value: 'platinum blonde hair', label: 'Platinum Blonde Hair' },
+                { value: 'bleached blonde hair', label: 'Bleached Blonde Hair' },
+                { value: 'ice blonde hair', label: 'Ice Blonde Hair' },
+                { value: 'ash blonde hair', label: 'Ash Blonde Hair' },
+                { value: 'golden blonde hair', label: 'Golden Blonde Hair' },
+                { value: 'honey blonde hair', label: 'Honey Blonde Hair' },
+                { value: 'strawberry blonde hair', label: 'Strawberry Blonde Hair' },
+                { value: 'sandy blonde hair', label: 'Sandy Blonde Hair' },
+                { value: 'dirty blonde hair', label: 'Dirty Blonde Hair' },
+                { value: 'dark blonde hair', label: 'Dark Blonde Hair' },
+                // Brown
+                { value: 'light brown hair', label: 'Light Brown Hair' },
+                { value: 'caramel brown hair', label: 'Caramel Brown Hair' },
+                { value: 'medium brown hair', label: 'Medium Brown Hair' },
+                { value: 'chestnut brown hair', label: 'Chestnut Brown Hair' },
+                { value: 'chocolate brown hair', label: 'Chocolate Brown Hair' },
+                { value: 'coffee brown hair', label: 'Coffee Brown Hair' },
+                { value: 'dark brown hair', label: 'Dark Brown Hair' },
+                { value: 'espresso brown hair', label: 'Espresso Brown Hair' },
+                // Red
+                { value: 'strawberry hair', label: 'Strawberry Hair' },
+                { value: 'light red hair', label: 'Light Red Hair' },
+                { value: 'ginger hair', label: 'Ginger Hair' },
+                { value: 'copper hair', label: 'Copper Hair' },
+                { value: 'auburn hair', label: 'Auburn Hair' },
+                { value: 'auburn brown hair', label: 'Auburn Brown Hair' },
+                { value: 'burgundy hair', label: 'Burgundy Hair' },
+                { value: 'mahogany hair', label: 'Mahogany Hair' },
+                { value: 'deep red hair', label: 'Deep Red Hair' },
+                // Black
+                { value: 'soft black hair', label: 'Soft Black Hair' },
+                { value: 'brown-black hair', label: 'Brown-Black Hair' },
+                { value: 'jet black hair', label: 'Jet Black Hair' },
+                { value: 'blue-black hair', label: 'Blue-Black Hair' },
+                { value: 'raven black hair', label: 'Raven Black Hair' },
+                // Fantasy
+                { value: 'pastel pink hair', label: 'Pastel Pink Hair' },
+                { value: 'hot pink hair', label: 'Hot Pink Hair' },
+                { value: 'magenta hair', label: 'Magenta Hair' },
+                { value: 'light blue hair', label: 'Light Blue Hair' },
+                { value: 'blue hair', label: 'Blue Hair' },
+                { value: 'navy blue hair', label: 'Navy Blue Hair' },
+                { value: 'teal hair', label: 'Teal Hair' },
+                { value: 'mint green hair', label: 'Mint Green Hair' },
+                { value: 'green hair', label: 'Green Hair' },
+                { value: 'forest green hair', label: 'Forest Green Hair' },
+                { value: 'lavender hair', label: 'Lavender Hair' },
+                { value: 'purple hair', label: 'Purple Hair' },
+                { value: 'violet hair', label: 'Violet Hair' },
+                { value: 'orange hair', label: 'Orange Hair' },
+                { value: 'yellow hair', label: 'Yellow Hair' },
+                // Multi-Color
+                { value: 'rainbow hair', label: 'Rainbow Hair' },
+                { value: 'ombre hair', label: 'Ombre Hair' },
+                { value: 'color-streaked hair', label: 'Color-Streaked Hair' },
+                { value: 'two-tone hair', label: 'Two-Tone Hair' },
+                { value: 'gradient hair', label: 'Gradient Hair' },
+                { value: 'highlighted hair', label: 'Highlighted Hair' },
+                { value: 'lowlighted hair', label: 'Lowlighted Hair' }
             ]
         },
         
@@ -1132,6 +1205,12 @@ function initializeHumanForm() {
     
     try {
         container.innerHTML = `
+            <div class="global-controls">
+                <button class="subcategory-toggle" onclick="toggleSubcategories()" title="Toggle grouped subcategories for all sections">
+                    📁 Groups
+                </button>
+            </div>
+
             <div class="section">
                 <h3>Character Information</h3>
                 <div class="form-group">
@@ -1234,8 +1313,29 @@ function generateFormSection(sectionData) {
             html += `<select data-field="${key}">`;
             html += `<option value="">Select ${field.label.toLowerCase()}...</option>`;
             
-            // Handle optgroups (for hair color subcategories)
-            if (field.optgroups && Array.isArray(field.optgroups)) {
+            // Handle fields with subcategory toggle support
+            if (field.useSubcategories && field.optgroups && field.flatOptions) {
+                // Check global subcategory preference (default to true)
+                const useSubcategories = window.subcategoriesEnabled !== false;
+                
+                if (useSubcategories) {
+                    // Use optgroups
+                    field.optgroups.forEach(optgroup => {
+                        html += `<optgroup label="${optgroup.label}">`;
+                        optgroup.options.forEach(option => {
+                            html += `<option value="${option.value}">${option.label}</option>`;
+                        });
+                        html += `</optgroup>`;
+                    });
+                } else {
+                    // Use flat options
+                    field.flatOptions.forEach(option => {
+                        html += `<option value="${option.value}">${option.label}</option>`;
+                    });
+                }
+            }
+            // Handle optgroups (for other fields with subcategories)
+            else if (field.optgroups && Array.isArray(field.optgroups)) {
                 field.optgroups.forEach(optgroup => {
                     html += `<optgroup label="${optgroup.label}">`;
                     optgroup.options.forEach(option => {
@@ -1328,6 +1428,81 @@ function clearSavedState() {
     }
 }
 
+/**
+ * Toggle subcategories on/off for all supported fields across the entire tab
+ */
+function toggleSubcategories() {
+    // Toggle global subcategory state
+    window.subcategoriesEnabled = !window.subcategoriesEnabled;
+    
+    // Update button text and title
+    const button = document.querySelector('.subcategory-toggle');
+    if (button) {
+        button.textContent = window.subcategoriesEnabled ? '📁 Groups' : '📄 List';
+        button.title = window.subcategoriesEnabled ? 
+            'Switch to flat list view for all sections' : 
+            'Switch to grouped subcategories view for all sections';
+    }
+    
+    // Regenerate the entire form to apply the change to all sections
+    if (window.AkshoHumanData) {
+        // Store current form values before regenerating
+        const currentData = window.AkshoHumanData.getHumanCharacterData();
+        
+        // Regenerate the form
+        window.AkshoHumanData.initializeHumanForm();
+        
+        // Restore form values after regeneration
+        restoreFormValues(currentData);
+        
+        // Re-setup event listeners after regenerating
+        if (window.akshoStudio) {
+            window.akshoStudio.setupDynamicEventListeners();
+        }
+    }
+    
+    console.log('Global subcategories toggled:', window.subcategoriesEnabled ? 'ON' : 'OFF');
+}
+
+/**
+ * Restore form values after form regeneration
+ */
+function restoreFormValues(data) {
+    if (!data) return;
+    
+    // Restore character name
+    const nameInput = document.getElementById('character-name');
+    if (nameInput && data.characterName) {
+        nameInput.value = data.characterName;
+    }
+    
+    // Restore select values
+    Object.keys(data).forEach(key => {
+        if (key === 'characterName' || key === 'selectedTags' || key === 'customTags') return;
+        
+        const input = document.querySelector(`select[data-field="${key}"], input[data-field="${key}"]`);
+        if (input && data[key]) {
+            input.value = data[key];
+        }
+    });
+    
+    // Restore toggle buttons
+    if (data.selectedTags) {
+        data.selectedTags.forEach(tag => {
+            const toggleBtn = document.querySelector(`.toggle-btn[data-tag="${tag}"]`);
+            if (toggleBtn) {
+                toggleBtn.classList.add('active');
+            }
+        });
+    }
+    
+    // Restore custom tags
+    const customTagsInput = document.getElementById('custom-tags');
+    if (customTagsInput && data.customTags) {
+        customTagsInput.value = data.customTags;
+    }
+}
+
 // === EXPORT MODULE ===
 
 window.AkshoHumanData = {
@@ -1335,8 +1510,13 @@ window.AkshoHumanData = {
     initializeHumanForm,
     generateFormSection,
     getHumanCharacterData,
-    clearSavedState
+    clearSavedState,
+    toggleSubcategories,
+    restoreFormValues
 };
+
+// Make toggleSubcategories globally available for onclick
+window.toggleSubcategories = toggleSubcategories;
 
 // Export for Node.js compatibility
 if (typeof module !== 'undefined' && module.exports) {
