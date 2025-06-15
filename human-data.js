@@ -228,84 +228,104 @@ const HUMAN_DATA = {
         hairColor: {
             label: 'Hair Color',
             type: 'select',
-            options: [
-                { value: '', label: 'Select hair color...' },
-                
-                // White/Gray Family (lightest to darkest)
-                { value: 'white hair', label: 'White Hair' },
-                { value: 'platinum white hair', label: 'Platinum White Hair' },
-                { value: 'silver hair', label: 'Silver Hair' },
-                { value: 'light gray hair', label: 'Light Gray Hair' },
-                { value: 'gray hair', label: 'Gray Hair' },
-                { value: 'dark gray hair', label: 'Dark Gray Hair' },
-                { value: 'salt and pepper hair', label: 'Salt and Pepper Hair' },
-                { value: 'premature gray hair', label: 'Premature Gray Hair' },
-                
-                // Blonde Family (lightest to darkest)
-                { value: 'platinum blonde hair', label: 'Platinum Blonde Hair' },
-                { value: 'bleached blonde hair', label: 'Bleached Blonde Hair' },
-                { value: 'ice blonde hair', label: 'Ice Blonde Hair' },
-                { value: 'ash blonde hair', label: 'Ash Blonde Hair' },
-                { value: 'golden blonde hair', label: 'Golden Blonde Hair' },
-                { value: 'honey blonde hair', label: 'Honey Blonde Hair' },
-                { value: 'strawberry blonde hair', label: 'Strawberry Blonde Hair' },
-                { value: 'sandy blonde hair', label: 'Sandy Blonde Hair' },
-                { value: 'dirty blonde hair', label: 'Dirty Blonde Hair' },
-                { value: 'dark blonde hair', label: 'Dark Blonde Hair' },
-                
-                // Brown Family (lightest to darkest)
-                { value: 'light brown hair', label: 'Light Brown Hair' },
-                { value: 'caramel brown hair', label: 'Caramel Brown Hair' },
-                { value: 'medium brown hair', label: 'Medium Brown Hair' },
-                { value: 'chestnut brown hair', label: 'Chestnut Brown Hair' },
-                { value: 'chocolate brown hair', label: 'Chocolate Brown Hair' },
-                { value: 'coffee brown hair', label: 'Coffee Brown Hair' },
-                { value: 'dark brown hair', label: 'Dark Brown Hair' },
-                { value: 'espresso brown hair', label: 'Espresso Brown Hair' },
-                
-                // Red Family (lightest to darkest)
-                { value: 'strawberry hair', label: 'Strawberry Hair' },
-                { value: 'light red hair', label: 'Light Red Hair' },
-                { value: 'ginger hair', label: 'Ginger Hair' },
-                { value: 'copper hair', label: 'Copper Hair' },
-                { value: 'auburn hair', label: 'Auburn Hair' },
-                { value: 'auburn brown hair', label: 'Auburn Brown Hair' },
-                { value: 'burgundy hair', label: 'Burgundy Hair' },
-                { value: 'mahogany hair', label: 'Mahogany Hair' },
-                { value: 'deep red hair', label: 'Deep Red Hair' },
-                
-                // Black Family
-                { value: 'soft black hair', label: 'Soft Black Hair' },
-                { value: 'brown-black hair', label: 'Brown-Black Hair' },
-                { value: 'jet black hair', label: 'Jet Black Hair' },
-                { value: 'blue-black hair', label: 'Blue-Black Hair' },
-                { value: 'raven black hair', label: 'Raven Black Hair' },
-                
-                // Fantasy/Unnatural Colors
-                { value: 'pastel pink hair', label: 'Pastel Pink Hair' },
-                { value: 'hot pink hair', label: 'Hot Pink Hair' },
-                { value: 'magenta hair', label: 'Magenta Hair' },
-                { value: 'light blue hair', label: 'Light Blue Hair' },
-                { value: 'blue hair', label: 'Blue Hair' },
-                { value: 'navy blue hair', label: 'Navy Blue Hair' },
-                { value: 'teal hair', label: 'Teal Hair' },
-                { value: 'mint green hair', label: 'Mint Green Hair' },
-                { value: 'green hair', label: 'Green Hair' },
-                { value: 'forest green hair', label: 'Forest Green Hair' },
-                { value: 'lavender hair', label: 'Lavender Hair' },
-                { value: 'purple hair', label: 'Purple Hair' },
-                { value: 'violet hair', label: 'Violet Hair' },
-                { value: 'orange hair', label: 'Orange Hair' },
-                { value: 'yellow hair', label: 'Yellow Hair' },
-                
-                // Multi-Color Effects
-                { value: 'rainbow hair', label: 'Rainbow Hair' },
-                { value: 'ombre hair', label: 'Ombre Hair' },
-                { value: 'color-streaked hair', label: 'Color-Streaked Hair' },
-                { value: 'two-tone hair', label: 'Two-Tone Hair' },
-                { value: 'gradient hair', label: 'Gradient Hair' },
-                { value: 'highlighted hair', label: 'Highlighted Hair' },
-                { value: 'lowlighted hair', label: 'Lowlighted Hair' }
+            optgroups: [
+                {
+                    label: 'White & Gray Range',
+                    options: [
+                        { value: 'white hair', label: 'White Hair' },
+                        { value: 'platinum white hair', label: 'Platinum White Hair' },
+                        { value: 'silver hair', label: 'Silver Hair' },
+                        { value: 'light gray hair', label: 'Light Gray Hair' },
+                        { value: 'gray hair', label: 'Gray Hair' },
+                        { value: 'dark gray hair', label: 'Dark Gray Hair' },
+                        { value: 'salt and pepper hair', label: 'Salt and Pepper Hair' },
+                        { value: 'premature gray hair', label: 'Premature Gray Hair' }
+                    ]
+                },
+                {
+                    label: 'Blonde Range',
+                    options: [
+                        { value: 'platinum blonde hair', label: 'Platinum Blonde Hair' },
+                        { value: 'bleached blonde hair', label: 'Bleached Blonde Hair' },
+                        { value: 'ice blonde hair', label: 'Ice Blonde Hair' },
+                        { value: 'ash blonde hair', label: 'Ash Blonde Hair' },
+                        { value: 'golden blonde hair', label: 'Golden Blonde Hair' },
+                        { value: 'honey blonde hair', label: 'Honey Blonde Hair' },
+                        { value: 'strawberry blonde hair', label: 'Strawberry Blonde Hair' },
+                        { value: 'sandy blonde hair', label: 'Sandy Blonde Hair' },
+                        { value: 'dirty blonde hair', label: 'Dirty Blonde Hair' },
+                        { value: 'dark blonde hair', label: 'Dark Blonde Hair' }
+                    ]
+                },
+                {
+                    label: 'Brown Range',
+                    options: [
+                        { value: 'light brown hair', label: 'Light Brown Hair' },
+                        { value: 'caramel brown hair', label: 'Caramel Brown Hair' },
+                        { value: 'medium brown hair', label: 'Medium Brown Hair' },
+                        { value: 'chestnut brown hair', label: 'Chestnut Brown Hair' },
+                        { value: 'chocolate brown hair', label: 'Chocolate Brown Hair' },
+                        { value: 'coffee brown hair', label: 'Coffee Brown Hair' },
+                        { value: 'dark brown hair', label: 'Dark Brown Hair' },
+                        { value: 'espresso brown hair', label: 'Espresso Brown Hair' }
+                    ]
+                },
+                {
+                    label: 'Red Range',
+                    options: [
+                        { value: 'strawberry hair', label: 'Strawberry Hair' },
+                        { value: 'light red hair', label: 'Light Red Hair' },
+                        { value: 'ginger hair', label: 'Ginger Hair' },
+                        { value: 'copper hair', label: 'Copper Hair' },
+                        { value: 'auburn hair', label: 'Auburn Hair' },
+                        { value: 'auburn brown hair', label: 'Auburn Brown Hair' },
+                        { value: 'burgundy hair', label: 'Burgundy Hair' },
+                        { value: 'mahogany hair', label: 'Mahogany Hair' },
+                        { value: 'deep red hair', label: 'Deep Red Hair' }
+                    ]
+                },
+                {
+                    label: 'Black Range',
+                    options: [
+                        { value: 'soft black hair', label: 'Soft Black Hair' },
+                        { value: 'brown-black hair', label: 'Brown-Black Hair' },
+                        { value: 'jet black hair', label: 'Jet Black Hair' },
+                        { value: 'blue-black hair', label: 'Blue-Black Hair' },
+                        { value: 'raven black hair', label: 'Raven Black Hair' }
+                    ]
+                },
+                {
+                    label: 'Fantasy Colors',
+                    options: [
+                        { value: 'pastel pink hair', label: 'Pastel Pink Hair' },
+                        { value: 'hot pink hair', label: 'Hot Pink Hair' },
+                        { value: 'magenta hair', label: 'Magenta Hair' },
+                        { value: 'light blue hair', label: 'Light Blue Hair' },
+                        { value: 'blue hair', label: 'Blue Hair' },
+                        { value: 'navy blue hair', label: 'Navy Blue Hair' },
+                        { value: 'teal hair', label: 'Teal Hair' },
+                        { value: 'mint green hair', label: 'Mint Green Hair' },
+                        { value: 'green hair', label: 'Green Hair' },
+                        { value: 'forest green hair', label: 'Forest Green Hair' },
+                        { value: 'lavender hair', label: 'Lavender Hair' },
+                        { value: 'purple hair', label: 'Purple Hair' },
+                        { value: 'violet hair', label: 'Violet Hair' },
+                        { value: 'orange hair', label: 'Orange Hair' },
+                        { value: 'yellow hair', label: 'Yellow Hair' }
+                    ]
+                },
+                {
+                    label: 'Multi-Color Effects',
+                    options: [
+                        { value: 'rainbow hair', label: 'Rainbow Hair' },
+                        { value: 'ombre hair', label: 'Ombre Hair' },
+                        { value: 'color-streaked hair', label: 'Color-Streaked Hair' },
+                        { value: 'two-tone hair', label: 'Two-Tone Hair' },
+                        { value: 'gradient hair', label: 'Gradient Hair' },
+                        { value: 'highlighted hair', label: 'Highlighted Hair' },
+                        { value: 'lowlighted hair', label: 'Lowlighted Hair' }
+                    ]
+                }
             ]
         },
         
@@ -1212,12 +1232,25 @@ function generateFormSection(sectionData) {
         
         if (field.type === 'select') {
             html += `<select data-field="${key}">`;
-            if (field.options && Array.isArray(field.options)) {
+            html += `<option value="">Select ${field.label.toLowerCase()}...</option>`;
+            
+            // Handle optgroups (for hair color subcategories)
+            if (field.optgroups && Array.isArray(field.optgroups)) {
+                field.optgroups.forEach(optgroup => {
+                    html += `<optgroup label="${optgroup.label}">`;
+                    optgroup.options.forEach(option => {
+                        html += `<option value="${option.value}">${option.label}</option>`;
+                    });
+                    html += `</optgroup>`;
+                });
+            } 
+            // Handle regular options
+            else if (field.options && Array.isArray(field.options)) {
                 field.options.forEach(option => {
                     html += `<option value="${option.value}">${option.label}</option>`;
                 });
             } else {
-                console.warn(`Field ${key} has no valid options array`);
+                console.warn(`Field ${key} has no valid options array or optgroups`);
             }
             html += `</select>`;
         } else if (field.type === 'toggle') {
