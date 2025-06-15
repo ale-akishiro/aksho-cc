@@ -1038,13 +1038,8 @@ function initializeHumanForm() {
             </div>
 
             <div class="section">
-                <h3>Physical Appearance</h3>
-                ${generateFormSection(HUMAN_DATA.physicalAppearance)}
-            </div>
-
-            <div class="section">
                 <h3>Hair Features</h3>
-                ${generateFormSection(HUMAN_DATA.hairFeatures)}
+                ${generateFormSection(HUMAN_DATA.hair)}
             </div>
 
             <div class="section">
@@ -1053,8 +1048,28 @@ function initializeHumanForm() {
             </div>
 
             <div class="section">
+                <h3>Beauty Marks & Skin</h3>
+                ${generateFormSection(HUMAN_DATA.beautyMarks)}
+            </div>
+
+            <div class="section">
                 <h3>Body Build</h3>
                 ${generateFormSection(HUMAN_DATA.bodyBuild)}
+            </div>
+
+            <div class="section">
+                <h3>Torso Details</h3>
+                ${generateFormSection(HUMAN_DATA.torsoDetailed)}
+            </div>
+
+            <div class="section">
+                <h3>Lower Body Details</h3>
+                ${generateFormSection(HUMAN_DATA.lowerBodyDetailed)}
+            </div>
+
+            <div class="section">
+                <h3>Hands & Feet</h3>
+                ${generateFormSection(HUMAN_DATA.extremities)}
             </div>
 
             <div class="section">
