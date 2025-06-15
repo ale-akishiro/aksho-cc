@@ -635,8 +635,16 @@ select, input[type="text"], input[type="number"], textarea {
     border-radius: 10px;
     font-size: 14px;
     font-family: 'Space Grotesk', sans-serif;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.95);
+    color: #374151;
     transition: all 0.3s ease;
+}
+
+/* Specific styling for character name and age inputs for better readability */
+#character-name, input[data-field="age"], #age {
+    background: rgba(249, 250, 251, 0.98);
+    color: #1f2937;
+    font-weight: 500;
 }
 
 select:focus, input:focus, textarea:focus {

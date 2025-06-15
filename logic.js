@@ -670,8 +670,17 @@ class AkshoStudio {
             const nameInput = document.getElementById('character-name');
             const characterName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : '';
             
+            // Get age if present
+            const ageInput = document.getElementById('age') || document.querySelector('input[data-field="age"]');
+            const age = ageInput && ageInput.value ? parseInt(ageInput.value) : null;
+            
             // Combine and order tags properly
             const allTags = [...this.state.selectedTags, ...customTags];
+            
+            // Add age to tags if present
+            if (age && age >= 18) {
+                allTags.push(`${age} years old`);
+            }
             const orderedTags = this.orderTagsForPrompt(allTags);
             
             // Update UI
