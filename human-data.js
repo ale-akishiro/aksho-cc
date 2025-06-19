@@ -604,45 +604,111 @@ const HUMAN_DATA = {
             label: 'HAIRSTYLE',
             type: 'select',
             priority: 'essential',
+            useSubcategories: true,
+            optgroups: [
+                {
+                    label: 'DEFAULT',
+                    options: [
+                        { value: '', label: 'SELECT HAIRSTYLE...' }
+                    ]
+                },
+                {
+                    label: 'BASIC CUTS',
+                    options: [
+                        { value: 'bob cut', label: 'BOB CUT' },
+                        { value: 'hime cut', label: 'HIME CUT' },
+                        { value: 'bowl cut', label: 'BOWL CUT' },
+                        { value: 'undercut', label: 'UNDERCUT' },
+                        { value: 'mohawk', label: 'MOHAWK' },
+                        { value: 'buzz cut', label: 'BUZZ CUT' }
+                    ]
+                },
+                {
+                    label: 'PONYTAILS & TAILS',
+                    options: [
+                        { value: 'ponytail', label: 'PONYTAIL' },
+                        { value: 'high ponytail', label: 'HIGH PONYTAIL' },
+                        { value: 'low ponytail', label: 'LOW PONYTAIL' },
+                        { value: 'side ponytail', label: 'SIDE PONYTAIL' },
+                        { value: 'twintails', label: 'TWINTAILS' },
+                        { value: 'low twintails', label: 'LOW TWINTAILS' }
+                    ]
+                },
+                {
+                    label: 'BUNS & UPDOS',
+                    options: [
+                        { value: 'hair bun', label: 'HAIR BUN' },
+                        { value: 'side bun', label: 'SIDE BUN' },
+                        { value: 'double bun', label: 'DOUBLE BUN' },
+                        { value: 'chignon', label: 'CHIGNON' },
+                        { value: 'top knot', label: 'TOP KNOT' }
+                    ]
+                },
+                {
+                    label: 'BRAIDED STYLES',
+                    options: [
+                        { value: 'braid', label: 'BRAID' },
+                        { value: 'side braid', label: 'SIDE BRAID' },
+                        { value: 'twin braids', label: 'TWIN BRAIDS' },
+                        { value: 'french braid', label: 'FRENCH BRAID' },
+                        { value: 'crown braid', label: 'CROWN BRAID' },
+                        { value: 'box braids', label: 'BOX BRAIDS' },
+                        { value: 'cornrows', label: 'CORNROWS' },
+                        { value: 'dreadlocks', label: 'DREADLOCKS' }
+                    ]
+                },
+                {
+                    label: 'LOOSE STYLES',
+                    options: [
+                        { value: 'loose hair', label: 'LOOSE HAIR' },
+                        { value: 'hair over shoulder', label: 'HAIR OVER SHOULDER' },
+                        { value: 'hair behind ear', label: 'HAIR BEHIND EAR' }
+                    ]
+                },
+                {
+                    label: 'SPECIAL STYLES',
+                    options: [
+                        { value: 'afro', label: 'AFRO' },
+                        { value: 'pompadour', label: 'POMPADOUR' },
+                        { value: 'bantu knots', label: 'BANTU KNOTS' },
+                        { value: 'twist-outs', label: 'TWIST-OUTS' }
+                    ]
+                }
+            ]
+        },
+        
+        hairCondition: {
+            label: 'HAIR CONDITION',
+            type: 'toggle',
+            priority: 'optional',
+            optional: true,
             options: [
-                { value: '', label: 'SELECT HAIRSTYLE...' },
-                
-                // Professional Styles
-                { value: 'business cut', label: 'BUSINESS CUT' },
-                { value: 'corporate style', label: 'CORPORATE STYLE' },
-                { value: 'professional updo', label: 'PROFESSIONAL UPDO' },
-                { value: 'neat ponytail', label: 'NEAT PONYTAIL' },
-                { value: 'conservative style', label: 'CONSERVATIVE STYLE' },
-                
-                // Casual Styles
-                { value: 'messy bun', label: 'MESSY BUN' },
-                { value: 'loose waves', label: 'LOOSE WAVES' },
-                { value: 'beach waves', label: 'BEACH WAVES' },
+                { value: 'messy hair', label: 'MESSY HAIR' },
+                { value: 'disheveled hair', label: 'DISHEVELED HAIR' },
+                { value: 'neat hair', label: 'NEAT HAIR' },
+                { value: 'well-groomed hair', label: 'WELL-GROOMED HAIR' },
+                { value: 'windblown hair', label: 'WINDBLOWN HAIR' },
                 { value: 'tousled hair', label: 'TOUSLED HAIR' },
-                { value: 'bedhead style', label: 'BEDHEAD STYLE' },
-                
-                // Elaborate Styles
-                { value: 'intricate braids', label: 'INTRICATE BRAIDS' },
-                { value: 'formal updo', label: 'FORMAL UPDO' },
-                { value: 'wedding hair', label: 'WEDDING HAIR' },
-                { value: 'red carpet style', label: 'RED CARPET STYLE' },
-                { value: 'vintage style', label: 'VINTAGE STYLE' },
-                
-                // Cultural Styles
-                { value: 'afro puffs', label: 'AFRO PUFFS' },
-                { value: 'bantu knots', label: 'BANTU KNOTS' },
-                { value: 'box braids', label: 'BOX BRAIDS' },
-                { value: 'cornrows', label: 'CORNROWS' },
-                { value: 'dreadlocks', label: 'DREADLOCKS' },
-                { value: 'twist-outs', label: 'TWIST-OUTS' },
-                
-                // Alternative Styles
-                { value: 'undercut', label: 'UNDERCUT' },
-                { value: 'mohawk', label: 'MOHAWK' },
-                { value: 'shaved sides', label: 'SHAVED SIDES' },
-                { value: 'punk style', label: 'PUNK STYLE' },
-                { value: 'emo fringe', label: 'EMO FRINGE' },
-                { value: 'scene hair', label: 'SCENE HAIR' }
+                { value: 'bedhead style', label: 'BEDHEAD STYLE' }
+            ]
+        },
+        
+        specialHairFeatures: {
+            label: 'SPECIAL HAIR FEATURES',
+            type: 'toggle',
+            priority: 'optional',
+            optional: true,
+            options: [
+                { value: 'ahoge', label: 'AHOGE' },
+                { value: 'antenna hair', label: 'ANTENNA HAIR' },
+                { value: 'drill hair', label: 'DRILL HAIR' },
+                { value: 'spiked hair', label: 'SPIKED HAIR' },
+                { value: 'fluffy hair', label: 'FLUFFY HAIR' },
+                { value: 'floating hair', label: 'FLOATING HAIR' },
+                { value: 'hair ornament', label: 'HAIR ORNAMENT' },
+                { value: 'hair flower', label: 'HAIR FLOWER' },
+                { value: 'hair ribbon', label: 'HAIR RIBBON' },
+                { value: 'hair bow', label: 'HAIR BOW' }
             ]
         },
         
