@@ -55,7 +55,7 @@ const HUMAN_DATA = {
         },
         
         ethnicity: {
-            label: 'ETHNICITY & HERITAGE <span class="optional-text">(OPTIONAL)</span>',
+            label: 'ETHNICITY & HERITAGE',
             type: 'select',
             priority: 'optional',
             optional: true,
@@ -281,7 +281,7 @@ const HUMAN_DATA = {
         },
         
         height: {
-            label: 'HEIGHT <span class="optional-text">(OPTIONAL)</span>',
+            label: 'HEIGHT',
             type: 'select',
             priority: 'optional',
             optional: true,
@@ -338,7 +338,7 @@ const HUMAN_DATA = {
         
         
         skinTexture: {
-            label: 'SKIN TEXTURE <span class="optional-text">(OPTIONAL)</span>',
+            label: 'SKIN TEXTURE',
             type: 'select',
             priority: 'optional',
             optional: true,
@@ -355,7 +355,7 @@ const HUMAN_DATA = {
         },
         
         skinFeatures: {
-            label: 'SKIN FEATURES <span class="optional-text">(OPTIONAL)</span>',
+            label: 'SKIN FEATURES',
             type: 'toggle',
             priority: 'optional',
             optional: true,
@@ -1131,7 +1131,7 @@ const HUMAN_DATA = {
         },
         
         genitalFeatures: {
-            label: 'Genital Features (Adult)',
+            label: 'Genital Features',
             type: 'toggle',
             priority: 'nsfw',
             options: [
