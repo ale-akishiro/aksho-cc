@@ -681,12 +681,16 @@ body::before {
 }
 
 .optional-text {
-    font-weight: 400;
-    font-size: 0.85em;
-    color: #6b7280;
-    font-style: italic;
-    margin-left: 4px;
-    opacity: 0.8;
+    font-weight: 500;
+    font-size: 0.8em;
+    color: #8b5cf6;
+    font-style: normal;
+    margin-left: 6px;
+    opacity: 0.9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 /* Form Controls */
@@ -757,13 +761,23 @@ optgroup option:hover {
 /* Global Controls at Top of Tag Column */
 .global-controls {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 15px 0;
     margin-bottom: 20px;
     border-bottom: 2px solid rgba(139, 92, 246, 0.1);
     gap: 8px;
     flex-wrap: wrap;
+}
+
+.global-controls-left {
+    display: flex;
+    gap: 8px;
+}
+
+.global-controls-right {
+    display: flex;
+    gap: 8px;
 }
 
 /* Section Header with Toggle Button */
@@ -887,26 +901,26 @@ optgroup option:hover {
     transform: translateY(0);
 }
 
-/* Hide Optional - Purple */
+/* Hide Optional (OFF state) - Grey like subcategories */
 .optional-toggle.hide-optional {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    color: #e5e7eb;
+    box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+}
+
+.optional-toggle.hide-optional:hover {
+    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
+}
+
+/* Show Optional (ON state) - Purple like subcategories */
+.optional-toggle.show-optional {
     background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
     color: white;
     box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
 }
 
-.optional-toggle.hide-optional:hover {
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
-}
-
-/* Show Optional - Lighter Purple */
-.optional-toggle.show-optional {
-    background: linear-gradient(135deg, #c084fc 0%, #a78bfa 100%);
-    color: white;
-    box-shadow: 0 2px 8px rgba(192, 132, 252, 0.3);
-}
-
 .optional-toggle.show-optional:hover {
-    box-shadow: 0 4px 15px rgba(192, 132, 252, 0.4);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
 }
 
 /* Category Type Styling */

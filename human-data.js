@@ -52,8 +52,9 @@ const HUMAN_DATA = {
         },
         
         ethnicity: {
-            label: 'ETHNICITY & HERITAGE',
+            label: 'ETHNICITY & HERITAGE <span class="optional-text">(OPTIONAL)</span>',
             type: 'select',
+            optional: true,
             useSubcategories: true,
             optgroups: [
                 {
@@ -275,8 +276,9 @@ const HUMAN_DATA = {
         },
         
         height: {
-            label: 'HEIGHT',
+            label: 'HEIGHT <span class="optional-text">(OPTIONAL)</span>',
             type: 'select',
+            optional: true,
             options: [
                 { value: '', label: 'SELECT HEIGHT...' },
                 { value: 'very short height', label: 'VERY SHORT' },
@@ -328,7 +330,7 @@ const HUMAN_DATA = {
         
         
         skinTexture: {
-            label: 'SKIN TEXTURE <span class="optional-text">*optional</span>',
+            label: 'SKIN TEXTURE <span class="optional-text">(OPTIONAL)</span>',
             type: 'select',
             optional: true,
             options: [
@@ -344,8 +346,9 @@ const HUMAN_DATA = {
         },
         
         skinFeatures: {
-            label: 'SKIN FEATURES',
+            label: 'SKIN FEATURES <span class="optional-text">(OPTIONAL)</span>',
             type: 'toggle',
+            optional: true,
             options: [
                 { value: 'body blush', label: 'BODY BLUSH' },
                 { value: 'sun tan', label: 'SUN TAN' },
@@ -1343,15 +1346,19 @@ function initializeHumanForm() {
     try {
         container.innerHTML = `
             <div class="global-controls">
-                <button class="subcategory-toggle subcategory-on" onclick="toggleSubcategories()" title="Click to disable subcategories (switch to flat list view)">
-                    SUBCATEGORIES
-                </button>
-                <button class="content-toggle sfw-mode" onclick="toggleContentRating()" title="Toggle between SFW and NSFW content">
-                    SFW
-                </button>
-                <button class="optional-toggle hide-optional" onclick="toggleOptionalContent()" title="Toggle optional content visibility">
-                    HIDE OPTIONAL
-                </button>
+                <div class="global-controls-left">
+                    <button class="content-toggle sfw-mode" onclick="toggleContentRating()" title="Toggle between SFW and NSFW content">
+                        SFW
+                    </button>
+                </div>
+                <div class="global-controls-right">
+                    <button class="subcategory-toggle subcategory-on" onclick="toggleSubcategories()" title="Click to disable subcategories (switch to flat list view)">
+                        SUBCATEGORIES
+                    </button>
+                    <button class="optional-toggle hide-optional" onclick="toggleOptionalContent()" title="Toggle optional content visibility">
+                        HIDE OPTIONAL
+                    </button>
+                </div>
             </div>
 
             <div class="section">
