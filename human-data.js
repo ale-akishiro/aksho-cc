@@ -1420,52 +1420,52 @@ function initializeHumanForm() {
             </div>
 
             <div class="section">
-                <h3>Hair Features</h3>
+                <h3>HAIR FEATURES</h3>
                 ${generateFormSection(HUMAN_DATA.hair)}
             </div>
 
             <div class="section">
-                <h3>Facial Features</h3>
+                <h3>FACIAL FEATURES</h3>
                 ${generateFormSection(HUMAN_DATA.facialFeatures)}
             </div>
 
             <div class="section">
-                <h3>Beauty Marks & Skin</h3>
+                <h3>BEAUTY MARKS & SKIN</h3>
                 ${generateFormSection(HUMAN_DATA.beautyMarks)}
             </div>
 
             <div class="section">
-                <h3>Body Build</h3>
+                <h3>BODY BUILD</h3>
                 ${generateFormSection(HUMAN_DATA.bodyBuild)}
             </div>
 
             <div class="section">
-                <h3>Torso Details</h3>
+                <h3>TORSO DETAILS</h3>
                 ${generateFormSection(HUMAN_DATA.torsoDetailed)}
             </div>
 
             <div class="section">
-                <h3>Lower Body Details</h3>
+                <h3>LOWER BODY DETAILS</h3>
                 ${generateFormSection(HUMAN_DATA.lowerBodyDetailed)}
             </div>
 
             <div class="section">
-                <h3>Hands & Feet</h3>
+                <h3>HANDS & FEET</h3>
                 ${generateFormSection(HUMAN_DATA.extremities)}
             </div>
 
             <div class="section">
-                <h3>Body Modifications</h3>
+                <h3>BODY MODIFICATIONS</h3>
                 ${generateFormSection(HUMAN_DATA.bodyModifications)}
             </div>
 
             <div class="section">
-                <h3>Accessories</h3>
+                <h3>ACCESSORIES</h3>
                 ${generateFormSection(HUMAN_DATA.accessories)}
             </div>
 
             <div class="section">
-                <h3>Custom Tags</h3>
+                <h3>CUSTOM TAGS</h3>
                 <div class="form-group">
                     <label for="custom-tags">Additional Tags (comma-separated)</label>
                     <textarea id="custom-tags" placeholder="Enter custom tags separated by commas..."></textarea>
