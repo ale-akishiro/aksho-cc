@@ -12,9 +12,6 @@
 
 // === APPLICATION STATE ===
 
-// NAI API variables (memory-only for privacy)
-let naiApiKey = null;
-let currentGeneratedImage = null;
 
 const AppState = {
     // Current application state
@@ -352,9 +349,6 @@ class AkshoStudio {
             case 'home':
                 this.setupHomeTabFeatures();
                 break;
-            case 'nai-generation':
-                this.setupNAITabFeatures();
-                break;
             case 'aksho-style':
             case 'furry':
             case 'closet':
@@ -453,32 +447,6 @@ class AkshoStudio {
         }
     }
 
-    /**
-     * Setup NAI tab features
-     */
-    setupNAITabFeatures() {
-        // Remove HOME layout class and restore 2-column layout
-        const mainContent = document.querySelector('.main-content');
-        if (mainContent) {
-            mainContent.classList.remove('home-layout');
-        }
-        
-        // Hide output panel and image viewer for NAI tab
-        const outputPanel = document.querySelector('.output-panel');
-        const imageViewer = document.querySelector('.image-viewer');
-        
-        if (outputPanel) {
-            outputPanel.style.display = 'none';
-        }
-        
-        if (imageViewer) {
-            imageViewer.style.display = 'none';
-        }
-        
-        // Setup NAI-specific features
-        setupNAIKeyMonitoring();
-        updateNAIPromptPreview();
-    }
 
     /**
      * Setup coming soon tab features (for non-functional tabs)
@@ -750,10 +718,6 @@ class AkshoStudio {
             
             summaryText.textContent = summary;
             
-            // Update NAI prompt preview if available
-            if (typeof updateNAIPromptPreview === 'function') {
-                updateNAIPromptPreview();
-            }
             
             // Track performance
             const endTime = performance.now();
@@ -1381,225 +1345,6 @@ function exportToFile() {
     console.log('Export to file functionality coming soon!');
 }
 
-// === NAI GENERATION FUNCTIONS ===
-
-/**
- * Global NAI state - stored only in memory for privacy
- * (Variables declared at top of file)
- */
-
-/**
- * Monitor API key input and update UI
- */
-function setupNAIKeyMonitoring() {
-    const apiKeyInput = document.getElementById('nai-api-key');
-    const statusDiv = document.getElementById('api-key-status');
-    const generateBtn = document.getElementById('generate-btn');
-    
-    if (!apiKeyInput || !statusDiv || !generateBtn) return;
-    
-    apiKeyInput.addEventListener('input', function() {
-        const key = this.value.trim();
-        
-        if (key.length === 0) {
-            naiApiKey = null;
-            statusDiv.textContent = '🔒 API KEY NOT ENTERED - ENTER YOUR KEY TO GENERATE IMAGES';
-            statusDiv.className = 'api-key-status';
-            generateBtn.disabled = true;
-        } else if (key.length < 20) {
-            naiApiKey = null;
-            statusDiv.textContent = '⚠️ API KEY TOO SHORT - PLEASE ENTER A VALID NOVELAI API KEY';
-            statusDiv.className = 'api-key-status';
-            generateBtn.disabled = true;
-        } else {
-            naiApiKey = key;
-            statusDiv.textContent = '✅ API KEY ENTERED - READY TO GENERATE IMAGES';
-            statusDiv.className = 'api-key-status valid';
-            generateBtn.disabled = false;
-        }
-        
-        // Update prompt preview when key is valid
-        if (naiApiKey) {
-            updateNAIPromptPreview();
-        }
-    });
-}
-
-/**
- * Update the prompt preview in NAI tab
- */
-function updateNAIPromptPreview() {
-    const promptPreview = document.getElementById('nai-prompt-preview');
-    const outputText = document.getElementById('output-text');
-    
-    if (!promptPreview || !outputText) return;
-    
-    const currentPrompt = outputText.textContent;
-    
-    if (currentPrompt === 'Select options to generate tags...') {
-        promptPreview.textContent = 'No prompt generated yet. Create a character to see the prompt.';
-    } else {
-        promptPreview.textContent = currentPrompt;
-    }
-}
-
-/**
- * Generate image using Vercel proxy
- */
-async function generateNAIImage() {
-    if (!naiApiKey) {
-        alert('Please enter your NovelAI API key first.');
-        return;
-    }
-    
-    const generateBtn = document.getElementById('generate-btn');
-    const imageResult = document.getElementById('image-result');
-    const imageActions = document.getElementById('image-actions');
-    const promptPreview = document.getElementById('nai-prompt-preview');
-    
-    // Get generation settings
-    const width = parseInt(document.getElementById('nai-width').value);
-    const height = parseInt(document.getElementById('nai-height').value);
-    const steps = parseInt(document.getElementById('nai-steps').value);
-    const scale = parseInt(document.getElementById('nai-scale').value);
-    
-    const prompt = promptPreview.textContent;
-    
-    if (prompt === 'No prompt generated yet. Create a character to see the prompt.') {
-        alert('Please create a character prompt first by using the Human or Monster tabs.');
-        return;
-    }
-    
-    // Update UI to show generating state
-    generateBtn.disabled = true;
-    generateBtn.classList.add('generating');
-    generateBtn.textContent = '🎨 GENERATING...';
-    
-    imageResult.innerHTML = '<div class="loading-spinner"></div><div class="placeholder-text">Generating via Vercel proxy...</div>';
-    imageActions.style.display = 'none';
-    
-    try {
-        console.log('🚀 Using Vercel proxy for NovelAI generation');
-        
-        // Use Vercel serverless function proxy
-        const response = await fetch('/api/generate-image', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                apiKey: naiApiKey,
-                prompt: prompt,
-                settings: {
-                    width: width,
-                    height: height,
-                    scale: scale,
-                    steps: steps,
-                    sampler: 'k_euler'
-                }
-            })
-        });
-        
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-            throw new Error(errorData.error || `HTTP ${response.status}`);
-        }
-        
-        const result = await response.json();
-        
-        if (result.success && result.image) {
-            // Display the generated image
-            currentGeneratedImage = result.image;
-            imageResult.innerHTML = `<img src="${result.image}" alt="Generated character image">`;
-            imageActions.style.display = 'flex';
-            
-            console.log('✅ Image generated successfully via Vercel proxy');
-            return;
-        } else {
-            throw new Error(result.error || 'Unknown proxy error');
-        }
-        
-    } catch (error) {
-        console.error('❌ Vercel proxy failed:', error);
-        
-        let errorMessage = '🚫 Image generation failed.\n\n';
-        
-        if (error.message.includes('Invalid API key') || error.message.includes('INVALID_API_KEY')) {
-            errorMessage += '🔑 Invalid API key. Please check your NovelAI API key.';
-        } else if (error.message.includes('Insufficient credits') || error.message.includes('INSUFFICIENT_CREDITS')) {
-            errorMessage += '💳 Insufficient credits. Please check your NovelAI account balance.';
-        } else if (error.message.includes('Rate limit') || error.message.includes('RATE_LIMITED')) {
-            errorMessage += '⏰ Rate limit exceeded. Please wait a moment and try again.';
-        } else if (error.message.includes('404') || error.message.includes('Not Found')) {
-            errorMessage += '⚠️ Vercel proxy not deployed yet.\n\n';
-            errorMessage += '💡 Solutions:\n';
-            errorMessage += '1. Deploy to Vercel (see deployment instructions)\n';
-            errorMessage += '2. Use "COPY PROMPT" and paste into NovelAI website\n\n';
-            errorMessage += '📋 Copy prompt works immediately without deployment.';
-        } else {
-            errorMessage += '💡 Possible solutions:\n';
-            errorMessage += '1. Check your internet connection\n';
-            errorMessage += '2. Verify the Vercel proxy is deployed\n';
-            errorMessage += '3. Use "COPY PROMPT" as reliable fallback\n\n';
-            errorMessage += `📋 Error: ${error.message}`;
-        }
-        
-        imageResult.innerHTML = `<div class="placeholder-text" style="color: #dc2626; white-space: pre-line; text-align: left; font-size: 13px;">${errorMessage}</div>`;
-        imageActions.style.display = 'none';
-        
-    } finally {
-        // Reset button state
-        generateBtn.disabled = false;
-        generateBtn.classList.remove('generating');
-        generateBtn.textContent = '🎨 GENERATE IMAGE';
-    }
-}
-
-/**
- * Copy prompt to clipboard
- */
-function copyPromptToClipboard() {
-    const promptPreview = document.getElementById('nai-prompt-preview');
-    const prompt = promptPreview.textContent;
-    
-    if (prompt === 'No prompt generated yet. Create a character to see the prompt.') {
-        alert('No prompt to copy. Please create a character first.');
-        return;
-    }
-    
-    navigator.clipboard.writeText(prompt).then(() => {
-        // Show feedback
-        const btn = document.querySelector('.copy-prompt-btn');
-        const originalText = btn.textContent;
-        btn.textContent = '✅ COPIED!';
-        btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-        
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-        }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy prompt:', err);
-        alert('Failed to copy prompt to clipboard.');
-    });
-}
-
-/**
- * Download generated image
- */
-function downloadImage() {
-    if (!currentGeneratedImage) {
-        alert('No image to download.');
-        return;
-    }
-    
-    const link = document.createElement('a');
-    link.href = currentGeneratedImage;
-    link.download = `akshoverse-generated-${Date.now()}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
 
 // === APPLICATION INITIALIZATION ===
 
