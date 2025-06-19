@@ -28,11 +28,11 @@ const HUMAN_DATA = {
         },
         
         gender: {
-            label: 'GENDER + LIFE STAGE',
+            label: 'GENDER & LIFE STAGE',
             type: 'select',
             required: true,
             options: [
-                { value: '', label: 'SELECT GENDER AND STAGE...' },
+                { value: '', label: 'SELECT GENDER & LIFE STAGE...' },
                 { value: 'adult female', label: 'ADULT FEMALE' },
                 { value: 'mature female', label: 'MATURE FEMALE' },
                 { value: 'elderly female', label: 'ELDERLY FEMALE' },
@@ -57,7 +57,13 @@ const HUMAN_DATA = {
             useSubcategories: true,
             optgroups: [
                 {
-                    label: 'European Heritage',
+                    label: 'DEFAULT',
+                    options: [
+                        { value: '', label: 'SELECT ETHNICITY & HERITAGE...' }
+                    ]
+                },
+                {
+                    label: 'EUROPEAN HERITAGE',
                     options: [
                         { value: 'european', label: 'EUROPEAN' },
                         { value: 'scandinavian', label: 'SCANDINAVIAN' },
@@ -68,7 +74,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'East Asian Heritage',
+                    label: 'EAST ASIAN HERITAGE',
                     options: [
                         { value: 'east asian', label: 'EAST ASIAN' },
                         { value: 'chinese', label: 'CHINESE' },
@@ -80,7 +86,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'South Asian Heritage',
+                    label: 'SOUTH ASIAN HERITAGE',
                     options: [
                         { value: 'south asian', label: 'SOUTH ASIAN' },
                         { value: 'indian', label: 'INDIAN' },
@@ -91,7 +97,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'Middle Eastern Heritage',
+                    label: 'MIDDLE EASTERN HERITAGE',
                     options: [
                         { value: 'middle eastern', label: 'MIDDLE EASTERN' },
                         { value: 'arabic', label: 'ARABIC' },
@@ -102,7 +108,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'African Heritage',
+                    label: 'AFRICAN HERITAGE',
                     options: [
                         { value: 'african', label: 'AFRICAN' },
                         { value: 'west african', label: 'WEST AFRICAN' },
@@ -113,7 +119,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'Latino/Hispanic Heritage',
+                    label: 'LATINO/HISPANIC HERITAGE',
                     options: [
                         { value: 'latino/hispanic', label: 'LATINO/HISPANIC' },
                         { value: 'mexican', label: 'MEXICAN' },
@@ -124,7 +130,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'Indigenous Heritage',
+                    label: 'INDIGENOUS HERITAGE',
                     options: [
                         { value: 'native american', label: 'NATIVE AMERICAN' },
                         { value: 'inuit', label: 'INUIT' },
@@ -134,7 +140,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'Mixed Heritage',
+                    label: 'MIXED HERITAGE',
                     options: [
                         { value: 'mixed heritage', label: 'MIXED HERITAGE' },
                         { value: 'multiracial', label: 'MULTIRACIAL' },
@@ -145,7 +151,7 @@ const HUMAN_DATA = {
                 }
             ],
             flatOptions: [
-                { value: '', label: 'SELECT ETHNICITY...' },
+                { value: '', label: 'SELECT ETHNICITY & HERITAGE...' },
                 { value: 'european', label: 'EUROPEAN' },
                 { value: 'scandinavian', label: 'SCANDINAVIAN' },
                 { value: 'mediterranean', label: 'MEDITERRANEAN' },
@@ -202,7 +208,13 @@ const HUMAN_DATA = {
             useSubcategories: true,
             optgroups: [
                 {
-                    label: 'Light Tones',
+                    label: 'DEFAULT',
+                    options: [
+                        { value: '', label: 'SELECT SKIN TONE...' }
+                    ]
+                },
+                {
+                    label: 'LIGHT TONES',
                     options: [
                         { value: 'pale skin', label: 'PALE SKIN' },
                         { value: 'fair skin', label: 'FAIR SKIN' },
@@ -212,7 +224,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'Medium Tones',
+                    label: 'MEDIUM TONES',
                     options: [
                         { value: 'medium skin', label: 'MEDIUM SKIN' },
                         { value: 'olive skin', label: 'OLIVE SKIN' },
@@ -222,7 +234,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'Dark Tones',
+                    label: 'DARK TONES',
                     options: [
                         { value: 'tan skin', label: 'TAN SKIN' },
                         { value: 'brown skin', label: 'BROWN SKIN' },
@@ -232,7 +244,7 @@ const HUMAN_DATA = {
                     ]
                 },
                 {
-                    label: 'Special Tones',
+                    label: 'SPECIAL TONES',
                     options: [
                         { value: 'rosy skin', label: 'ROSY SKIN' },
                         { value: 'warm skin', label: 'WARM SKIN' },
