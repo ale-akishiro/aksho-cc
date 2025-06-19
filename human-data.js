@@ -662,6 +662,7 @@ const HUMAN_DATA = {
             label: 'SIDELOCKS',
             type: 'select',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: '', label: 'SELECT SIDELOCKS...' },
                 { value: 'very short sidelocks', label: 'VERY SHORT SIDELOCKS' },
@@ -682,6 +683,7 @@ const HUMAN_DATA = {
             label: 'HAIR ACCESSORIES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'hair clips', label: 'HAIR CLIPS' },
                 { value: 'hair pins', label: 'HAIR PINS' },
@@ -701,6 +703,7 @@ const HUMAN_DATA = {
             label: 'FACE SHAPE',
             type: 'select',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: '', label: 'SELECT FACE SHAPE...' },
                 { value: 'oval face', label: 'OVAL FACE' },
@@ -718,6 +721,7 @@ const HUMAN_DATA = {
             label: 'FOREHEAD',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'high forehead', label: 'HIGH FOREHEAD' },
                 { value: 'low forehead', label: 'LOW FOREHEAD' },
@@ -725,7 +729,7 @@ const HUMAN_DATA = {
                 { value: 'narrow forehead', label: 'NARROW FOREHEAD' },
                 { value: 'prominent forehead', label: 'PROMINENT FOREHEAD' },
                 { value: 'receding hairline', label: 'RECEDING HAIRLINE' },
-                { value: "widow's peak", label: "WIDOW's Peak" }
+                { value: "widow's peak", label: "WIDOW'S PEAK" }
             ]
         },
         
@@ -733,6 +737,7 @@ const HUMAN_DATA = {
             label: 'EYEBROW VARIATIONS',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'thin eyebrows', label: 'THIN EYEBROWS' },
                 { value: 'thick eyebrows', label: 'THICK EYEBROWS' },
@@ -751,6 +756,7 @@ const HUMAN_DATA = {
             label: 'EYE SHAPE & FEATURES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'almond eyes', label: 'ALMOND EYES' },
                 { value: 'round eyes', label: 'ROUND EYES' },
@@ -812,6 +818,7 @@ const HUMAN_DATA = {
             label: 'EYE FEATURES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'long eyelashes', label: 'LONG EYELASHES' },
                 { value: 'short eyelashes', label: 'SHORT EYELASHES' },
@@ -823,7 +830,7 @@ const HUMAN_DATA = {
                 { value: 'light eyelids', label: 'LIGHT EYELIDS' },
                 { value: 'eyebags', label: 'EYEBAGS' },
                 { value: 'dark circles', label: 'DARK CIRCLES' },
-                { value: "crow's feet", label: "CROW's Feet" },
+                { value: "crow's feet", label: "CROW'S FEET" },
                 { value: 'laugh lines', label: 'LAUGH LINES' }
             ]
         },
@@ -832,6 +839,7 @@ const HUMAN_DATA = {
             label: 'NOSE VARIATIONS',
             type: 'select',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: '', label: 'SELECT NOSE TYPE...' },
                 { value: 'button nose', label: 'BUTTON NOSE' },
@@ -853,6 +861,7 @@ const HUMAN_DATA = {
             label: 'LIP VARIATIONS',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'thin lips', label: 'THIN LIPS' },
                 { value: 'full lips', label: 'FULL LIPS' },
@@ -870,6 +879,7 @@ const HUMAN_DATA = {
             label: 'CHEEK FEATURES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'high cheekbones', label: 'HIGH CHEEKBONES' },
                 { value: 'low cheekbones', label: 'LOW CHEEKBONES' },
@@ -885,6 +895,7 @@ const HUMAN_DATA = {
             label: 'JAW & CHIN',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'strong jaw', label: 'STRONG JAW' },
                 { value: 'weak jaw', label: 'WEAK JAW' },
@@ -904,6 +915,7 @@ const HUMAN_DATA = {
             label: 'BEAUTY MARKS & MOLES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'freckles', label: 'FRECKLES' },
                 { value: 'freckles on whole body', label: 'FRECKLES ON WHOLE BODY' },
@@ -926,6 +938,7 @@ const HUMAN_DATA = {
             label: 'SKIN CONDITIONS & MARKS',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'sun spots', label: 'SUN SPOTS' },
                 { value: 'age spots', label: 'AGE SPOTS' },
@@ -959,6 +972,7 @@ const HUMAN_DATA = {
             label: 'MUSCLE DEFINITION',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'no muscle definition', label: 'NO MUSCLE DEFINITION' },
                 { value: 'subtle muscle tone', label: 'SUBTLE MUSCLE TONE' },
@@ -1027,6 +1041,7 @@ const HUMAN_DATA = {
             label: 'TORSO FEATURES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'broad shoulders', label: 'BROAD SHOULDERS' },
                 { value: 'narrow shoulders', label: 'NARROW SHOULDERS' },
@@ -1048,6 +1063,7 @@ const HUMAN_DATA = {
             label: 'WAIST VARIATIONS',
             type: 'select',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: '', label: 'SELECT WAIST TYPE...' },
                 { value: 'no waist definition', label: 'NO WAIST DEFINITION' },
@@ -1067,6 +1083,7 @@ const HUMAN_DATA = {
             label: 'HIP VARIATIONS',
             type: 'select',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: '', label: 'SELECT HIP TYPE...' },
                 { value: 'narrow hips', label: 'NARROW HIPS' },
@@ -1099,6 +1116,7 @@ const HUMAN_DATA = {
             label: 'THIGH TYPES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'skinny thighs', label: 'SKINNY THIGHS' },
                 { value: 'athletic thighs', label: 'ATHLETIC THIGHS' },
@@ -1113,6 +1131,7 @@ const HUMAN_DATA = {
             label: 'LEG FEATURES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'long legs', label: 'LONG LEGS' },
                 { value: 'short legs', label: 'SHORT LEGS' },
@@ -1159,6 +1178,7 @@ const HUMAN_DATA = {
             label: 'HAND FEATURES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'small hands', label: 'SMALL HANDS' },
                 { value: 'large hands', label: 'LARGE HANDS' },
@@ -1177,6 +1197,7 @@ const HUMAN_DATA = {
             label: 'NAIL FEATURES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'short nails', label: 'SHORT NAILS' },
                 { value: 'long nails', label: 'LONG NAILS' },
@@ -1193,6 +1214,7 @@ const HUMAN_DATA = {
             label: 'FOOT FEATURES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'small feet', label: 'SMALL FEET' },
                 { value: 'large feet', label: 'LARGE FEET' },
@@ -1214,6 +1236,7 @@ const HUMAN_DATA = {
             label: 'TATTOO CATEGORIES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 // Size
                 { value: 'small tattoo', label: 'SMALL TATTOO' },
@@ -1253,6 +1276,7 @@ const HUMAN_DATA = {
             label: 'PIERCING OPTIONS',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 // Ear
                 { value: 'lobe piercing', label: 'LOBE PIERCING' },
@@ -1281,6 +1305,7 @@ const HUMAN_DATA = {
             label: 'SCAR TYPES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'surgical scars', label: 'SURGICAL SCARS' },
                 { value: 'accident scars', label: 'ACCIDENT SCARS' },
@@ -1301,6 +1326,7 @@ const HUMAN_DATA = {
             label: 'JEWELRY CATEGORIES',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 // Necklaces
                 { value: 'choker', label: 'CHOKER' },
@@ -1338,6 +1364,7 @@ const HUMAN_DATA = {
             label: 'EYEWEAR',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'glasses', label: 'GLASSES' },
                 { value: 'sunglasses', label: 'SUNGLASSES' },
@@ -1359,6 +1386,7 @@ const HUMAN_DATA = {
             label: 'CLOTHING STYLE',
             type: 'toggle',
             priority: 'optional',
+            optional: true,
             options: [
                 { value: 'casual style', label: 'CASUAL STYLE' },
                 { value: 'formal style', label: 'FORMAL STYLE' },
