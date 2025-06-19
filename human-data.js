@@ -375,6 +375,12 @@ const HUMAN_DATA = {
             useSubcategories: true,
             optgroups: [
                 {
+                    label: 'DEFAULT',
+                    options: [
+                        { value: '', label: 'SELECT HAIR COLOR...' }
+                    ]
+                },
+                {
                     label: 'WHITE & GRAY RANGE',
                     options: [
                         { value: 'white hair', label: 'WHITE HAIR' },
@@ -474,6 +480,7 @@ const HUMAN_DATA = {
             ],
             // Flat version without subcategories (for toggle feature)
             flatOptions: [
+                { value: '', label: 'SELECT HAIR COLOR...' },
                 // White/Gray
                 { value: 'white hair', label: 'WHITE HAIR' },
                 { value: 'platinum white hair', label: 'PLATINUM WHITE HAIR' },
