@@ -677,19 +677,47 @@ const HUMAN_DATA = {
             ]
         },
         
-        hairCondition: {
-            label: 'HAIR CONDITION',
-            type: 'toggle',
+        sidelocks: {
+            label: 'SIDELOCKS',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT SIDELOCKS...' },
+                { value: 'very short sidelocks', label: 'VERY SHORT SIDELOCKS' },
+                { value: 'short sidelocks', label: 'SHORT SIDELOCKS' },
+                { value: 'medium sidelocks', label: 'MEDIUM SIDELOCKS' },
+                { value: 'long sidelocks', label: 'LONG SIDELOCKS' },
+                { value: 'very long sidelocks', label: 'VERY LONG SIDELOCKS' },
+                { value: 'single sidelock', label: 'SINGLE SIDELOCK' },
+                { value: 'very short single sidelock', label: 'VERY SHORT SINGLE SIDELOCK' },
+                { value: 'short single sidelock', label: 'SHORT SINGLE SIDELOCK' },
+                { value: 'medium single sidelock', label: 'MEDIUM SINGLE SIDELOCK' },
+                { value: 'long single sidelock', label: 'LONG SINGLE SIDELOCK' },
+                { value: 'very long single sidelock', label: 'VERY LONG SINGLE SIDELOCK' },
+                { value: 'curly sidelocks', label: 'CURLY SIDELOCKS' },
+                { value: 'drill sidelocks', label: 'DRILL SIDELOCKS' },
+                { value: 'braided sidelocks', label: 'BRAIDED SIDELOCKS' },
+                { value: 'asymmetrical sidelocks', label: 'ASYMMETRICAL SIDELOCKS' }
+            ]
+        },
+        
+        hairCondition: {
+            label: 'HAIR CONDITION',
+            type: 'select',
+            priority: 'optional',
+            optional: true,
+            options: [
+                { value: '', label: 'SELECT HAIR CONDITION...' },
                 { value: 'messy hair', label: 'MESSY HAIR' },
                 { value: 'disheveled hair', label: 'DISHEVELED HAIR' },
                 { value: 'neat hair', label: 'NEAT HAIR' },
                 { value: 'well-groomed hair', label: 'WELL-GROOMED HAIR' },
                 { value: 'windblown hair', label: 'WINDBLOWN HAIR' },
                 { value: 'tousled hair', label: 'TOUSLED HAIR' },
-                { value: 'bedhead style', label: 'BEDHEAD STYLE' }
+                { value: 'bedhead style', label: 'BEDHEAD STYLE' },
+                { value: 'hair slicked back', label: 'HAIR SLICKED BACK' },
+                { value: 'hair pulled back', label: 'HAIR PULLED BACK' }
             ]
         },
         
@@ -700,15 +728,23 @@ const HUMAN_DATA = {
             optional: true,
             options: [
                 { value: 'ahoge', label: 'AHOGE' },
+                { value: 'heart ahoge', label: 'HEART AHOGE' },
+                { value: 'huge ahoge', label: 'HUGE AHOGE' },
                 { value: 'antenna hair', label: 'ANTENNA HAIR' },
+                { value: 'heart antenna hair', label: 'HEART ANTENNA HAIR' },
                 { value: 'drill hair', label: 'DRILL HAIR' },
                 { value: 'spiked hair', label: 'SPIKED HAIR' },
                 { value: 'fluffy hair', label: 'FLUFFY HAIR' },
                 { value: 'floating hair', label: 'FLOATING HAIR' },
-                { value: 'hair ornament', label: 'HAIR ORNAMENT' },
-                { value: 'hair flower', label: 'HAIR FLOWER' },
-                { value: 'hair ribbon', label: 'HAIR RIBBON' },
-                { value: 'hair bow', label: 'HAIR BOW' }
+                { value: 'hair between eyes', label: 'HAIR BETWEEN EYES' },
+                { value: 'hair over one eye', label: 'HAIR OVER ONE EYE' },
+                { value: 'single hair intake', label: 'SINGLE HAIR INTAKE' },
+                { value: 'widow\'s peak', label: 'WIDOW\'S PEAK' },
+                { value: 'bow-shaped hair', label: 'BOW-SHAPED HAIR' },
+                { value: 'flower-shaped hair', label: 'FLOWER-SHAPED HAIR' },
+                { value: 'star-shaped hair', label: 'STAR-SHAPED HAIR' },
+                { value: 'pointy hair', label: 'POINTY HAIR' },
+                { value: 'crested hair', label: 'CRESTED HAIR' }
             ]
         },
         
@@ -728,27 +764,6 @@ const HUMAN_DATA = {
                 { value: 'micro bangs', label: 'MICRO BANGS' },
                 { value: 'long bangs', label: 'LONG BANGS' },
                 { value: 'layered bangs', label: 'LAYERED BANGS' }
-            ]
-        },
-        
-        sidelocks: {
-            label: 'SIDELOCKS',
-            type: 'select',
-            priority: 'optional',
-            optional: true,
-            options: [
-                { value: '', label: 'SELECT SIDELOCKS...' },
-                { value: 'very short sidelocks', label: 'VERY SHORT SIDELOCKS' },
-                { value: 'short sidelocks', label: 'SHORT SIDELOCKS' },
-                { value: 'medium sidelocks', label: 'MEDIUM SIDELOCKS' },
-                { value: 'long sidelocks', label: 'LONG SIDELOCKS' },
-                { value: 'very long sidelocks', label: 'VERY LONG SIDELOCKS' },
-                { value: 'single sidelock', label: 'SINGLE SIDELOCK' },
-                { value: 'very short single sidelock', label: 'VERY SHORT SINGLE SIDELOCK' },
-                { value: 'short single sidelock', label: 'SHORT SINGLE SIDELOCK' },
-                { value: 'medium single sidelock', label: 'MEDIUM SINGLE SIDELOCK' },
-                { value: 'long single sidelock', label: 'LONG SINGLE SIDELOCK' },
-                { value: 'very long single sidelock', label: 'VERY LONG SINGLE SIDELOCK' }
             ]
         },
         
