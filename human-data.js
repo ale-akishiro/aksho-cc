@@ -272,13 +272,13 @@ const HUMAN_DATA = {
             type: 'select',
             options: [
                 { value: '', label: 'SELECT HEIGHT...' },
-                { value: 'very short height', label: 'Very Short' },
-                { value: 'short height', label: 'Short' },
-                { value: 'below average height', label: 'Below Average' },
-                { value: 'average height', label: 'Average' },
-                { value: 'above average height', label: 'Above Average' },
-                { value: 'tall height', label: 'Tall' },
-                { value: 'very tall height', label: 'Very Tall' }
+                { value: 'very short height', label: 'VERY SHORT' },
+                { value: 'short height', label: 'SHORT' },
+                { value: 'below average height', label: 'BELOW AVERAGE' },
+                { value: 'average height', label: 'AVERAGE' },
+                { value: 'above average height', label: 'ABOVE AVERAGE' },
+                { value: 'tall height', label: 'TALL' },
+                { value: 'very tall height', label: 'VERY TALL' }
             ]
         },
         
@@ -287,14 +287,14 @@ const HUMAN_DATA = {
             type: 'select',
             options: [
                 { value: '', label: 'SELECT FRAME...' },
-                { value: 'petite frame', label: 'Petite Frame' },
-                { value: 'small frame', label: 'Small Frame' },
-                { value: 'lanky frame', label: 'Lanky Frame' },
-                { value: 'average frame', label: 'Average Frame' },
-                { value: 'broad frame', label: 'Broad Frame' },
-                { value: 'big frame', label: 'Big Frame' },
-                { value: 'stocky frame', label: 'Stocky Frame' },
-                { value: 'bulky frame', label: 'Bulky Frame' }
+                { value: 'petite frame', label: 'PETITE FRAME' },
+                { value: 'small frame', label: 'SMALL FRAME' },
+                { value: 'lanky frame', label: 'LANKY FRAME' },
+                { value: 'average frame', label: 'AVERAGE FRAME' },
+                { value: 'broad frame', label: 'BROAD FRAME' },
+                { value: 'big frame', label: 'BIG FRAME' },
+                { value: 'stocky frame', label: 'STOCKY FRAME' },
+                { value: 'bulky frame', label: 'BULKY FRAME' }
             ]
         },
         
@@ -302,20 +302,20 @@ const HUMAN_DATA = {
             label: 'BUILD',
             type: 'select',
             options: [
-                { value: '', label: 'Select build...' },
-                { value: 'skinny', label: 'Skinny' },
-                { value: 'slender', label: 'Slender' },
-                { value: 'slim', label: 'Slim' },
-                { value: 'average build', label: 'Average' },
-                { value: 'fit', label: 'Fit' },
-                { value: 'toned', label: 'Toned' },
-                { value: 'curvy', label: 'Curvy' },
-                { value: 'chubby', label: 'Chubby' },
-                { value: 'fat', label: 'Fat' },
-                { value: 'athletic', label: 'Athletic' },
-                { value: 'muscular', label: 'Muscular' },
-                { value: 'buff', label: 'Buff' },
-                { value: 'stocky', label: 'Stocky' }
+                { value: '', label: 'SELECT BUILD...' },
+                { value: 'skinny', label: 'SKINNY' },
+                { value: 'slender', label: 'SLENDER' },
+                { value: 'slim', label: 'SLIM' },
+                { value: 'average build', label: 'AVERAGE' },
+                { value: 'fit', label: 'FIT' },
+                { value: 'toned', label: 'TONED' },
+                { value: 'curvy', label: 'CURVY' },
+                { value: 'chubby', label: 'CHUBBY' },
+                { value: 'fat', label: 'FAT' },
+                { value: 'athletic', label: 'ATHLETIC' },
+                { value: 'muscular', label: 'MUSCULAR' },
+                { value: 'buff', label: 'BUFF' },
+                { value: 'stocky', label: 'STOCKY' }
             ]
         },
         
@@ -324,14 +324,14 @@ const HUMAN_DATA = {
             label: 'SKIN TEXTURE <span class="optional-text">*optional</span>',
             type: 'select',
             options: [
-                { value: '', label: 'Select skin texture...' },
-                { value: 'soft skin', label: 'Soft Skin' },
-                { value: 'smooth skin', label: 'Smooth Skin' },
-                { value: 'youthful skin', label: 'Youthful Skin' },
-                { value: 'firm skin', label: 'Firm Skin' },
-                { value: 'rough skin', label: 'Rough Skin' },
-                { value: 'weathered skin', label: 'Weathered Skin' },
-                { value: 'aged skin', label: 'Aged Skin' }
+                { value: '', label: 'SELECT SKIN TEXTURE...' },
+                { value: 'soft skin', label: 'SOFT SKIN' },
+                { value: 'smooth skin', label: 'SMOOTH SKIN' },
+                { value: 'youthful skin', label: 'YOUTHFUL SKIN' },
+                { value: 'firm skin', label: 'FIRM SKIN' },
+                { value: 'rough skin', label: 'ROUGH SKIN' },
+                { value: 'weathered skin', label: 'WEATHERED SKIN' },
+                { value: 'aged skin', label: 'AGED SKIN' }
             ]
         },
         
@@ -339,10 +339,10 @@ const HUMAN_DATA = {
             label: 'SKIN FEATURES',
             type: 'toggle',
             options: [
-                { value: 'body blush', label: 'Body Blush' },
-                { value: 'sun tan', label: 'Sun Tan' },
-                { value: 'tan lines', label: 'Tan Lines' },
-                { value: "farmer's tan", label: "Farmer's Tan" }
+                { value: 'body blush', label: 'BODY BLUSH' },
+                { value: 'sun tan', label: 'SUN TAN' },
+                { value: 'tan lines', label: 'TAN LINES' },
+                { value: "farmer's tan", label: "FARMER'S TAN" }
             ]
         }
     },
