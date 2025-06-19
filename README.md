@@ -1,6 +1,43 @@
 # The Akshoverse Studio - Testing Enviroment
 
-## Current Version: TE v1.1
+## Current Version: TE v1.1.1
+
+### 🎯 TE v1.1.1 - Content Organization & Hair System Overhaul
+
+#### 🎛️ **Advanced Content Toggle System**
+- **SFW/NSFW Toggle**: Dynamic switch between safe and adult content modes with visual indicators (Green SFW / Red NSFW)
+- **Optional Content Control**: "SKIP OPTIONAL" / "USE OPTIONAL" toggle to streamline character creation workflow
+- **Smart Content Detection**: Automatic field categorization using priority flags (essential, optional, nsfw)
+- **Future-Proof Architecture**: Toggle system automatically works with new content additions
+
+#### 🎨 **Complete Hair System Restructure**
+- **Danbooru Taxonomy Integration**: Replaced generic styles with proper anime/manga hair tags from Danbooru
+- **Separated Hair Concerns**: Independent selection of style, texture, and condition as combinable attributes
+- **Enhanced Hair Styles**: Subcategorized into Basic Cuts, Ponytails & Tails, Buns & Updos, Braided Styles, Loose Styles, Special Styles
+- **New Hair Condition Field**: Dropdown for styling states (messy, neat, disheveled, slicked back, hair pulled back)
+- **Special Hair Features**: Comprehensive anime features (ahoge, heart ahoge, antenna hair, drill hair, shaped hair variants)
+- **Improved Sidelocks**: Moved to top of optional fields with enhanced length and style options
+
+#### 🏗️ **Priority-Based Content Organization**
+- **Three-Tier Structure**: ESSENTIALS → OPTIONAL → NSFW grouping across ALL sections
+- **Visual Content Separation**: Clear headers, borders, and styling for each priority group
+- **Consistent Styling Flags**: Unified optional and NSFW treatment across entire dataset
+- **Enhanced Form Generation**: Smart grouping with visual separators and category titles
+
+#### 🎯 **Data Quality & UX Improvements**
+- **Ethnicity Refinement**: Expanded to 7 specific ethnicities per region, removed redundant generic options
+- **Capitalization Consistency**: ALL CAPS formatting standardized across all labels and sections
+- **Default Label Fixes**: Proper dropdown placeholders for all select fields
+- **Duplicate Removal**: Cleaned up redundant accessories between hair features and hair accessories sections
+- **Enhanced Field Organization**: Logical flow and improved visual hierarchy
+
+#### 🔧 **Technical Architecture Enhancements**
+- **Scalable Toggle System**: Automatic detection and handling of content flags without manual configuration
+- **Clean Data Structure**: Streamlined organization with removed redundancies
+- **Enhanced Form Logic**: Improved subcategory handling and optional content visibility
+- **Performance Optimization**: Better field detection and categorization algorithms
+
+## Previous Version: TE v1.1
 
 ### 🎨 MAJOR UPDATE - Sleek UI Redesign
 
@@ -66,7 +103,8 @@
 
 | Version | Branch | Status | Description |
 |---------|--------|--------|-------------|
-| TE v1.1 | testing | 🚧 Active Development | Major UI overhaul with enhanced UX features |
+| TE v1.1.1 | testing | 🚧 Active Development | Content organization, hair system overhaul, priority-based grouping |
+| TE v1.1 | testing | 📁 Archived | Major UI overhaul with enhanced UX features |
 | v1.0-testing | testing | 📁 Archived | Previous testing version with basic fixes |
 | v1.0 | master | ✅ Stable | Initial release with basic functionality |
 
