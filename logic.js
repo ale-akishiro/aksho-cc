@@ -1401,9 +1401,9 @@ function toggleOptionalContent() {
     
     if (contentState.optionalVisible) {
         // Show optional content
-        button.textContent = 'SHOW OPTIONAL';
+        button.textContent = 'USE OPTIONAL';
         button.className = 'optional-toggle show-optional';
-        button.title = 'Optional content is visible - click to hide optional fields';
+        button.title = 'Optional content is visible - click to skip optional fields';
         
         // Make optional elements fully visible
         optionalElements.forEach(element => {
@@ -1411,9 +1411,9 @@ function toggleOptionalContent() {
         });
     } else {
         // Hide optional content
-        button.textContent = 'HIDE OPTIONAL';
+        button.textContent = 'SKIP OPTIONAL';
         button.className = 'optional-toggle hide-optional';
-        button.title = 'Optional content is hidden - click to show optional fields';
+        button.title = 'Optional content is skipped - click to use optional fields';
         
         // Fade out optional elements
         optionalElements.forEach(element => {

@@ -1356,7 +1356,7 @@ function initializeHumanForm() {
                         SUBCATEGORIES
                     </button>
                     <button class="optional-toggle hide-optional" onclick="toggleOptionalContent()" title="Toggle optional content visibility">
-                        HIDE OPTIONAL
+                        SKIP OPTIONAL
                     </button>
                 </div>
             </div>
