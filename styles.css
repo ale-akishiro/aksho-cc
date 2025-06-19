@@ -762,6 +762,8 @@ optgroup option:hover {
     padding: 15px 0;
     margin-bottom: 20px;
     border-bottom: 2px solid rgba(139, 92, 246, 0.1);
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 /* Section Header with Toggle Button */
@@ -817,6 +819,142 @@ optgroup option:hover {
 
 .subcategory-toggle.subcategory-off:hover {
     box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
+}
+
+/* Content Rating Toggle Button */
+.content-toggle {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.content-toggle:hover {
+    transform: translateY(-1px);
+}
+
+.content-toggle:active {
+    transform: translateY(0);
+}
+
+/* SFW Mode - Green */
+.content-toggle.sfw-mode {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.content-toggle.sfw-mode:hover {
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+/* NSFW Mode - Red/Orange */
+.content-toggle.nsfw-mode {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.content-toggle.nsfw-mode:hover {
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+/* Optional Content Toggle Button */
+.optional-toggle {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.optional-toggle:hover {
+    transform: translateY(-1px);
+}
+
+.optional-toggle:active {
+    transform: translateY(0);
+}
+
+/* Hide Optional - Purple */
+.optional-toggle.hide-optional {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.optional-toggle.hide-optional:hover {
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+/* Show Optional - Lighter Purple */
+.optional-toggle.show-optional {
+    background: linear-gradient(135deg, #c084fc 0%, #a78bfa 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(192, 132, 252, 0.3);
+}
+
+.optional-toggle.show-optional:hover {
+    box-shadow: 0 4px 15px rgba(192, 132, 252, 0.4);
+}
+
+/* Category Type Styling */
+/* NSFW Categories - Hidden by default, shown when NSFW mode is enabled */
+.form-group.nsfw-content {
+    display: none;
+    border-left: 4px solid #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+    padding-left: 16px;
+    margin-left: -4px;
+}
+
+.form-group.nsfw-content.nsfw-visible {
+    display: block;
+}
+
+.form-group.nsfw-content label {
+    color: #dc2626;
+    position: relative;
+}
+
+.form-group.nsfw-content label::before {
+    content: '🔞 ';
+    margin-right: 4px;
+}
+
+/* Optional Categories - Faded when hidden */
+.form-group.optional-content {
+    transition: opacity 0.3s ease;
+    border-left: 4px solid #c084fc;
+    background: rgba(192, 132, 252, 0.05);
+    padding-left: 16px;
+    margin-left: -4px;
+}
+
+.form-group.optional-content.optional-hidden {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.form-group.optional-content label {
+    color: #8b5cf6;
+    position: relative;
+}
+
+.form-group.optional-content label::before {
+    content: '✨ ';
+    margin-right: 4px;
 }
 
 

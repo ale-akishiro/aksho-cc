@@ -65,68 +65,73 @@ const HUMAN_DATA = {
                 {
                     label: 'EUROPEAN HERITAGE',
                     options: [
-                        { value: 'european', label: 'EUROPEAN' },
                         { value: 'scandinavian', label: 'SCANDINAVIAN' },
                         { value: 'mediterranean', label: 'MEDITERRANEAN' },
                         { value: 'slavic', label: 'SLAVIC' },
                         { value: 'celtic', label: 'CELTIC' },
-                        { value: 'germanic', label: 'GERMANIC' }
+                        { value: 'germanic', label: 'GERMANIC' },
+                        { value: 'french', label: 'FRENCH' },
+                        { value: 'italian', label: 'ITALIAN' }
                     ]
                 },
                 {
                     label: 'EAST ASIAN HERITAGE',
                     options: [
-                        { value: 'east asian', label: 'EAST ASIAN' },
                         { value: 'chinese', label: 'CHINESE' },
                         { value: 'japanese', label: 'JAPANESE' },
                         { value: 'korean', label: 'KOREAN' },
                         { value: 'vietnamese', label: 'VIETNAMESE' },
                         { value: 'thai', label: 'THAI' },
-                        { value: 'filipino', label: 'FILIPINO' }
+                        { value: 'filipino', label: 'FILIPINO' },
+                        { value: 'mongolian', label: 'MONGOLIAN' }
                     ]
                 },
                 {
                     label: 'SOUTH ASIAN HERITAGE',
                     options: [
-                        { value: 'south asian', label: 'SOUTH ASIAN' },
                         { value: 'indian', label: 'INDIAN' },
                         { value: 'pakistani', label: 'PAKISTANI' },
                         { value: 'bengali', label: 'BENGALI' },
                         { value: 'sri lankan', label: 'SRI LANKAN' },
-                        { value: 'nepalese', label: 'NEPALESE' }
+                        { value: 'nepalese', label: 'NEPALESE' },
+                        { value: 'afghani', label: 'AFGHANI' },
+                        { value: 'tibetan', label: 'TIBETAN' }
                     ]
                 },
                 {
                     label: 'MIDDLE EASTERN HERITAGE',
                     options: [
-                        { value: 'middle eastern', label: 'MIDDLE EASTERN' },
                         { value: 'arabic', label: 'ARABIC' },
                         { value: 'persian', label: 'PERSIAN' },
                         { value: 'turkish', label: 'TURKISH' },
                         { value: 'israeli', label: 'ISRAELI' },
-                        { value: 'armenian', label: 'ARMENIAN' }
+                        { value: 'armenian', label: 'ARMENIAN' },
+                        { value: 'lebanese', label: 'LEBANESE' },
+                        { value: 'egyptian', label: 'EGYPTIAN' }
                     ]
                 },
                 {
                     label: 'AFRICAN HERITAGE',
                     options: [
-                        { value: 'african', label: 'AFRICAN' },
                         { value: 'west african', label: 'WEST AFRICAN' },
                         { value: 'east african', label: 'EAST AFRICAN' },
                         { value: 'north african', label: 'NORTH AFRICAN' },
                         { value: 'ethiopian', label: 'ETHIOPIAN' },
-                        { value: 'somali', label: 'SOMALI' }
+                        { value: 'somali', label: 'SOMALI' },
+                        { value: 'south african', label: 'SOUTH AFRICAN' },
+                        { value: 'sudanese', label: 'SUDANESE' }
                     ]
                 },
                 {
                     label: 'LATINO/HISPANIC HERITAGE',
                     options: [
-                        { value: 'latino/hispanic', label: 'LATINO/HISPANIC' },
                         { value: 'mexican', label: 'MEXICAN' },
                         { value: 'brazilian', label: 'BRAZILIAN' },
                         { value: 'argentinian', label: 'ARGENTINIAN' },
                         { value: 'colombian', label: 'COLOMBIAN' },
-                        { value: 'puerto rican', label: 'PUERTO RICAN' }
+                        { value: 'puerto rican', label: 'PUERTO RICAN' },
+                        { value: 'cuban', label: 'CUBAN' },
+                        { value: 'peruvian', label: 'PERUVIAN' }
                     ]
                 },
                 {
@@ -138,67 +143,57 @@ const HUMAN_DATA = {
                         { value: 'aboriginal australian', label: 'ABORIGINAL AUSTRALIAN' },
                         { value: 'maori', label: 'MAORI' }
                     ]
-                },
-                {
-                    label: 'MIXED HERITAGE',
-                    options: [
-                        { value: 'mixed heritage', label: 'MIXED HERITAGE' },
-                        { value: 'multiracial', label: 'MULTIRACIAL' },
-                        { value: 'eurasian', label: 'EURASIAN' },
-                        { value: 'afro-latino', label: 'AFRO-LATINO' },
-                        { value: 'indo-european', label: 'INDO-EUROPEAN' }
-                    ]
                 }
             ],
             flatOptions: [
                 { value: '', label: 'SELECT ETHNICITY & HERITAGE...' },
-                { value: 'european', label: 'EUROPEAN' },
                 { value: 'scandinavian', label: 'SCANDINAVIAN' },
                 { value: 'mediterranean', label: 'MEDITERRANEAN' },
                 { value: 'slavic', label: 'SLAVIC' },
                 { value: 'celtic', label: 'CELTIC' },
                 { value: 'germanic', label: 'GERMANIC' },
-                { value: 'east asian', label: 'EAST ASIAN' },
+                { value: 'french', label: 'FRENCH' },
+                { value: 'italian', label: 'ITALIAN' },
                 { value: 'chinese', label: 'CHINESE' },
                 { value: 'japanese', label: 'JAPANESE' },
                 { value: 'korean', label: 'KOREAN' },
                 { value: 'vietnamese', label: 'VIETNAMESE' },
                 { value: 'thai', label: 'THAI' },
                 { value: 'filipino', label: 'FILIPINO' },
-                { value: 'south asian', label: 'SOUTH ASIAN' },
+                { value: 'mongolian', label: 'MONGOLIAN' },
                 { value: 'indian', label: 'INDIAN' },
                 { value: 'pakistani', label: 'PAKISTANI' },
                 { value: 'bengali', label: 'BENGALI' },
                 { value: 'sri lankan', label: 'SRI LANKAN' },
                 { value: 'nepalese', label: 'NEPALESE' },
-                { value: 'middle eastern', label: 'MIDDLE EASTERN' },
+                { value: 'afghani', label: 'AFGHANI' },
+                { value: 'tibetan', label: 'TIBETAN' },
                 { value: 'arabic', label: 'ARABIC' },
                 { value: 'persian', label: 'PERSIAN' },
                 { value: 'turkish', label: 'TURKISH' },
                 { value: 'israeli', label: 'ISRAELI' },
                 { value: 'armenian', label: 'ARMENIAN' },
-                { value: 'african', label: 'AFRICAN' },
+                { value: 'lebanese', label: 'LEBANESE' },
+                { value: 'egyptian', label: 'EGYPTIAN' },
                 { value: 'west african', label: 'WEST AFRICAN' },
                 { value: 'east african', label: 'EAST AFRICAN' },
                 { value: 'north african', label: 'NORTH AFRICAN' },
                 { value: 'ethiopian', label: 'ETHIOPIAN' },
                 { value: 'somali', label: 'SOMALI' },
-                { value: 'latino/hispanic', label: 'LATINO/HISPANIC' },
+                { value: 'south african', label: 'SOUTH AFRICAN' },
+                { value: 'sudanese', label: 'SUDANESE' },
                 { value: 'mexican', label: 'MEXICAN' },
                 { value: 'brazilian', label: 'BRAZILIAN' },
                 { value: 'argentinian', label: 'ARGENTINIAN' },
                 { value: 'colombian', label: 'COLOMBIAN' },
                 { value: 'puerto rican', label: 'PUERTO RICAN' },
+                { value: 'cuban', label: 'CUBAN' },
+                { value: 'peruvian', label: 'PERUVIAN' },
                 { value: 'native american', label: 'NATIVE AMERICAN' },
                 { value: 'inuit', label: 'INUIT' },
                 { value: 'polynesian', label: 'POLYNESIAN' },
                 { value: 'aboriginal australian', label: 'ABORIGINAL AUSTRALIAN' },
-                { value: 'maori', label: 'MAORI' },
-                { value: 'mixed heritage', label: 'MIXED HERITAGE' },
-                { value: 'multiracial', label: 'MULTIRACIAL' },
-                { value: 'eurasian', label: 'EURASIAN' },
-                { value: 'afro-latino', label: 'AFRO-LATINO' },
-                { value: 'indo-european', label: 'INDO-EUROPEAN' }
+                { value: 'maori', label: 'MAORI' }
             ]
         },
 
@@ -335,6 +330,7 @@ const HUMAN_DATA = {
         skinTexture: {
             label: 'SKIN TEXTURE <span class="optional-text">*optional</span>',
             type: 'select',
+            optional: true,
             options: [
                 { value: '', label: 'SELECT SKIN TEXTURE...' },
                 { value: 'soft skin', label: 'SOFT SKIN' },
@@ -1350,6 +1346,12 @@ function initializeHumanForm() {
                 <button class="subcategory-toggle subcategory-on" onclick="toggleSubcategories()" title="Click to disable subcategories (switch to flat list view)">
                     SUBCATEGORIES
                 </button>
+                <button class="content-toggle sfw-mode" onclick="toggleContentRating()" title="Toggle between SFW and NSFW content">
+                    SFW
+                </button>
+                <button class="optional-toggle hide-optional" onclick="toggleOptionalContent()" title="Toggle optional content visibility">
+                    HIDE OPTIONAL
+                </button>
             </div>
 
             <div class="section">
@@ -1448,7 +1450,20 @@ function generateFormSection(sectionData) {
         
         console.log(`Processing field ${key}:`, field.label, field.type, field.options?.length || 0, 'options');
         
-        html += `<div class="form-group">`;
+        // Determine CSS classes for the form group
+        let cssClasses = 'form-group';
+        
+        // Check if this field is NSFW
+        if (field.nsfw) {
+            cssClasses += ' nsfw-content';
+        }
+        
+        // Check if this field is optional
+        if (field.optional || key === 'skinTexture') {
+            cssClasses += ' optional-content optional-hidden';
+        }
+        
+        html += `<div class="${cssClasses}">`;
         html += `<label>${field.label}</label>`;
         
         if (field.type === 'select') {

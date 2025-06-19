@@ -1346,6 +1346,84 @@ function exportToFile() {
 }
 
 
+// === CONTENT TOGGLE FUNCTIONS ===
+
+/**
+ * Global state for content toggles
+ */
+let contentState = {
+    nsfwMode: false,    // Default to SFW mode
+    optionalVisible: false  // Default to hiding optional content
+};
+
+/**
+ * Toggle between SFW and NSFW content rating
+ */
+function toggleContentRating() {
+    const button = document.querySelector('.content-toggle');
+    const nsfwElements = document.querySelectorAll('.nsfw-content');
+    
+    contentState.nsfwMode = !contentState.nsfwMode;
+    
+    if (contentState.nsfwMode) {
+        // Switch to NSFW mode
+        button.textContent = 'NSFW';
+        button.className = 'content-toggle nsfw-mode';
+        button.title = 'Currently showing NSFW content - click to switch to SFW mode';
+        
+        // Show all NSFW elements
+        nsfwElements.forEach(element => {
+            element.classList.add('nsfw-visible');
+        });
+    } else {
+        // Switch to SFW mode
+        button.textContent = 'SFW';
+        button.className = 'content-toggle sfw-mode';
+        button.title = 'Currently showing SFW content only - click to enable NSFW content';
+        
+        // Hide all NSFW elements
+        nsfwElements.forEach(element => {
+            element.classList.remove('nsfw-visible');
+        });
+    }
+    
+    console.log('Content rating toggled:', contentState.nsfwMode ? 'NSFW' : 'SFW');
+}
+
+/**
+ * Toggle optional content visibility
+ */
+function toggleOptionalContent() {
+    const button = document.querySelector('.optional-toggle');
+    const optionalElements = document.querySelectorAll('.optional-content');
+    
+    contentState.optionalVisible = !contentState.optionalVisible;
+    
+    if (contentState.optionalVisible) {
+        // Show optional content
+        button.textContent = 'SHOW OPTIONAL';
+        button.className = 'optional-toggle show-optional';
+        button.title = 'Optional content is visible - click to hide optional fields';
+        
+        // Make optional elements fully visible
+        optionalElements.forEach(element => {
+            element.classList.remove('optional-hidden');
+        });
+    } else {
+        // Hide optional content
+        button.textContent = 'HIDE OPTIONAL';
+        button.className = 'optional-toggle hide-optional';
+        button.title = 'Optional content is hidden - click to show optional fields';
+        
+        // Fade out optional elements
+        optionalElements.forEach(element => {
+            element.classList.add('optional-hidden');
+        });
+    }
+    
+    console.log('Optional content toggled:', contentState.optionalVisible ? 'visible' : 'hidden');
+}
+
 // === APPLICATION INITIALIZATION ===
 
 // Initialize application when DOM is ready
