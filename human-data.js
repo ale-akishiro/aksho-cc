@@ -16,6 +16,7 @@ const HUMAN_DATA = {
         artStyle: {
             label: 'ART STYLE',
             type: 'select',
+            priority: 'essential',
             options: [
                 { value: '', label: 'SELECT ART STYLE...' },
                 { value: '2.5d', label: '2.5D' },
@@ -30,6 +31,7 @@ const HUMAN_DATA = {
         gender: {
             label: 'GENDER & LIFE STAGE',
             type: 'select',
+            priority: 'essential',
             required: true,
             options: [
                 { value: '', label: 'SELECT GENDER & LIFE STAGE...' },
@@ -45,6 +47,7 @@ const HUMAN_DATA = {
         age: {
             label: 'AGE (18-100)',
             type: 'number',
+            priority: 'essential',
             required: true,
             min: 18,
             max: 100,
@@ -54,6 +57,7 @@ const HUMAN_DATA = {
         ethnicity: {
             label: 'ETHNICITY & HERITAGE <span class="optional-text">(OPTIONAL)</span>',
             type: 'select',
+            priority: 'optional',
             optional: true,
             useSubcategories: true,
             optgroups: [
@@ -201,6 +205,7 @@ const HUMAN_DATA = {
         skinTone: {
             label: 'SKIN TONE',
             type: 'select',
+            priority: 'essential',
             useSubcategories: true,
             optgroups: [
                 {
@@ -278,6 +283,7 @@ const HUMAN_DATA = {
         height: {
             label: 'HEIGHT <span class="optional-text">(OPTIONAL)</span>',
             type: 'select',
+            priority: 'optional',
             optional: true,
             options: [
                 { value: '', label: 'SELECT HEIGHT...' },
@@ -294,6 +300,7 @@ const HUMAN_DATA = {
         frame: {
             label: 'FRAME',
             type: 'select',
+            priority: 'essential',
             options: [
                 { value: '', label: 'SELECT FRAME...' },
                 { value: 'petite frame', label: 'PETITE FRAME' },
@@ -310,6 +317,7 @@ const HUMAN_DATA = {
         build: {
             label: 'BUILD',
             type: 'select',
+            priority: 'essential',
             options: [
                 { value: '', label: 'SELECT BUILD...' },
                 { value: 'skinny', label: 'SKINNY' },
@@ -332,6 +340,7 @@ const HUMAN_DATA = {
         skinTexture: {
             label: 'SKIN TEXTURE <span class="optional-text">(OPTIONAL)</span>',
             type: 'select',
+            priority: 'optional',
             optional: true,
             options: [
                 { value: '', label: 'SELECT SKIN TEXTURE...' },
@@ -348,6 +357,7 @@ const HUMAN_DATA = {
         skinFeatures: {
             label: 'SKIN FEATURES <span class="optional-text">(OPTIONAL)</span>',
             type: 'toggle',
+            priority: 'optional',
             optional: true,
             options: [
                 { value: 'body blush', label: 'BODY BLUSH' },
@@ -363,6 +373,7 @@ const HUMAN_DATA = {
         hairColor: {
             label: 'Hair Color',
             type: 'select',
+            priority: 'essential',
             useSubcategories: true,
             optgroups: [
                 {
@@ -540,6 +551,7 @@ const HUMAN_DATA = {
         hairTexture: {
             label: 'Hair Texture',
             type: 'select',
+            priority: 'optional',
             options: [
                 { value: '', label: 'Select hair texture...' },
                 
@@ -570,6 +582,7 @@ const HUMAN_DATA = {
         hairLength: {
             label: 'Hair Length',
             type: 'select',
+            priority: 'essential',
             options: [
                 { value: '', label: 'Select hair length...' },
                 { value: 'bald', label: 'Bald' },
@@ -585,6 +598,7 @@ const HUMAN_DATA = {
         hairStyle: {
             label: 'Hairstyle',
             type: 'select',
+            priority: 'optional',
             options: [
                 { value: '', label: 'Select hairstyle...' },
                 
@@ -630,6 +644,7 @@ const HUMAN_DATA = {
         bangs: {
             label: 'Bangs & Fringe',
             type: 'select',
+            priority: 'optional',
             options: [
                 { value: '', label: 'Select bangs type...' },
                 { value: 'blunt bangs', label: 'Blunt Bangs' },
@@ -648,6 +663,7 @@ const HUMAN_DATA = {
         sidelocks: {
             label: 'Sidelocks',
             type: 'select',
+            priority: 'optional',
             options: [
                 { value: '', label: 'Select sidelocks...' },
                 { value: 'very short sidelocks', label: 'Very Short Sidelocks' },
@@ -667,6 +683,7 @@ const HUMAN_DATA = {
         hairAccessories: {
             label: 'Hair Accessories',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'hair clips', label: 'Hair Clips' },
                 { value: 'hair pins', label: 'Hair Pins' },
@@ -685,6 +702,7 @@ const HUMAN_DATA = {
         faceShape: {
             label: 'Face Shape',
             type: 'select',
+            priority: 'optional',
             options: [
                 { value: '', label: 'Select face shape...' },
                 { value: 'oval face', label: 'Oval Face' },
@@ -701,6 +719,7 @@ const HUMAN_DATA = {
         forehead: {
             label: 'Forehead',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'high forehead', label: 'High Forehead' },
                 { value: 'low forehead', label: 'Low Forehead' },
@@ -715,6 +734,7 @@ const HUMAN_DATA = {
         eyebrows: {
             label: 'Eyebrow Variations',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'thin eyebrows', label: 'Thin Eyebrows' },
                 { value: 'thick eyebrows', label: 'Thick Eyebrows' },
@@ -732,6 +752,7 @@ const HUMAN_DATA = {
         eyeShape: {
             label: 'Eye Shape & Features',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'almond eyes', label: 'Almond Eyes' },
                 { value: 'round eyes', label: 'Round Eyes' },
@@ -750,6 +771,7 @@ const HUMAN_DATA = {
         eyeColor: {
             label: 'Eye Color',
             type: 'select',
+            priority: 'essential',
             options: [
                 { value: '', label: 'Select eye color...' },
                 
@@ -791,6 +813,7 @@ const HUMAN_DATA = {
         eyeFeatures: {
             label: 'Eye Features',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'long eyelashes', label: 'Long Eyelashes' },
                 { value: 'short eyelashes', label: 'Short Eyelashes' },
@@ -810,6 +833,7 @@ const HUMAN_DATA = {
         nose: {
             label: 'Nose Variations',
             type: 'select',
+            priority: 'optional',
             options: [
                 { value: '', label: 'Select nose type...' },
                 { value: 'button nose', label: 'Button Nose' },
@@ -830,6 +854,7 @@ const HUMAN_DATA = {
         lips: {
             label: 'Lip Variations',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'thin lips', label: 'Thin Lips' },
                 { value: 'full lips', label: 'Full Lips' },
@@ -846,6 +871,7 @@ const HUMAN_DATA = {
         cheeks: {
             label: 'Cheek Features',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'high cheekbones', label: 'High Cheekbones' },
                 { value: 'low cheekbones', label: 'Low Cheekbones' },
@@ -860,6 +886,7 @@ const HUMAN_DATA = {
         jawChin: {
             label: 'Jaw & Chin',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'strong jaw', label: 'Strong Jaw' },
                 { value: 'weak jaw', label: 'Weak Jaw' },
@@ -878,6 +905,7 @@ const HUMAN_DATA = {
         beautyMarks: {
             label: 'Beauty Marks & Moles',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'freckles', label: 'Freckles' },
                 { value: 'freckles on whole body', label: 'Freckles on Whole Body' },
@@ -899,6 +927,7 @@ const HUMAN_DATA = {
         skinConditions: {
             label: 'Skin Conditions & Marks',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'sun spots', label: 'Sun Spots' },
                 { value: 'age spots', label: 'Age Spots' },
@@ -917,6 +946,7 @@ const HUMAN_DATA = {
         bodyFrame: {
             label: 'Body Frame',
             type: 'select',
+            priority: 'essential',
             options: [
                 { value: '', label: 'Select body frame...' },
                 { value: 'very small body frame', label: 'Very Small Body Frame' },
@@ -930,6 +960,7 @@ const HUMAN_DATA = {
         muscleDefinition: {
             label: 'Muscle Definition',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'no muscle definition', label: 'No Muscle Definition' },
                 { value: 'subtle muscle tone', label: 'Subtle Muscle Tone' },
@@ -944,6 +975,7 @@ const HUMAN_DATA = {
         bodyShape: {
             label: 'Body Build',
             type: 'select',
+            priority: 'essential',
             options: [
                 { value: '', label: 'Select body shape...' },
                 { value: 'skinny shape build', label: 'Skinny Shape Build' },
@@ -970,6 +1002,7 @@ const HUMAN_DATA = {
         chestBreast: {
             label: 'Chest/Breast Variations',
             type: 'select',
+            priority: 'nsfw',
             options: [
                 { value: '', label: 'Select chest/breast type...' },
                 // Size
@@ -995,6 +1028,7 @@ const HUMAN_DATA = {
         torsoFeatures: {
             label: 'Torso Features',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'broad shoulders', label: 'Broad Shoulders' },
                 { value: 'narrow shoulders', label: 'Narrow Shoulders' },
@@ -1015,6 +1049,7 @@ const HUMAN_DATA = {
         waist: {
             label: 'Waist Variations',
             type: 'select',
+            priority: 'optional',
             options: [
                 { value: '', label: 'Select waist type...' },
                 { value: 'no waist definition', label: 'No Waist Definition' },
@@ -1033,6 +1068,7 @@ const HUMAN_DATA = {
         hips: {
             label: 'Hip Variations',
             type: 'select',
+            priority: 'optional',
             options: [
                 { value: '', label: 'Select hip type...' },
                 { value: 'narrow hips', label: 'Narrow Hips' },
@@ -1047,6 +1083,7 @@ const HUMAN_DATA = {
         buttocks: {
             label: 'Buttocks Features',
             type: 'select',
+            priority: 'nsfw',
             options: [
                 { value: '', label: 'Select buttocks type...' },
                 { value: 'flat butt', label: 'Flat Butt' },
@@ -1063,6 +1100,7 @@ const HUMAN_DATA = {
         thighs: {
             label: 'Thigh Types',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'skinny thighs', label: 'Skinny Thighs' },
                 { value: 'athletic thighs', label: 'Athletic Thighs' },
@@ -1076,6 +1114,7 @@ const HUMAN_DATA = {
         legs: {
             label: 'Leg Features',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'long legs', label: 'Long Legs' },
                 { value: 'short legs', label: 'Short Legs' },
@@ -1094,6 +1133,7 @@ const HUMAN_DATA = {
         genitalFeatures: {
             label: 'Genital Features (Adult)',
             type: 'toggle',
+            priority: 'nsfw',
             options: [
                 // Grooming
                 { value: 'shaved pubes', label: 'Shaved Pubes' },
@@ -1120,6 +1160,7 @@ const HUMAN_DATA = {
         hands: {
             label: 'Hand Features',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'small hands', label: 'Small Hands' },
                 { value: 'large hands', label: 'Large Hands' },
@@ -1137,6 +1178,7 @@ const HUMAN_DATA = {
         nails: {
             label: 'Nail Features',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'short nails', label: 'Short Nails' },
                 { value: 'long nails', label: 'Long Nails' },
@@ -1152,6 +1194,7 @@ const HUMAN_DATA = {
         feet: {
             label: 'Foot Features',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'small feet', label: 'Small Feet' },
                 { value: 'large feet', label: 'Large Feet' },
@@ -1172,6 +1215,7 @@ const HUMAN_DATA = {
         tattoos: {
             label: 'Tattoo Categories',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 // Size
                 { value: 'small tattoo', label: 'Small Tattoo' },
@@ -1210,6 +1254,7 @@ const HUMAN_DATA = {
         piercings: {
             label: 'Piercing Options',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 // Ear
                 { value: 'lobe piercing', label: 'Lobe Piercing' },
@@ -1237,6 +1282,7 @@ const HUMAN_DATA = {
         scars: {
             label: 'Scar Types',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'surgical scars', label: 'Surgical Scars' },
                 { value: 'accident scars', label: 'Accident Scars' },
@@ -1256,6 +1302,7 @@ const HUMAN_DATA = {
         jewelry: {
             label: 'Jewelry Categories',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 // Necklaces
                 { value: 'choker', label: 'Choker' },
@@ -1292,6 +1339,7 @@ const HUMAN_DATA = {
         eyewear: {
             label: 'Eyewear',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'glasses', label: 'Glasses' },
                 { value: 'sunglasses', label: 'Sunglasses' },
@@ -1312,6 +1360,7 @@ const HUMAN_DATA = {
         clothingStyle: {
             label: 'Clothing Style',
             type: 'toggle',
+            priority: 'optional',
             options: [
                 { value: 'casual style', label: 'Casual Style' },
                 { value: 'formal style', label: 'Formal Style' },
@@ -1447,14 +1496,73 @@ function generateFormSection(sectionData) {
     }
     
     console.log('Generating form section for:', Object.keys(sectionData));
-    let html = '';
     
+    // Group fields by priority
+    const groups = {
+        essential: [],
+        optional: [],
+        nsfw: []
+    };
+    
+    // Sort fields into priority groups
     Object.entries(sectionData).forEach(([key, field]) => {
         if (!field) {
             console.warn(`Field ${key} is null/undefined`);
             return;
         }
         
+        const priority = field.priority || 'essential'; // Default to essential if no priority
+        if (groups[priority]) {
+            groups[priority].push([key, field]);
+        } else {
+            groups.essential.push([key, field]); // Fallback to essential
+        }
+    });
+    
+    console.log('Field groups:', {
+        essential: groups.essential.map(([key]) => key),
+        optional: groups.optional.map(([key]) => key),
+        nsfw: groups.nsfw.map(([key]) => key)
+    });
+    
+    let html = '';
+    
+    // Generate HTML for each group in order: essential → optional → nsfw
+    const groupConfigs = [
+        { 
+            name: 'essential', 
+            fields: groups.essential, 
+            title: '', // No header for essentials - they're the default
+            visible: true 
+        },
+        { 
+            name: 'optional', 
+            fields: groups.optional, 
+            title: '✨ OPTIONAL DETAILS', 
+            visible: true,
+            className: 'group-separator optional-group'
+        },
+        { 
+            name: 'nsfw', 
+            fields: groups.nsfw, 
+            title: '🔞 ADULT CONTENT', 
+            visible: false, // Hidden by default
+            className: 'group-separator nsfw-group'
+        }
+    ];
+    
+    groupConfigs.forEach(group => {
+        if (group.fields.length === 0) return; // Skip empty groups
+        
+        // Add group header if specified
+        if (group.title) {
+            html += `<div class="${group.className || 'group-separator'}">`;
+            html += `<h4 class="group-title">${group.title}</h4>`;
+            html += `</div>`;
+        }
+        
+        // Generate fields for this group
+        group.fields.forEach(([key, field]) => {
         console.log(`Processing field ${key}:`, field.label, field.type, field.options?.length || 0, 'options');
         
         // Determine CSS classes for the form group
@@ -1531,6 +1639,7 @@ function generateFormSection(sectionData) {
         }
         
         html += `</div>`;
+        });
     });
     
     console.log(`Generated HTML length: ${html.length}`);

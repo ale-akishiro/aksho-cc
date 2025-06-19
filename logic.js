@@ -1362,6 +1362,7 @@ let contentState = {
 function toggleContentRating() {
     const button = document.querySelector('.content-toggle');
     const nsfwElements = document.querySelectorAll('.nsfw-content');
+    const nsfwGroups = document.querySelectorAll('.nsfw-group');
     
     contentState.nsfwMode = !contentState.nsfwMode;
     
@@ -1371,9 +1372,12 @@ function toggleContentRating() {
         button.className = 'content-toggle nsfw-mode';
         button.title = 'Currently showing NSFW content - click to switch to SFW mode';
         
-        // Show all NSFW elements
+        // Show all NSFW elements and groups
         nsfwElements.forEach(element => {
             element.classList.add('nsfw-visible');
+        });
+        nsfwGroups.forEach(group => {
+            group.classList.add('nsfw-visible');
         });
     } else {
         // Switch to SFW mode
@@ -1381,9 +1385,12 @@ function toggleContentRating() {
         button.className = 'content-toggle sfw-mode';
         button.title = 'Currently showing SFW content only - click to enable NSFW content';
         
-        // Hide all NSFW elements
+        // Hide all NSFW elements and groups
         nsfwElements.forEach(element => {
             element.classList.remove('nsfw-visible');
+        });
+        nsfwGroups.forEach(group => {
+            group.classList.remove('nsfw-visible');
         });
     }
     

@@ -923,6 +923,53 @@ optgroup option:hover {
     box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
 }
 
+/* Group Separators and Titles */
+.group-separator {
+    margin: 25px 0 15px 0;
+    padding-top: 20px;
+    border-top: 2px solid rgba(139, 92, 246, 0.1);
+}
+
+.group-separator:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.group-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 0 0 15px 0;
+    padding: 8px 12px;
+    background: rgba(139, 92, 246, 0.05);
+    border-radius: 8px;
+    border-left: 4px solid rgba(139, 92, 246, 0.3);
+}
+
+.optional-group .group-title {
+    color: #8b5cf6;
+    border-left-color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.08);
+}
+
+.nsfw-group {
+    display: none; /* Hidden by default until NSFW mode is enabled */
+}
+
+.nsfw-group.nsfw-visible {
+    display: block;
+}
+
+.nsfw-group .group-title {
+    color: #dc2626;
+    border-left-color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+}
+
 /* Category Type Styling */
 /* NSFW Categories - Hidden by default, shown when NSFW mode is enabled */
 .form-group.nsfw-content {
