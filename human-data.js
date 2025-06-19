@@ -303,13 +303,11 @@ const HUMAN_DATA = {
             priority: 'essential',
             options: [
                 { value: '', label: 'SELECT FRAME...' },
-                { value: 'petite frame', label: 'PETITE FRAME' },
                 { value: 'small frame', label: 'SMALL FRAME' },
-                { value: 'lanky frame', label: 'LANKY FRAME' },
-                { value: 'average frame', label: 'AVERAGE FRAME' },
-                { value: 'broad frame', label: 'BROAD FRAME' },
+                { value: 'medium frame', label: 'MEDIUM FRAME' },
                 { value: 'big frame', label: 'BIG FRAME' },
-                { value: 'stocky frame', label: 'STOCKY FRAME' },
+                { value: 'broad frame', label: 'BROAD FRAME' },
+                { value: 'lanky frame', label: 'LANKY FRAME' },
                 { value: 'bulky frame', label: 'BULKY FRAME' }
             ]
         },
@@ -551,7 +549,7 @@ const HUMAN_DATA = {
         hairTexture: {
             label: 'HAIR TEXTURE',
             type: 'select',
-            priority: 'optional',
+            priority: 'essential',
             options: [
                 { value: '', label: 'SELECT HAIR TEXTURE...' },
                 
@@ -598,7 +596,7 @@ const HUMAN_DATA = {
         hairStyle: {
             label: 'HAIRSTYLE',
             type: 'select',
-            priority: 'optional',
+            priority: 'essential',
             options: [
                 { value: '', label: 'SELECT HAIRSTYLE...' },
                 
@@ -644,7 +642,7 @@ const HUMAN_DATA = {
         bangs: {
             label: 'BANGS & FRINGE',
             type: 'select',
-            priority: 'optional',
+            priority: 'essential',
             options: [
                 { value: '', label: 'SELECT BANGS TYPE...' },
                 { value: 'blunt bangs', label: 'BLUNT BANGS' },
