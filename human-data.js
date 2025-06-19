@@ -299,7 +299,7 @@ const HUMAN_DATA = {
         },
         
         build: {
-            label: 'Build',
+            label: 'BUILD',
             type: 'select',
             options: [
                 { value: '', label: 'Select build...' },
@@ -319,30 +319,9 @@ const HUMAN_DATA = {
             ]
         },
         
-        skinTone: {
-            label: 'Skin Tone',
-            type: 'select',
-            options: [
-                { value: '', label: 'Select skin tone...' },
-                { value: 'very pale skin', label: 'Very Pale Skin' },
-                { value: 'pale skin', label: 'Pale Skin' },
-                { value: 'fair skin', label: 'Fair Skin' },
-                { value: 'light olive skin', label: 'Light Olive Skin' },
-                { value: 'olive skin', label: 'Olive Skin' },
-                { value: 'light brown skin', label: 'Light Brown Skin' },
-                { value: 'sun kissed skin', label: 'Sun Kissed Skin' },
-                { value: 'warm brown skin', label: 'Warm Brown Skin' },
-                { value: 'medium brown skin', label: 'Medium Brown Skin' },
-                { value: 'brown skin', label: 'Brown Skin' },
-                { value: 'dark brown skin', label: 'Dark Brown Skin' },
-                { value: 'deep brown skin', label: 'Deep Brown Skin' },
-                { value: 'dark skin', label: 'Dark Skin' },
-                { value: 'ebony skin', label: 'Ebony Skin' }
-            ]
-        },
         
         skinTexture: {
-            label: 'Skin Texture *optional',
+            label: 'SKIN TEXTURE <span class="optional-text">*optional</span>',
             type: 'select',
             options: [
                 { value: '', label: 'Select skin texture...' },
@@ -357,7 +336,7 @@ const HUMAN_DATA = {
         },
         
         skinFeatures: {
-            label: 'Skin Features',
+            label: 'SKIN FEATURES',
             type: 'toggle',
             options: [
                 { value: 'body blush', label: 'Body Blush' },

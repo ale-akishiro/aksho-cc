@@ -680,6 +680,15 @@ body::before {
     font-size: 0.95em;
 }
 
+.optional-text {
+    font-weight: 400;
+    font-size: 0.85em;
+    color: #6b7280;
+    font-style: italic;
+    margin-left: 4px;
+    opacity: 0.8;
+}
+
 /* Form Controls */
 select, input[type="text"], input[type="number"], textarea {
     width: 100%;
