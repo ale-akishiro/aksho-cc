@@ -1004,8 +1004,11 @@ optgroup option:hover {
 }
 
 .form-group.optional-content.optional-hidden {
-    opacity: 0.3;
-    pointer-events: none;
+    display: none;
+}
+
+.form-group.optional-content.optional-visible {
+    display: block;
 }
 
 .form-group.optional-content label {
