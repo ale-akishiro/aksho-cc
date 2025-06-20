@@ -7,7 +7,7 @@
 
 class VersionManager {
     constructor() {
-        this.currentVersion = { major: 1, minor: 1, patch: 3 };
+        this.currentVersion = { major: 1, minor: 1, patch: 4 };
         this.versionHistory = [];
         this.autoIncrement = true;
         this.currentBranch = this.detectBranch();
@@ -299,6 +299,7 @@ function showVersionModal() {
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button onclick="simulateCommitModal()" style="padding: 6px 12px; border: 1px solid #f59e0b; background: rgba(245, 158, 11, 0.1); border-radius: 6px; cursor: pointer; font-size: 0.85em;">Simulate Commit</button>
                 <button onclick="setVersionModal()" style="padding: 6px 12px; border: 1px solid #dc2626; background: rgba(220, 38, 38, 0.1); border-radius: 6px; cursor: pointer; font-size: 0.85em;">Set Version</button>
+                <button onclick="setLatestCommit()" style="padding: 6px 12px; border: 1px solid #059669; background: rgba(5, 150, 105, 0.1); border-radius: 6px; cursor: pointer; font-size: 0.85em;">Set Latest Commit</button>
             </div>
         </div>
     `;
@@ -346,12 +347,23 @@ function toggleBranch() {
  * Simulate commit for testing auto-increment
  */
 function simulateCommitModal() {
-    const commitHash = '0be34cf'; // Use actual latest commit hash
+    const commitHash = '3acac70'; // Use actual latest commit hash
     VersionManager_Instance.simulateCommit(commitHash);
     // Refresh modal content after short delay to show update
     setTimeout(() => {
         showVersionModal();
     }, 100);
+}
+
+/**
+ * Auto-detect and set latest commit hash for version tracking
+ */
+function setLatestCommit() {
+    // This simulates detecting the latest commit
+    // In a real environment, this would be set by a build process
+    const latestCommit = '3acac70'; // Lower Body visibility fix
+    localStorage.setItem('aksho-latest-commit', latestCommit);
+    console.log(`📝 Latest commit set: ${latestCommit}`);
 }
 
 /**
