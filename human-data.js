@@ -1642,7 +1642,15 @@ function initializeHumanForm() {
             ${generateSectionWithHeader('HAIR FEATURES', HUMAN_DATA.hair)}
             ${generateSectionWithHeader('FACIAL FEATURES', HUMAN_DATA.facialFeatures)}
             ${generateSectionWithHeader('UPPER BODY', HUMAN_DATA.upperBody)}
-            ${generateSectionWithHeader('LOWER BODY', HUMAN_DATA.lowerBodyDetailed)}
+            ${(() => {
+                console.log('🔍 DEBUGGING: About to generate Lower Body section');
+                console.log('🔍 HUMAN_DATA.lowerBodyDetailed:', HUMAN_DATA.lowerBodyDetailed);
+                console.log('🔍 Keys in lowerBodyDetailed:', Object.keys(HUMAN_DATA.lowerBodyDetailed || {}));
+                const result = generateSectionWithHeader('LOWER BODY', HUMAN_DATA.lowerBodyDetailed);
+                console.log('🔍 Lower Body section result length:', result.length);
+                console.log('🔍 Lower Body section result preview:', result.substring(0, 200));
+                return result;
+            })()}
             ${generateSectionWithHeader('HANDS & FEET', HUMAN_DATA.extremities)}
             ${generateSectionWithHeader('BODY MODIFICATIONS', HUMAN_DATA.bodyModifications)}
             ${generateSectionWithHeader('ACCESSORIES', HUMAN_DATA.accessories)}
@@ -1678,9 +1686,14 @@ function initializeHumanForm() {
  */
 function generateSectionWithHeader(title, sectionData) {
     const content = generateFormSection(sectionData);
+    
+    // Always generate section if we have fields, let CSS handle visibility
     if (!content.trim()) {
-        return ''; // Return empty string if no visible content
+        console.warn(`⚠️ Section "${title}" has no content generated`);
+        return ''; // Return empty string only if literally no content was generated
     }
+    
+    console.log(`✅ Generated section: ${title} (${content.length} chars)`);
     return `
         <div class="section">
             <h3>${title}</h3>
