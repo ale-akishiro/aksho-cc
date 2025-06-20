@@ -950,6 +950,14 @@ optgroup option:hover {
     border-left: 4px solid rgba(139, 92, 246, 0.3);
 }
 
+.optional-group {
+    display: none; /* Hidden by default until optional mode is enabled */
+}
+
+.optional-group.optional-visible {
+    display: block;
+}
+
 .optional-group .group-title {
     color: #8b5cf6;
     border-left-color: #8b5cf6;

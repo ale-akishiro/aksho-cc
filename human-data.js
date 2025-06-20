@@ -1145,7 +1145,6 @@ const HUMAN_DATA = {
             label: 'NIPPLE COLOR',
             type: 'select',
             priority: 'nsfw',
-            optional: true,
             options: [
                 { value: '', label: 'SELECT NIPPLE COLOR...' },
                 { value: 'pink nipples', label: 'PINK NIPPLES' },
@@ -1163,7 +1162,6 @@ const HUMAN_DATA = {
             label: 'NIPPLE SIZE',
             type: 'select',
             priority: 'nsfw',
-            optional: true,
             options: [
                 { value: '', label: 'SELECT NIPPLE SIZE...' },
                 { value: 'tiny nipples', label: 'TINY NIPPLES' },
@@ -1178,7 +1176,6 @@ const HUMAN_DATA = {
             label: 'NIPPLE MODIFIERS',
             type: 'select',
             priority: 'nsfw',
-            optional: true,
             options: [
                 { value: '', label: 'SELECT NIPPLE TYPE...' },
                 { value: 'puffy nipples', label: 'PUFFY NIPPLES' },
@@ -1719,14 +1716,14 @@ function generateFormSection(sectionData) {
         { 
             name: 'optional', 
             fields: groups.optional, 
-            title: '✨ OPTIONAL DETAILS', 
-            visible: true,
+            title: '', // No header needed - purple styling indicates optional
+            visible: false, // Hidden by default like NSFW
             className: 'group-separator optional-group'
         },
         { 
             name: 'nsfw', 
             fields: groups.nsfw, 
-            title: '🔞 NSFW DETAILS', 
+            title: '', // No header needed - red styling indicates NSFW
             visible: false, // Hidden by default
             className: 'group-separator nsfw-group'
         }
