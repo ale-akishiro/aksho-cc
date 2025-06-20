@@ -1159,6 +1159,21 @@ const HUMAN_DATA = {
             ]
         },
         
+        nippleSize: {
+            label: 'NIPPLE SIZE',
+            type: 'select',
+            priority: 'nsfw',
+            optional: true,
+            options: [
+                { value: '', label: 'SELECT NIPPLE SIZE...' },
+                { value: 'tiny nipples', label: 'TINY NIPPLES' },
+                { value: 'small nipples', label: 'SMALL NIPPLES' },
+                { value: 'medium nipples', label: 'MEDIUM NIPPLES' },
+                { value: 'large nipples', label: 'LARGE NIPPLES' },
+                { value: 'huge nipples', label: 'HUGE NIPPLES' }
+            ]
+        },
+        
         nippleModifiers: {
             label: 'NIPPLE MODIFIERS',
             type: 'select',
@@ -1168,13 +1183,12 @@ const HUMAN_DATA = {
                 { value: '', label: 'SELECT NIPPLE TYPE...' },
                 { value: 'puffy nipples', label: 'PUFFY NIPPLES' },
                 { value: 'inverted nipples', label: 'INVERTED NIPPLES' },
-                { value: 'large nipples', label: 'LARGE NIPPLES' },
-                { value: 'small nipples', label: 'SMALL NIPPLES' },
                 { value: 'erect nipples', label: 'ERECT NIPPLES' },
                 { value: 'flat nipples', label: 'FLAT NIPPLES' },
                 { value: 'pointy nipples', label: 'POINTY NIPPLES' },
                 { value: 'sensitive nipples', label: 'SENSITIVE NIPPLES' },
-                { value: 'pierced nipples', label: 'PIERCED NIPPLES' }
+                { value: 'pierced nipples', label: 'PIERCED NIPPLES' },
+                { value: 'normal nipples', label: 'NORMAL NIPPLES' }
             ]
         },
         
@@ -1702,7 +1716,7 @@ function generateFormSection(sectionData) {
         { 
             name: 'nsfw', 
             fields: groups.nsfw, 
-            title: '🔞 ADULT CONTENT', 
+            title: '🔞 NSFW DETAILS', 
             visible: false, // Hidden by default
             className: 'group-separator nsfw-group'
         }
