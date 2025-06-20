@@ -1659,6 +1659,9 @@ function initializeHumanForm() {
         // Set the correct initial button state
         setTimeout(() => {
             updateToggleButtonState();
+            if (typeof updateSectionVisibility === 'function') {
+                updateSectionVisibility();
+            }
         }, 0);
         
         console.log('Human form HTML generated successfully');
@@ -1675,17 +1678,9 @@ function initializeHumanForm() {
  */
 function generateSectionWithHeader(title, sectionData) {
     const content = generateFormSection(sectionData);
-    
-    // Check if section contains NSFW fields (should always show section header if NSFW content exists)
-    const hasNSFWContent = Object.values(sectionData).some(field => 
-        field.nsfw || field.priority === 'nsfw'
-    );
-    
-    // If no content and no NSFW fields, hide the section
-    if (!content.trim() && !hasNSFWContent) {
-        return ''; // Return empty string if no visible content and no NSFW fields
+    if (!content.trim()) {
+        return ''; // Return empty string if no visible content
     }
-    
     return `
         <div class="section">
             <h3>${title}</h3>

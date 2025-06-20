@@ -1357,6 +1357,52 @@ let contentState = {
 };
 
 /**
+ * Update section visibility based on content state
+ */
+function updateSectionVisibility() {
+    const sections = document.querySelectorAll('.section');
+    
+    sections.forEach(section => {
+        const visibleFormGroups = section.querySelectorAll('.form-group').length;
+        const hiddenFormGroups = section.querySelectorAll('.form-group[style*="display: none"], .form-group.nsfw-content:not(.nsfw-visible), .form-group.optional-content.optional-hidden').length;
+        
+        // Check for different content types in this section
+        const hasNSFWContent = section.querySelector('.nsfw-content') !== null;
+        const hasOptionalContent = section.querySelector('.optional-content') !== null;
+        const hasVisibleNSFW = section.querySelector('.nsfw-content.nsfw-visible') !== null;
+        const hasVisibleOptional = section.querySelector('.optional-content:not(.optional-hidden)') !== null;
+        const hasEssentialContent = section.querySelector('.form-group:not(.nsfw-content):not(.optional-content)') !== null;
+        
+        // Determine if section should be visible
+        let shouldShowSection = false;
+        
+        if (hasEssentialContent) {
+            // Always show sections with essential content
+            shouldShowSection = true;
+        } else if (hasNSFWContent && hasOptionalContent) {
+            // Mixed NSFW + Optional content
+            shouldShowSection = hasVisibleNSFW || hasVisibleOptional;
+        } else if (hasNSFWContent) {
+            // Only NSFW content
+            shouldShowSection = hasVisibleNSFW;
+        } else if (hasOptionalContent) {
+            // Only optional content
+            shouldShowSection = hasVisibleOptional;
+        } else {
+            // Default case - show if any visible content
+            shouldShowSection = visibleFormGroups > hiddenFormGroups;
+        }
+        
+        // Apply visibility
+        if (shouldShowSection) {
+            section.style.display = 'block';
+        } else {
+            section.style.display = 'none';
+        }
+    });
+}
+
+/**
  * Toggle between SFW and NSFW content rating
  */
 function toggleContentRating() {
@@ -1394,6 +1440,9 @@ function toggleContentRating() {
         });
     }
     
+    // Update section visibility after toggle
+    updateSectionVisibility();
+    
     console.log('Content rating toggled:', contentState.nsfwMode ? 'NSFW' : 'SFW');
 }
 
@@ -1427,6 +1476,9 @@ function toggleOptionalContent() {
             element.classList.add('optional-hidden');
         });
     }
+    
+    // Update section visibility after toggle
+    updateSectionVisibility();
     
     console.log('Optional content toggled:', contentState.optionalVisible ? 'visible' : 'hidden');
 }
