@@ -924,46 +924,62 @@ const HUMAN_DATA = {
             label: 'EYE COLOR',
             type: 'select',
             priority: 'essential',
-            options: [
-                { value: '', label: 'SELECT EYE COLOR...' },
-                
-                // Blue Family
-                { value: 'subcategory_blue_eyes', label: '--- BLUE EYES ---', disabled: true },
-                { value: 'ice blue eyes', label: 'ICE BLUE EYES' },
-                { value: 'sky blue eyes', label: 'SKY BLUE EYES' },
-                { value: 'navy blue eyes', label: 'NAVY BLUE EYES' },
-                { value: 'steel blue eyes', label: 'STEEL BLUE EYES' },
-                { value: 'aqua blue eyes', label: 'AQUA BLUE EYES' },
-                
-                // Green Family
-                { value: 'subcategory_green_eyes', label: '--- GREEN EYES ---', disabled: true },
-                { value: 'emerald green eyes', label: 'EMERALD GREEN EYES' },
-                { value: 'forest green eyes', label: 'FOREST GREEN EYES' },
-                { value: 'hazel green eyes', label: 'HAZEL GREEN EYES' },
-                { value: 'olive green eyes', label: 'OLIVE GREEN EYES' },
-                { value: 'mint green eyes', label: 'MINT GREEN EYES' },
-                
-                // Brown Family
-                { value: 'subcategory_brown_eyes', label: '--- BROWN EYES ---', disabled: true },
-                { value: 'amber eyes', label: 'AMBER EYES' },
-                { value: 'honey brown eyes', label: 'HONEY BROWN EYES' },
-                { value: 'chocolate brown eyes', label: 'CHOCOLATE BROWN EYES' },
-                { value: 'dark brown eyes', label: 'DARK BROWN EYES' },
-                { value: 'mahogany eyes', label: 'MAHOGANY EYES' },
-                
-                // Gray Family
-                { value: 'subcategory_gray_eyes', label: '--- GRAY EYES ---', disabled: true },
-                { value: 'light gray eyes', label: 'LIGHT GRAY EYES' },
-                { value: 'dark gray eyes', label: 'DARK GRAY EYES' },
-                { value: 'blue-gray eyes', label: 'BLUE-GRAY EYES' },
-                { value: 'green-gray eyes', label: 'GREEN-GRAY EYES' },
-                
-                // Rare Colors
-                { value: 'subcategory_rare_eyes', label: '--- RARE COLORS ---', disabled: true },
-                { value: 'violet eyes', label: 'VIOLET EYES' },
-                { value: 'golden eyes', label: 'GOLDEN EYES' },
-                { value: 'heterochromia', label: 'HETEROCHROMIA' },
-                { value: 'sectoral heterochromia', label: 'SECTORAL HETEROCHROMIA' }
+            useSubcategories: true,
+            optgroups: [
+                {
+                    label: 'DEFAULT',
+                    options: [
+                        { value: '', label: 'SELECT EYE COLOR...' }
+                    ]
+                },
+                {
+                    label: 'BLUE EYES',
+                    options: [
+                        { value: 'ice blue eyes', label: 'ICE BLUE EYES' },
+                        { value: 'sky blue eyes', label: 'SKY BLUE EYES' },
+                        { value: 'navy blue eyes', label: 'NAVY BLUE EYES' },
+                        { value: 'steel blue eyes', label: 'STEEL BLUE EYES' },
+                        { value: 'aqua blue eyes', label: 'AQUA BLUE EYES' }
+                    ]
+                },
+                {
+                    label: 'GREEN EYES',
+                    options: [
+                        { value: 'emerald green eyes', label: 'EMERALD GREEN EYES' },
+                        { value: 'forest green eyes', label: 'FOREST GREEN EYES' },
+                        { value: 'hazel green eyes', label: 'HAZEL GREEN EYES' },
+                        { value: 'olive green eyes', label: 'OLIVE GREEN EYES' },
+                        { value: 'mint green eyes', label: 'MINT GREEN EYES' }
+                    ]
+                },
+                {
+                    label: 'BROWN EYES',
+                    options: [
+                        { value: 'amber eyes', label: 'AMBER EYES' },
+                        { value: 'honey brown eyes', label: 'HONEY BROWN EYES' },
+                        { value: 'chocolate brown eyes', label: 'CHOCOLATE BROWN EYES' },
+                        { value: 'dark brown eyes', label: 'DARK BROWN EYES' },
+                        { value: 'mahogany eyes', label: 'MAHOGANY EYES' }
+                    ]
+                },
+                {
+                    label: 'GRAY EYES',
+                    options: [
+                        { value: 'light gray eyes', label: 'LIGHT GRAY EYES' },
+                        { value: 'dark gray eyes', label: 'DARK GRAY EYES' },
+                        { value: 'blue-gray eyes', label: 'BLUE-GRAY EYES' },
+                        { value: 'green-gray eyes', label: 'GREEN-GRAY EYES' }
+                    ]
+                },
+                {
+                    label: 'RARE COLORS',
+                    options: [
+                        { value: 'violet eyes', label: 'VIOLET EYES' },
+                        { value: 'golden eyes', label: 'GOLDEN EYES' },
+                        { value: 'heterochromia', label: 'HETEROCHROMIA' },
+                        { value: 'sectoral heterochromia', label: 'SECTORAL HETEROCHROMIA' }
+                    ]
+                }
             ]
         },
         
@@ -1066,12 +1082,12 @@ const HUMAN_DATA = {
         }
     },
 
-    // Torso Detailed
-    torsoDetailed: {
+    // Upper Body
+    upperBody: {
         chestBreast: {
             label: 'CHEST/BREAST VARIATIONS',
             type: 'select',
-            priority: 'nsfw',
+            priority: 'essential',
             options: [
                 { value: '', label: 'SELECT CHEST/BREAST TYPE...' },
                 // Size
