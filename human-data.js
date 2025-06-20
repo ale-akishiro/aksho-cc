@@ -1229,7 +1229,7 @@ const HUMAN_DATA = {
         }
     },
 
-    // Lower Body Detailed
+    // Lower Body
     lowerBodyDetailed: {
         hips: {
             label: 'HIP VARIATIONS',
@@ -1309,27 +1309,59 @@ const HUMAN_DATA = {
             ]
         },
         
-        genitalFeatures: {
-            label: 'GENITAL FEATURES',
+        vaginaType: {
+            label: 'VAGINA TYPE',
+            type: 'select',
+            priority: 'nsfw',
+            options: [
+                { value: '', label: 'SELECT VAGINA TYPE...' },
+                { value: 'innie vagina', label: 'INNIE VAGINA' },
+                { value: 'outie vagina', label: 'OUTIE VAGINA' }
+            ]
+        },
+        
+        vaginaColor: {
+            label: 'VAGINA COLOR',
+            type: 'select',
+            priority: 'nsfw',
+            options: [
+                { value: '', label: 'SELECT VAGINA COLOR...' },
+                { value: 'pink vagina', label: 'PINK VAGINA' },
+                { value: 'light pink vagina', label: 'LIGHT PINK VAGINA' },
+                { value: 'reddish vagina', label: 'REDDISH VAGINA' },
+                { value: 'red vagina', label: 'RED VAGINA' },
+                { value: 'brown vagina', label: 'BROWN VAGINA' },
+                { value: 'dark brown vagina', label: 'DARK BROWN VAGINA' },
+                { value: 'dark vagina', label: 'DARK VAGINA' },
+                { value: 'pale vagina', label: 'PALE VAGINA' }
+            ]
+        },
+        
+        pubicHair: {
+            label: 'PUBIC HAIR',
+            type: 'select',
+            priority: 'nsfw',
+            options: [
+                { value: '', label: 'SELECT PUBIC HAIR...' },
+                { value: 'shaved pubes', label: 'SHAVED' },
+                { value: 'small pubes', label: 'SMALL PUBES' },
+                { value: 'heart pubes', label: 'HEART SHAPED' },
+                { value: 'line shaped pubes', label: 'LINE SHAPED' },
+                { value: 'triangle pubes', label: 'TRIANGLE SHAPED' },
+                { value: 'full pubes', label: 'FULL BUSH' },
+                { value: 'sparse pubic hair', label: 'SPARSE' },
+                { value: 'trimmed pubes', label: 'TRIMMED' },
+                { value: 'natural pubes', label: 'NATURAL' }
+            ]
+        },
+        
+        clitorisFeatures: {
+            label: 'CLITORIS FEATURES',
             type: 'toggle',
             priority: 'nsfw',
             options: [
-                // Grooming
-                { value: 'shaved pubes', label: 'SHAVED PUBES' },
-                { value: 'small pubes', label: 'SMALL PUBES' },
-                { value: 'heart pubes', label: 'HEART PUBES' },
-                { value: 'line shaped pubes', label: 'LINE SHAPED PUBES' },
-                { value: 'full pubes', label: 'FULL PUBES' },
-                { value: 'sparse pubic hair', label: 'SPARSE PUBIC HAIR' },
-                // Anatomy
-                { value: 'innie vagina', label: 'INNIE VAGINA' },
-                { value: 'outie vagina', label: 'OUTIE VAGINA' },
                 { value: 'defined clitoris', label: 'DEFINED CLITORIS' },
-                // Colors
-                { value: 'pink vagina', label: 'PINK VAGINA' },
-                { value: 'reddish vagina', label: 'REDDISH VAGINA' },
-                { value: 'brown vagina', label: 'BROWN VAGINA' },
-                { value: 'dark vagina', label: 'DARK VAGINA' }
+                { value: 'prominent clitoris', label: 'PROMINENT CLITORIS' }
             ]
         }
     },
@@ -1607,40 +1639,13 @@ function initializeHumanForm() {
                 ${generateFormSection(HUMAN_DATA.basicInfo)}
             </div>
 
-            <div class="section">
-                <h3>HAIR FEATURES</h3>
-                ${generateFormSection(HUMAN_DATA.hair)}
-            </div>
-
-            <div class="section">
-                <h3>FACIAL FEATURES</h3>
-                ${generateFormSection(HUMAN_DATA.facialFeatures)}
-            </div>
-
-            <div class="section">
-                <h3>UPPER BODY</h3>
-                ${generateFormSection(HUMAN_DATA.upperBody)}
-            </div>
-
-            <div class="section">
-                <h3>LOWER BODY DETAILS</h3>
-                ${generateFormSection(HUMAN_DATA.lowerBodyDetailed)}
-            </div>
-
-            <div class="section">
-                <h3>HANDS & FEET</h3>
-                ${generateFormSection(HUMAN_DATA.extremities)}
-            </div>
-
-            <div class="section">
-                <h3>BODY MODIFICATIONS</h3>
-                ${generateFormSection(HUMAN_DATA.bodyModifications)}
-            </div>
-
-            <div class="section">
-                <h3>ACCESSORIES</h3>
-                ${generateFormSection(HUMAN_DATA.accessories)}
-            </div>
+            ${generateSectionWithHeader('HAIR FEATURES', HUMAN_DATA.hair)}
+            ${generateSectionWithHeader('FACIAL FEATURES', HUMAN_DATA.facialFeatures)}
+            ${generateSectionWithHeader('UPPER BODY', HUMAN_DATA.upperBody)}
+            ${generateSectionWithHeader('LOWER BODY', HUMAN_DATA.lowerBodyDetailed)}
+            ${generateSectionWithHeader('HANDS & FEET', HUMAN_DATA.extremities)}
+            ${generateSectionWithHeader('BODY MODIFICATIONS', HUMAN_DATA.bodyModifications)}
+            ${generateSectionWithHeader('ACCESSORIES', HUMAN_DATA.accessories)}
 
             <div class="section">
                 <h3>CUSTOM TAGS</h3>
@@ -1660,6 +1665,25 @@ function initializeHumanForm() {
     } catch (error) {
         console.error('Error generating human form:', error);
     }
+}
+
+/**
+ * Generate section with header only if it has visible content
+ * @param {string} title - Section title
+ * @param {Object} sectionData - Section data object
+ * @returns {string} HTML string
+ */
+function generateSectionWithHeader(title, sectionData) {
+    const content = generateFormSection(sectionData);
+    if (!content.trim()) {
+        return ''; // Return empty string if no visible content
+    }
+    return `
+        <div class="section">
+            <h3>${title}</h3>
+            ${content}
+        </div>
+    `;
 }
 
 /**
@@ -1819,6 +1843,16 @@ function generateFormSection(sectionData) {
         html += `</div>`;
         });
     });
+    
+    // Check if section has any visible content (not just essential fields)
+    const hasVisibleContent = groups.essential.length > 0 || 
+                            (window.optionalContentEnabled && groups.optional.length > 0) ||
+                            (window.nsfwContentEnabled && groups.nsfw.length > 0);
+    
+    if (!hasVisibleContent) {
+        console.log('Section has no visible content, returning empty string');
+        return '';
+    }
     
     console.log(`Generated HTML length: ${html.length}`);
     return html;
