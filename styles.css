@@ -79,6 +79,10 @@ body::before {
     text-align: center;
     position: relative;
     overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .header::before {
@@ -101,22 +105,171 @@ body::before {
 }
 
 .header h1 {
-    font-size: 2.8em;
-    margin-bottom: 10px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    font-size: 3.2em;
+    margin-bottom: 0;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    position: relative;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+/* Version Badge */
+.version-badge {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.version-badge:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.version-badge:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Version Info Modal */
+.version-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.version-modal.active {
+    display: flex;
+}
+
+.version-modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.version-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(139, 92, 246, 0.2);
+}
+
+.version-modal-title {
+    font-size: 1.5em;
     font-weight: 700;
-    letter-spacing: 0.02em;
-    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.header p {
-    font-size: 1.2em;
-    opacity: 0.95;
-    font-weight: 400;
-    letter-spacing: 0.01em;
+.version-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.2s ease;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.version-modal-close:hover {
+    color: #374151;
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.version-info-section {
+    margin-bottom: 20px;
+}
+
+.version-info-section h3 {
+    color: #374151;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.version-info-section p {
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.version-history {
+    max-height: 200px;
+    overflow-y: auto;
+    background: rgba(139, 92, 246, 0.05);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.version-history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.version-history-item:last-child {
+    border-bottom: none;
+}
+
+.version-history-version {
+    font-weight: 600;
+    color: #8b5cf6;
+}
+
+.version-history-date {
+    font-size: 0.85em;
+    color: #9ca3af;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 /* Navigation Pills */

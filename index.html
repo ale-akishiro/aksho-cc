@@ -12,8 +12,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>The Akshoverse Studio</h1>
-            <p>Professional Creative Studio Platform - Grand Launch v1.0</p>
+            <h1>AKSHOVERSE STUDIO</h1>
+            <div class="version-badge" onclick="showVersionModal()">TE v1.1.2</div>
         </div>
 
         <!-- Centered Pills Navigation -->
@@ -222,7 +222,21 @@
         </div>
     </div>
 
+    <!-- Version Info Modal -->
+    <div id="version-modal" class="version-modal" onclick="closeVersionModal(event)">
+        <div class="version-modal-content" onclick="event.stopPropagation()">
+            <div class="version-modal-header">
+                <h3 class="version-modal-title">Version Information</h3>
+                <button class="version-modal-close" onclick="closeVersionModal()">&times;</button>
+            </div>
+            <div id="version-modal-body">
+                <!-- Version info will be populated here -->
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript modules -->
+    <script src="version.js"></script>
     <script src="utils.js"></script>
     <script src="validation.js"></script>
     <script src="conflict-detection.js"></script>
