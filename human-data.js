@@ -1642,15 +1642,7 @@ function initializeHumanForm() {
             ${generateSectionWithHeader('HAIR FEATURES', HUMAN_DATA.hair)}
             ${generateSectionWithHeader('FACIAL FEATURES', HUMAN_DATA.facialFeatures)}
             ${generateSectionWithHeader('UPPER BODY', HUMAN_DATA.upperBody)}
-            ${(() => {
-                console.log('🔍 DEBUGGING: About to generate Lower Body section');
-                console.log('🔍 HUMAN_DATA.lowerBodyDetailed:', HUMAN_DATA.lowerBodyDetailed);
-                console.log('🔍 Keys in lowerBodyDetailed:', Object.keys(HUMAN_DATA.lowerBodyDetailed || {}));
-                const result = generateSectionWithHeader('LOWER BODY', HUMAN_DATA.lowerBodyDetailed);
-                console.log('🔍 Lower Body section result length:', result.length);
-                console.log('🔍 Lower Body section result preview:', result.substring(0, 200));
-                return result;
-            })()}
+            ${generateSectionWithHeader('LOWER BODY', HUMAN_DATA.lowerBodyDetailed)}
             ${generateSectionWithHeader('HANDS & FEET', HUMAN_DATA.extremities)}
             ${generateSectionWithHeader('BODY MODIFICATIONS', HUMAN_DATA.bodyModifications)}
             ${generateSectionWithHeader('ACCESSORIES', HUMAN_DATA.accessories)}
@@ -1689,11 +1681,8 @@ function generateSectionWithHeader(title, sectionData) {
     
     // Always generate section if we have fields, let CSS handle visibility
     if (!content.trim()) {
-        console.warn(`⚠️ Section "${title}" has no content generated`);
         return ''; // Return empty string only if literally no content was generated
     }
-    
-    console.log(`✅ Generated section: ${title} (${content.length} chars)`);
     return `
         <div class="section">
             <h3>${title}</h3>
@@ -1860,13 +1849,10 @@ function generateFormSection(sectionData) {
         });
     });
     
-    // Check if section has any visible content (not just essential fields)
-    const hasVisibleContent = groups.essential.length > 0 || 
-                            (window.optionalContentEnabled && groups.optional.length > 0) ||
-                            (window.nsfwContentEnabled && groups.nsfw.length > 0);
-    
-    if (!hasVisibleContent) {
-        console.log('Section has no visible content, returning empty string');
+    // Always generate HTML content and let CSS handle visibility
+    // Don't filter out sections based on current toggle states at generation time
+    if (html.trim().length === 0) {
+        console.log('No HTML generated for section');
         return '';
     }
     
