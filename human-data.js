@@ -1529,18 +1529,8 @@ function initializeHumanForm() {
             </div>
 
             <div class="section">
-                <h3>BEAUTY MARKS & SKIN</h3>
-                ${generateFormSection(HUMAN_DATA.beautyMarks)}
-            </div>
-
-            <div class="section">
-                <h3>BODY BUILD</h3>
-                ${generateFormSection(HUMAN_DATA.bodyBuild)}
-            </div>
-
-            <div class="section">
-                <h3>TORSO DETAILS</h3>
-                ${generateFormSection(HUMAN_DATA.torsoDetailed)}
+                <h3>UPPER BODY</h3>
+                ${generateFormSection(HUMAN_DATA.upperBody)}
             </div>
 
             <div class="section">
