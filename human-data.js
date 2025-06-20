@@ -1740,7 +1740,7 @@ function generateFormSection(sectionData) {
         let cssClasses = 'form-group';
         
         // Check if this field is NSFW
-        if (field.nsfw) {
+        if (field.nsfw || field.priority === 'nsfw') {
             cssClasses += ' nsfw-content';
         }
         
