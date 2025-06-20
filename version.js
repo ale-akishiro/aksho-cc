@@ -7,10 +7,11 @@
 
 class VersionManager {
     constructor() {
-        this.currentVersion = { major: 1, minor: 1, patch: 2 };
+        this.currentVersion = { major: 1, minor: 1, patch: 3 };
         this.versionHistory = [];
         this.autoIncrement = true;
         this.currentBranch = this.detectBranch();
+        this.lastCommitHash = null;
     }
 
     /**
@@ -123,37 +124,78 @@ class VersionManager {
     }
 
     /**
-     * Setup automatic version incrementing based on activity
+     * Setup automatic version incrementing based on development activity
      */
     setupAutoIncrement() {
-        let lastActivity = Date.now();
-        const CHECK_INTERVAL = 30000; // 30 seconds
-        const ACTIVITY_THRESHOLD = 300000; // 5 minutes of inactivity before considering session ended
-
-        // Track user activity
-        const activityEvents = ['click', 'keypress', 'scroll', 'mousemove'];
-        activityEvents.forEach(event => {
-            document.addEventListener(event, () => {
-                lastActivity = Date.now();
-            }, { passive: true });
-        });
-
-        // Check for version updates periodically
+        // Check for version updates based on localStorage changes
+        const CHECK_INTERVAL = 10000; // 10 seconds
+        
+        // Monitor for manual version increments or external version changes
         setInterval(() => {
-            const now = Date.now();
-            const inactiveTime = now - lastActivity;
+            this.checkForVersionUpdates();
+        }, CHECK_INTERVAL);
+        
+        // Set up commit-based versioning (simulated via localStorage for demo)
+        this.setupCommitBasedVersioning();
+    }
+
+    /**
+     * Setup commit-based versioning system
+     */
+    setupCommitBasedVersioning() {
+        // In a real environment, this would connect to git hooks
+        // For now, we'll simulate with localStorage and manual triggers
+        
+        const checkCommits = () => {
+            const currentCommit = localStorage.getItem('aksho-latest-commit');
+            const lastKnownCommit = localStorage.getItem('aksho-last-processed-commit');
             
-            // If user has been inactive and then becomes active, increment patch
-            if (inactiveTime > ACTIVITY_THRESHOLD) {
-                const lastSeen = localStorage.getItem('aksho-last-seen');
-                if (lastSeen && (now - parseInt(lastSeen)) > ACTIVITY_THRESHOLD) {
-                    // User returned after being away - increment patch version
-                    this.addVersionHistoryEntry('patch', 'Session resumed');
+            if (currentCommit && currentCommit !== lastKnownCommit) {
+                // New commit detected - increment patch version
+                this.incrementVersion('patch');
+                this.addVersionHistoryEntry('patch', `Commit: ${currentCommit.substring(0, 8)}`);
+                localStorage.setItem('aksho-last-processed-commit', currentCommit);
+            }
+        };
+        
+        // Check for commits every 5 seconds
+        setInterval(checkCommits, 5000);
+    }
+
+    /**
+     * Check for external version updates
+     */
+    checkForVersionUpdates() {
+        try {
+            const savedData = localStorage.getItem('aksho-version-data');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const savedVersion = data.current;
+                
+                // Check if version was updated externally
+                if (savedVersion && (
+                    savedVersion.major !== this.currentVersion.major ||
+                    savedVersion.minor !== this.currentVersion.minor ||
+                    savedVersion.patch !== this.currentVersion.patch
+                )) {
+                    this.currentVersion = savedVersion;
+                    this.updateVersionDisplay();
                 }
             }
-            
-            localStorage.setItem('aksho-last-seen', now.toString());
-        }, CHECK_INTERVAL);
+        } catch (error) {
+            console.warn('Could not check for version updates:', error);
+        }
+    }
+
+    /**
+     * Simulate git commit (for development/testing)
+     */
+    simulateCommit(commitHash = null) {
+        if (!commitHash) {
+            commitHash = Math.random().toString(36).substring(2, 10);
+        }
+        localStorage.setItem('aksho-latest-commit', commitHash);
+        console.log(`🚀 Simulated commit: ${commitHash}`);
     }
 
     /**
@@ -248,11 +290,15 @@ function showVersionModal() {
         <div class="version-info-section">
             <h3>🎯 Version Controls</h3>
             <p style="margin-bottom: 15px;">Manually increment version for testing:</p>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
                 <button onclick="incrementVersionModal('patch')" style="padding: 6px 12px; border: 1px solid #8b5cf6; background: rgba(139, 92, 246, 0.1); border-radius: 6px; cursor: pointer; font-size: 0.85em;">+Patch</button>
                 <button onclick="incrementVersionModal('minor')" style="padding: 6px 12px; border: 1px solid #8b5cf6; background: rgba(139, 92, 246, 0.1); border-radius: 6px; cursor: pointer; font-size: 0.85em;">+Minor</button>
                 <button onclick="incrementVersionModal('major')" style="padding: 6px 12px; border: 1px solid #8b5cf6; background: rgba(139, 92, 246, 0.1); border-radius: 6px; cursor: pointer; font-size: 0.85em;">+Major</button>
                 <button onclick="toggleBranch()" style="padding: 6px 12px; border: 1px solid #059669; background: rgba(5, 150, 105, 0.1); border-radius: 6px; cursor: pointer; font-size: 0.85em;">Toggle Branch</button>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="simulateCommitModal()" style="padding: 6px 12px; border: 1px solid #f59e0b; background: rgba(245, 158, 11, 0.1); border-radius: 6px; cursor: pointer; font-size: 0.85em;">Simulate Commit</button>
+                <button onclick="setVersionModal()" style="padding: 6px 12px; border: 1px solid #dc2626; background: rgba(220, 38, 38, 0.1); border-radius: 6px; cursor: pointer; font-size: 0.85em;">Set Version</button>
             </div>
         </div>
     `;
@@ -294,6 +340,40 @@ function toggleBranch() {
     VersionManager_Instance.updateVersionDisplay();
     // Refresh modal content
     showVersionModal();
+}
+
+/**
+ * Simulate commit for testing auto-increment
+ */
+function simulateCommitModal() {
+    const commitHash = '0be34cf'; // Use actual latest commit hash
+    VersionManager_Instance.simulateCommit(commitHash);
+    // Refresh modal content after short delay to show update
+    setTimeout(() => {
+        showVersionModal();
+    }, 100);
+}
+
+/**
+ * Set specific version manually
+ */
+function setVersionModal() {
+    const currentVersion = VersionManager_Instance.currentVersion;
+    const input = prompt(
+        `Enter version (format: major.minor.patch)
+Current: ${currentVersion.major}.${currentVersion.minor}.${currentVersion.patch}`,
+        `${currentVersion.major}.${currentVersion.minor}.${currentVersion.patch}`
+    );
+    
+    if (input && input.match(/^\d+\.\d+\.\d+$/)) {
+        const [major, minor, patch] = input.split('.').map(Number);
+        VersionManager_Instance.setVersion(major, minor, patch);
+        VersionManager_Instance.addVersionHistoryEntry('manual', `Manual version set to ${input}`);
+        // Refresh modal content
+        showVersionModal();
+    } else if (input !== null) {
+        alert('Invalid version format. Use: major.minor.patch (e.g., 1.1.3)');
+    }
 }
 
 // Close modal with Escape key
