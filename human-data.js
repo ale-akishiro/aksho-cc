@@ -1659,9 +1659,9 @@ function initializeHumanForm() {
         // Set the correct initial button state
         setTimeout(() => {
             updateToggleButtonState();
-            if (typeof updateSectionVisibility === 'function') {
-                updateSectionVisibility();
-            }
+            // if (typeof updateSectionVisibility === 'function') {
+            //     updateSectionVisibility(); // Temporarily disabled to debug
+            // }
         }, 0);
         
         console.log('Human form HTML generated successfully');

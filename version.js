@@ -7,7 +7,7 @@
 
 class VersionManager {
     constructor() {
-        this.currentVersion = { major: 1, minor: 1, patch: 4 };
+        this.currentVersion = { major: 1, minor: 1, patch: 2383 };
         this.versionHistory = [];
         this.autoIncrement = true;
         this.currentBranch = this.detectBranch();
@@ -143,9 +143,10 @@ class VersionManager {
      * Setup commit-based versioning system
      */
     setupCommitBasedVersioning() {
-        // In a real environment, this would connect to git hooks
-        // For now, we'll simulate with localStorage and manual triggers
+        // Try to fetch real git commit info via API or server
+        this.checkForRealCommits();
         
+        // Fallback: localStorage-based simulation
         const checkCommits = () => {
             const currentCommit = localStorage.getItem('aksho-latest-commit');
             const lastKnownCommit = localStorage.getItem('aksho-last-processed-commit');
@@ -160,6 +161,33 @@ class VersionManager {
         
         // Check for commits every 5 seconds
         setInterval(checkCommits, 5000);
+    }
+
+    /**
+     * Attempt to fetch real commit information
+     */
+    async checkForRealCommits() {
+        try {
+            // Try to read from a version.json file that could be updated by build process
+            const response = await fetch('./version.json?t=' + Date.now());
+            if (response.ok) {
+                const versionData = await response.json();
+                if (versionData.version) {
+                    const [major, minor, patch] = versionData.version.split('.').map(Number);
+                    if (major !== this.currentVersion.major || 
+                        minor !== this.currentVersion.minor || 
+                        patch !== this.currentVersion.patch) {
+                        
+                        this.currentVersion = { major, minor, patch };
+                        this.updateVersionDisplay();
+                        this.addVersionHistoryEntry('auto', `Auto-sync from build: ${versionData.version}`);
+                        console.log(`🔄 Version auto-synced to ${versionData.version}`);
+                    }
+                }
+            }
+        } catch (error) {
+            // Silently fail - this is expected if no version.json exists
+        }
     }
 
     /**

@@ -1363,41 +1363,63 @@ function updateSectionVisibility() {
     const sections = document.querySelectorAll('.section');
     
     sections.forEach(section => {
-        const visibleFormGroups = section.querySelectorAll('.form-group').length;
-        const hiddenFormGroups = section.querySelectorAll('.form-group[style*="display: none"], .form-group.nsfw-content:not(.nsfw-visible), .form-group.optional-content.optional-hidden').length;
+        const sectionTitle = section.querySelector('h3')?.textContent || 'Unknown';
         
-        // Check for different content types in this section
-        const hasNSFWContent = section.querySelector('.nsfw-content') !== null;
-        const hasOptionalContent = section.querySelector('.optional-content') !== null;
-        const hasVisibleNSFW = section.querySelector('.nsfw-content.nsfw-visible') !== null;
-        const hasVisibleOptional = section.querySelector('.optional-content:not(.optional-hidden)') !== null;
-        const hasEssentialContent = section.querySelector('.form-group:not(.nsfw-content):not(.optional-content)') !== null;
+        // Get all form groups in this section
+        const allFormGroups = section.querySelectorAll('.form-group');
+        const nsfwElements = section.querySelectorAll('.nsfw-content');
+        const optionalElements = section.querySelectorAll('.optional-content');
+        const essentialElements = section.querySelectorAll('.form-group:not(.nsfw-content):not(.optional-content)');
+        
+        // Check visibility states
+        const visibleNSFW = section.querySelectorAll('.nsfw-content.nsfw-visible');
+        const visibleOptional = section.querySelectorAll('.optional-content:not(.optional-hidden)');
+        
+        // Debug logging for Lower Body section
+        if (sectionTitle === 'LOWER BODY') {
+            console.log('🔍 Lower Body Debug:', {
+                totalFormGroups: allFormGroups.length,
+                nsfwElements: nsfwElements.length,
+                optionalElements: optionalElements.length,
+                essentialElements: essentialElements.length,
+                visibleNSFW: visibleNSFW.length,
+                visibleOptional: visibleOptional.length,
+                nsfwMode: contentState.nsfwMode,
+                optionalVisible: contentState.optionalVisible
+            });
+        }
         
         // Determine if section should be visible
         let shouldShowSection = false;
         
-        if (hasEssentialContent) {
-            // Always show sections with essential content
+        // Always show if there are essential (non-optional, non-NSFW) elements
+        if (essentialElements.length > 0) {
             shouldShowSection = true;
-        } else if (hasNSFWContent && hasOptionalContent) {
-            // Mixed NSFW + Optional content
-            shouldShowSection = hasVisibleNSFW || hasVisibleOptional;
-        } else if (hasNSFWContent) {
-            // Only NSFW content
-            shouldShowSection = hasVisibleNSFW;
-        } else if (hasOptionalContent) {
-            // Only optional content
-            shouldShowSection = hasVisibleOptional;
-        } else {
-            // Default case - show if any visible content
-            shouldShowSection = visibleFormGroups > hiddenFormGroups;
+        }
+        // Show if NSFW mode is on and there are visible NSFW elements
+        else if (contentState.nsfwMode && visibleNSFW.length > 0) {
+            shouldShowSection = true;
+        }
+        // Show if optional mode is on and there are visible optional elements
+        else if (contentState.optionalVisible && visibleOptional.length > 0) {
+            shouldShowSection = true;
+        }
+        // For mixed content sections, show if ANY content is visible
+        else if (nsfwElements.length > 0 && optionalElements.length > 0) {
+            shouldShowSection = (visibleNSFW.length > 0) || (visibleOptional.length > 0);
+        }
+        // Default: show if section has any form groups at all (let CSS handle visibility)
+        else if (allFormGroups.length > 0) {
+            shouldShowSection = true;
         }
         
         // Apply visibility
-        if (shouldShowSection) {
-            section.style.display = 'block';
-        } else {
-            section.style.display = 'none';
+        const displayStyle = shouldShowSection ? 'block' : 'none';
+        section.style.display = displayStyle;
+        
+        // Debug logging for Lower Body section
+        if (sectionTitle === 'LOWER BODY') {
+            console.log(`🎯 Lower Body Decision: ${shouldShowSection ? 'SHOW' : 'HIDE'} (${displayStyle})`);
         }
     });
 }
@@ -1441,7 +1463,7 @@ function toggleContentRating() {
     }
     
     // Update section visibility after toggle
-    updateSectionVisibility();
+    // updateSectionVisibility(); // Temporarily disabled to debug
     
     console.log('Content rating toggled:', contentState.nsfwMode ? 'NSFW' : 'SFW');
 }
@@ -1478,7 +1500,7 @@ function toggleOptionalContent() {
     }
     
     // Update section visibility after toggle
-    updateSectionVisibility();
+    // updateSectionVisibility(); // Temporarily disabled to debug
     
     console.log('Optional content toggled:', contentState.optionalVisible ? 'visible' : 'hidden');
 }
