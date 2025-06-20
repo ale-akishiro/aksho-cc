@@ -297,6 +297,23 @@ const HUMAN_DATA = {
             ]
         },
         
+        muscleDefinition: {
+            label: 'MUSCLE DEFINITION',
+            type: 'select',
+            priority: 'optional',
+            optional: true,
+            options: [
+                { value: '', label: 'SELECT MUSCLE DEFINITION...' },
+                { value: 'no muscle definition', label: 'NO MUSCLE DEFINITION' },
+                { value: 'subtle muscle tone', label: 'SUBTLE MUSCLE TONE' },
+                { value: 'moderate muscle definition', label: 'MODERATE MUSCLE DEFINITION' },
+                { value: 'well-defined muscles', label: 'WELL-DEFINED MUSCLES' },
+                { value: 'bodybuilder physique', label: 'BODYBUILDER PHYSIQUE' },
+                { value: 'athletic build', label: 'ATHLETIC BUILD' },
+                { value: "dancer's build", label: "DANCER'S BUILD" }
+            ]
+        },
+        
         frame: {
             label: 'FRAME',
             type: 'select',
@@ -362,6 +379,46 @@ const HUMAN_DATA = {
                 { value: 'sun tan', label: 'SUN TAN' },
                 { value: 'tan lines', label: 'TAN LINES' },
                 { value: "farmer's tan", label: "FARMER'S TAN" }
+            ]
+        },
+        
+        beautyMarks: {
+            label: 'BEAUTY MARKS & MOLES',
+            type: 'toggle',
+            priority: 'optional',
+            optional: true,
+            options: [
+                { value: 'freckles', label: 'FRECKLES' },
+                { value: 'freckles on whole body', label: 'FRECKLES ON WHOLE BODY' },
+                { value: 'beauty mark', label: 'BEAUTY MARK' },
+                { value: 'multiple beauty marks', label: 'MULTIPLE BEAUTY MARKS' },
+                { value: 'mole on neck', label: 'MOLE ON NECK' },
+                { value: 'mole on chin', label: 'MOLE ON CHIN' },
+                { value: 'mole above lip', label: 'MOLE ABOVE LIP' },
+                { value: 'mole on forehead', label: 'MOLE ON FOREHEAD' },
+                { value: 'mole above chest', label: 'MOLE ABOVE CHEST' },
+                { value: 'mole on cheek', label: 'MOLE ON CHEEK' },
+                { value: 'mole on nose', label: 'MOLE ON NOSE' },
+                { value: 'mole on shoulder', label: 'MOLE ON SHOULDER' },
+                { value: 'mole on arm', label: 'MOLE ON ARM' },
+                { value: 'mole on leg', label: 'MOLE ON LEG' }
+            ]
+        },
+        
+        skinConditions: {
+            label: 'SKIN CONDITIONS & MARKS',
+            type: 'toggle',
+            priority: 'optional',
+            optional: true,
+            options: [
+                { value: 'sun spots', label: 'SUN SPOTS' },
+                { value: 'age spots', label: 'AGE SPOTS' },
+                { value: 'birthmarks', label: 'BIRTHMARKS' },
+                { value: 'vitiligo', label: 'VITILIGO' },
+                { value: 'skin tags', label: 'SKIN TAGS' },
+                { value: 'stretch marks', label: 'STRETCH MARKS' },
+                { value: 'port wine stain', label: 'PORT WINE STAIN' },
+                { value: 'cafe au lait spots', label: 'CAFE AU LAIT SPOTS' }
             ]
         }
     },
@@ -807,10 +864,11 @@ const HUMAN_DATA = {
         
         forehead: {
             label: 'FOREHEAD',
-            type: 'toggle',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT FOREHEAD...' },
                 { value: 'high forehead', label: 'HIGH FOREHEAD' },
                 { value: 'low forehead', label: 'LOW FOREHEAD' },
                 { value: 'wide forehead', label: 'WIDE FOREHEAD' },
@@ -823,10 +881,11 @@ const HUMAN_DATA = {
         
         eyebrows: {
             label: 'EYEBROW VARIATIONS',
-            type: 'toggle',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT EYEBROWS...' },
                 { value: 'thin eyebrows', label: 'THIN EYEBROWS' },
                 { value: 'thick eyebrows', label: 'THICK EYEBROWS' },
                 { value: 'arched eyebrows', label: 'ARCHED EYEBROWS' },
@@ -842,10 +901,11 @@ const HUMAN_DATA = {
         
         eyeShape: {
             label: 'EYE SHAPE & FEATURES',
-            type: 'toggle',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT EYE SHAPE...' },
                 { value: 'almond eyes', label: 'ALMOND EYES' },
                 { value: 'round eyes', label: 'ROUND EYES' },
                 { value: 'hooded eyes', label: 'HOODED EYES' },
@@ -868,6 +928,7 @@ const HUMAN_DATA = {
                 { value: '', label: 'SELECT EYE COLOR...' },
                 
                 // Blue Family
+                { value: 'subcategory_blue_eyes', label: '--- BLUE EYES ---', disabled: true },
                 { value: 'ice blue eyes', label: 'ICE BLUE EYES' },
                 { value: 'sky blue eyes', label: 'SKY BLUE EYES' },
                 { value: 'navy blue eyes', label: 'NAVY BLUE EYES' },
@@ -875,6 +936,7 @@ const HUMAN_DATA = {
                 { value: 'aqua blue eyes', label: 'AQUA BLUE EYES' },
                 
                 // Green Family
+                { value: 'subcategory_green_eyes', label: '--- GREEN EYES ---', disabled: true },
                 { value: 'emerald green eyes', label: 'EMERALD GREEN EYES' },
                 { value: 'forest green eyes', label: 'FOREST GREEN EYES' },
                 { value: 'hazel green eyes', label: 'HAZEL GREEN EYES' },
@@ -882,6 +944,7 @@ const HUMAN_DATA = {
                 { value: 'mint green eyes', label: 'MINT GREEN EYES' },
                 
                 // Brown Family
+                { value: 'subcategory_brown_eyes', label: '--- BROWN EYES ---', disabled: true },
                 { value: 'amber eyes', label: 'AMBER EYES' },
                 { value: 'honey brown eyes', label: 'HONEY BROWN EYES' },
                 { value: 'chocolate brown eyes', label: 'CHOCOLATE BROWN EYES' },
@@ -889,12 +952,14 @@ const HUMAN_DATA = {
                 { value: 'mahogany eyes', label: 'MAHOGANY EYES' },
                 
                 // Gray Family
+                { value: 'subcategory_gray_eyes', label: '--- GRAY EYES ---', disabled: true },
                 { value: 'light gray eyes', label: 'LIGHT GRAY EYES' },
                 { value: 'dark gray eyes', label: 'DARK GRAY EYES' },
                 { value: 'blue-gray eyes', label: 'BLUE-GRAY EYES' },
                 { value: 'green-gray eyes', label: 'GREEN-GRAY EYES' },
                 
                 // Rare Colors
+                { value: 'subcategory_rare_eyes', label: '--- RARE COLORS ---', disabled: true },
                 { value: 'violet eyes', label: 'VIOLET EYES' },
                 { value: 'golden eyes', label: 'GOLDEN EYES' },
                 { value: 'heterochromia', label: 'HETEROCHROMIA' },
@@ -904,10 +969,11 @@ const HUMAN_DATA = {
         
         eyeFeatures: {
             label: 'EYE FEATURES',
-            type: 'toggle',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT EYE FEATURES...' },
                 { value: 'long eyelashes', label: 'LONG EYELASHES' },
                 { value: 'short eyelashes', label: 'SHORT EYELASHES' },
                 { value: 'thick eyelashes', label: 'THICK EYELASHES' },
@@ -947,10 +1013,11 @@ const HUMAN_DATA = {
         
         lips: {
             label: 'LIP VARIATIONS',
-            type: 'toggle',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT LIPS...' },
                 { value: 'thin lips', label: 'THIN LIPS' },
                 { value: 'full lips', label: 'FULL LIPS' },
                 { value: 'pouty lips', label: 'POUTY LIPS' },
@@ -965,10 +1032,11 @@ const HUMAN_DATA = {
         
         cheeks: {
             label: 'CHEEK FEATURES',
-            type: 'toggle',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT CHEEKS...' },
                 { value: 'high cheekbones', label: 'HIGH CHEEKBONES' },
                 { value: 'low cheekbones', label: 'LOW CHEEKBONES' },
                 { value: 'hollow cheeks', label: 'HOLLOW CHEEKS' },
@@ -981,10 +1049,11 @@ const HUMAN_DATA = {
         
         jawChin: {
             label: 'JAW & CHIN',
-            type: 'toggle',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT JAW & CHIN...' },
                 { value: 'strong jaw', label: 'STRONG JAW' },
                 { value: 'weak jaw', label: 'WEAK JAW' },
                 { value: 'square jaw', label: 'SQUARE JAW' },
@@ -993,106 +1062,6 @@ const HUMAN_DATA = {
                 { value: 'double chin', label: 'DOUBLE CHIN' },
                 { value: 'defined jawline', label: 'DEFINED JAWLINE' },
                 { value: 'soft jawline', label: 'SOFT JAWLINE' }
-            ]
-        }
-    },
-
-    // Beauty Marks & Skin Features
-    beautyMarks: {
-        beautyMarks: {
-            label: 'BEAUTY MARKS & MOLES',
-            type: 'toggle',
-            priority: 'optional',
-            optional: true,
-            options: [
-                { value: 'freckles', label: 'FRECKLES' },
-                { value: 'freckles on whole body', label: 'FRECKLES ON WHOLE BODY' },
-                { value: 'beauty mark', label: 'BEAUTY MARK' },
-                { value: 'multiple beauty marks', label: 'MULTIPLE BEAUTY MARKS' },
-                { value: 'mole on neck', label: 'MOLE ON NECK' },
-                { value: 'mole on chin', label: 'MOLE ON CHIN' },
-                { value: 'mole above lip', label: 'MOLE ABOVE LIP' },
-                { value: 'mole on forehead', label: 'MOLE ON FOREHEAD' },
-                { value: 'mole above chest', label: 'MOLE ABOVE CHEST' },
-                { value: 'mole on cheek', label: 'MOLE ON CHEEK' },
-                { value: 'mole on nose', label: 'MOLE ON NOSE' },
-                { value: 'mole on shoulder', label: 'MOLE ON SHOULDER' },
-                { value: 'mole on arm', label: 'MOLE ON ARM' },
-                { value: 'mole on leg', label: 'MOLE ON LEG' }
-            ]
-        },
-        
-        skinConditions: {
-            label: 'SKIN CONDITIONS & MARKS',
-            type: 'toggle',
-            priority: 'optional',
-            optional: true,
-            options: [
-                { value: 'sun spots', label: 'SUN SPOTS' },
-                { value: 'age spots', label: 'AGE SPOTS' },
-                { value: 'birthmarks', label: 'BIRTHMARKS' },
-                { value: 'vitiligo', label: 'VITILIGO' },
-                { value: 'skin tags', label: 'SKIN TAGS' },
-                { value: 'stretch marks', label: 'STRETCH MARKS' },
-                { value: 'port wine stain', label: 'PORT WINE STAIN' },
-                { value: 'cafe au lait spots', label: 'CAFE AU LAIT SPOTS' }
-            ]
-        }
-    },
-
-    // Body Build Expanded
-    bodyBuild: {
-        bodyFrame: {
-            label: 'BODY FRAME',
-            type: 'select',
-            priority: 'essential',
-            options: [
-                { value: '', label: 'SELECT BODY FRAME...' },
-                { value: 'very small body frame', label: 'VERY SMALL BODY FRAME' },
-                { value: 'small body frame', label: 'SMALL BODY FRAME' },
-                { value: 'medium body frame', label: 'MEDIUM BODY FRAME' },
-                { value: 'big body frame', label: 'BIG BODY FRAME' },
-                { value: 'very big body frame', label: 'VERY BIG BODY FRAME' }
-            ]
-        },
-        
-        muscleDefinition: {
-            label: 'MUSCLE DEFINITION',
-            type: 'toggle',
-            priority: 'optional',
-            optional: true,
-            options: [
-                { value: 'no muscle definition', label: 'NO MUSCLE DEFINITION' },
-                { value: 'subtle muscle tone', label: 'SUBTLE MUSCLE TONE' },
-                { value: 'moderate muscle definition', label: 'MODERATE MUSCLE DEFINITION' },
-                { value: 'well-defined muscles', label: 'WELL-DEFINED MUSCLES' },
-                { value: 'bodybuilder physique', label: 'BODYBUILDER PHYSIQUE' },
-                { value: 'athletic build', label: 'ATHLETIC BUILD' },
-                { value: "dancer's build", label: "DANCER'S BUILD" }
-            ]
-        },
-        
-        bodyShape: {
-            label: 'BODY BUILD',
-            type: 'select',
-            priority: 'essential',
-            options: [
-                { value: '', label: 'SELECT BODY SHAPE...' },
-                { value: 'skinny shape build', label: 'SKINNY SHAPE BUILD' },
-                { value: 'petite shape build', label: 'PETITE SHAPE BUILD' },
-                { value: 'slim shape build', label: 'SLIM SHAPE BUILD' },
-                { value: 'fit shape build', label: 'FIT SHAPE BUILD' },
-                { value: 'slender shape build', label: 'SLENDER SHAPE BUILD' },
-                { value: 'toned shape build', label: 'TONED SHAPE BUILD' },
-                { value: 'curvy shape build', label: 'CURVY SHAPE BUILD' },
-                { value: 'chubby shape build', label: 'CHUBBY SHAPE BUILD' },
-                { value: 'fat shape build', label: 'FAT SHAPE BUILD' },
-                { value: 'athletic shape build', label: 'ATHLETIC SHAPE BUILD' },
-                { value: 'pear shape build', label: 'PEAR SHAPE BUILD' },
-                { value: 'apple shape build', label: 'APPLE SHAPE BUILD' },
-                { value: 'hourglass shape build', label: 'HOURGLASS SHAPE BUILD' },
-                { value: 'rectangle shape build', label: 'RECTANGLE SHAPE BUILD' },
-                { value: 'inverted triangle shape build', label: 'INVERTED TRIANGLE SHAPE BUILD' }
             ]
         }
     },
