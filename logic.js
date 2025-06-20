@@ -677,8 +677,13 @@ class AkshoStudio {
             const age = ageInput && ageInput.value ? parseInt(ageInput.value) : null;
             console.log('Age input found:', ageInput, 'Age value:', age);
             
-            // Combine and order tags properly
-            const allTags = [...this.state.selectedTags, ...customTags];
+            // Apply Custom Tag Merge system before combining tags
+            const mergedCharacterData = window.processCustomTagMergers ? 
+                window.processCustomTagMergers(characterData) : characterData;
+            
+            // Convert merged character data back to tags and combine with custom tags
+            const mergedTags = this.convertCharacterDataToTags(mergedCharacterData);
+            const allTags = [...mergedTags, ...customTags];
             const orderedTags = this.orderTagsForPrompt(allTags, age);
             
             // Update UI
@@ -726,6 +731,31 @@ class AkshoStudio {
         } catch (error) {
             console.error('Failed to update output:', error);
         }
+    }
+
+    /**
+     * Convert character data object to tags array (including merged tags)
+     * @param {Object} characterData - Character data with potentially merged fields
+     * @returns {Array} Array of tag strings
+     */
+    convertCharacterDataToTags(characterData) {
+        const tags = [];
+        
+        // Process all character data fields
+        Object.entries(characterData).forEach(([key, value]) => {
+            if (value && value.trim && value.trim() !== '') {
+                // Handle merged tags (they end with 'Merged')
+                if (key.endsWith('Merged')) {
+                    tags.push(value);
+                    console.log(`🔗 Added merged tag: ${value}`);
+                } else {
+                    // Handle regular tags
+                    tags.push(value);
+                }
+            }
+        });
+        
+        return tags;
     }
 
     /**

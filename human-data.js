@@ -1593,6 +1593,160 @@ const HUMAN_DATA = {
     }
 };
 
+// === CUSTOM TAG MERGE SYSTEM ===
+
+/**
+ * Custom Tag Merge Configuration
+ * Combines related tags to save context tokens
+ * Format: "color type" instead of "type, color"
+ */
+const CUSTOM_TAG_MERGERS = {
+    // Vagina tag merging: combines vaginaColor + vaginaType
+    vagina: {
+        description: 'Combines vagina color and type into single optimized tag',
+        primaryField: 'vaginaColor',     // The color goes first
+        secondaryField: 'vaginaType',    // The type goes after
+        baseWordRemoval: ['vagina'],     // Remove redundant words
+        format: '{color} {type}',        // Template: "pink innie vagina"
+        enabled: true
+    },
+    
+    // Future extension examples (ready for implementation):
+    
+    // Breast tag merging: combines breastSize + breastModifiers  
+    breast: {
+        description: 'Combines breast size and modifiers',
+        primaryField: 'breastSize',
+        secondaryField: 'breastModifiers', 
+        baseWordRemoval: ['breast', 'breasts'],
+        format: '{size} {modifier} breasts',
+        enabled: false // Not implemented yet
+    },
+    
+    // Hair tag merging: combines hairColor + hairStyle
+    hair: {
+        description: 'Combines hair color and style',
+        primaryField: 'hairColor',
+        secondaryField: 'hairStyle',
+        baseWordRemoval: ['hair'],
+        format: '{color} {style} hair',
+        enabled: false // Not implemented yet
+    },
+    
+    // Eye tag merging: combines eyeColor + eyeShape
+    eyes: {
+        description: 'Combines eye color and shape',
+        primaryField: 'eyeColor', 
+        secondaryField: 'eyeShape',
+        baseWordRemoval: ['eye', 'eyes'],
+        format: '{color} {shape} eyes',
+        enabled: false // Not implemented yet
+    },
+    
+    // Skin tag merging: combines skinColor + skinTexture
+    skin: {
+        description: 'Combines skin color and texture',
+        primaryField: 'skinColor',
+        secondaryField: 'skinTexture', 
+        baseWordRemoval: ['skin'],
+        format: '{color} {texture} skin',
+        enabled: false // Not implemented yet
+    }
+};
+
+/**
+ * Process custom tag merging for selected values
+ * @param {Object} selectedValues - Currently selected form values
+ * @returns {Object} - Processed values with merged tags
+ */
+function processCustomTagMergers(selectedValues) {
+    const processedValues = { ...selectedValues };
+    
+    // Process each enabled merger
+    Object.entries(CUSTOM_TAG_MERGERS).forEach(([mergerKey, config]) => {
+        if (!config.enabled) return;
+        
+        const primaryValue = selectedValues[config.primaryField];
+        const secondaryValue = selectedValues[config.secondaryField];
+        
+        // Only merge if both values are selected and not empty
+        if (primaryValue && secondaryValue && 
+            primaryValue.trim() !== '' && secondaryValue.trim() !== '') {
+            
+            // Clean the values by removing base words
+            let cleanPrimary = primaryValue;
+            let cleanSecondary = secondaryValue;
+            
+            config.baseWordRemoval.forEach(word => {
+                const regex = new RegExp(`\\b${word}\\b`, 'gi');
+                cleanPrimary = cleanPrimary.replace(regex, '').trim();
+                cleanSecondary = cleanSecondary.replace(regex, '').trim();
+            });
+            
+            // Create merged tag using the format template
+            const mergedTag = config.format
+                .replace('{color}', cleanPrimary)
+                .replace('{size}', cleanPrimary)
+                .replace('{primary}', cleanPrimary)
+                .replace('{type}', cleanSecondary)
+                .replace('{modifier}', cleanSecondary)
+                .replace('{style}', cleanSecondary)
+                .replace('{shape}', cleanSecondary)
+                .replace('{texture}', cleanSecondary)
+                .replace('{secondary}', cleanSecondary)
+                .replace(/\s+/g, ' ')  // Clean up multiple spaces
+                .trim();
+            
+            // Store the merged result and clear individual fields
+            processedValues[`${mergerKey}Merged`] = mergedTag;
+            
+            // Optionally remove the individual fields to save tokens
+            // (comment out if you want to keep both)
+            delete processedValues[config.primaryField];
+            delete processedValues[config.secondaryField];
+            
+            console.log(`🔗 Tag Merge: ${primaryValue} + ${secondaryValue} → ${mergedTag}`);
+        }
+    });
+    
+    return processedValues;
+}
+
+/**
+ * Get list of fields that participate in tag merging
+ * @returns {Array} - Array of field names involved in merging
+ */
+function getTagMergerFields() {
+    const fields = [];
+    Object.values(CUSTOM_TAG_MERGERS).forEach(config => {
+        if (config.enabled) {
+            fields.push(config.primaryField, config.secondaryField);
+        }
+    });
+    return fields;
+}
+
+/**
+ * Check if a field is part of a tag merger
+ * @param {string} fieldName - Name of the field to check
+ * @returns {Object|null} - Merger config if field participates, null otherwise
+ */
+function getFieldMergerConfig(fieldName) {
+    for (const [mergerKey, config] of Object.entries(CUSTOM_TAG_MERGERS)) {
+        if (config.enabled && 
+            (config.primaryField === fieldName || config.secondaryField === fieldName)) {
+            return { key: mergerKey, config };
+        }
+    }
+    return null;
+}
+
+// Export Custom Tag Merge functions globally
+window.processCustomTagMergers = processCustomTagMergers;
+window.getTagMergerFields = getTagMergerFields;
+window.getFieldMergerConfig = getFieldMergerConfig;
+window.CUSTOM_TAG_MERGERS = CUSTOM_TAG_MERGERS;
+
 // === FORM GENERATION FUNCTIONS ===
 
 /**
@@ -1652,6 +1806,15 @@ function initializeHumanForm() {
                 <div class="form-group">
                     <label for="custom-tags">Additional Tags (comma-separated)</label>
                     <textarea id="custom-tags" placeholder="Enter custom tags separated by commas..."></textarea>
+                </div>
+                
+                <div class="form-group" style="margin-top: 15px;">
+                    <div class="tag-merger-info">
+                        <small style="color: #6b7280; font-style: italic;">
+                            🔗 <strong>Smart Tag Merging Enabled:</strong> Related tags (like vagina color + type) are automatically combined to save context tokens.
+                            Fields with 🔗 participate in intelligent merging.
+                        </small>
+                    </div>
                 </div>
             </div>
         `;
@@ -1785,8 +1948,17 @@ function generateFormSection(sectionData) {
             cssClasses += ' optional-content optional-hidden';
         }
         
+        // Check if this field participates in tag merging
+        const mergerConfig = getFieldMergerConfig(key);
+        let mergerIndicator = '';
+        if (mergerConfig) {
+            const partnerField = mergerConfig.config.primaryField === key ? 
+                mergerConfig.config.secondaryField : mergerConfig.config.primaryField;
+            mergerIndicator = `<span class="tag-merger-indicator" title="Merges with ${partnerField} to save tokens">🔗</span>`;
+        }
+        
         html += `<div class="${cssClasses}">`;
-        html += `<label>${field.label}</label>`;
+        html += `<label>${field.label}${mergerIndicator}</label>`;
         
         if (field.type === 'select') {
             html += `<select data-field="${key}">`;

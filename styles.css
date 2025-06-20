@@ -272,6 +272,21 @@ body::before {
     to { opacity: 1; }
 }
 
+/* Custom Tag Merge Indicators */
+.tag-merger-indicator {
+    margin-left: 8px;
+    font-size: 0.85em;
+    color: #10b981;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    cursor: help;
+}
+
+.tag-merger-indicator:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
 /* Navigation Pills */
 .nav-tabs {
     display: flex;
