@@ -1269,25 +1269,33 @@ const HUMAN_DATA = {
         
         thighs: {
             label: 'THIGH TYPES',
-            type: 'toggle',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT THIGH TYPE...' },
+                { value: 'very skinny thighs', label: 'VERY SKINNY THIGHS' },
                 { value: 'skinny thighs', label: 'SKINNY THIGHS' },
-                { value: 'athletic thighs', label: 'ATHLETIC THIGHS' },
+                { value: 'slightly skinny thighs', label: 'SLIGHTLY SKINNY THIGHS' },
+                { value: 'normal thighs', label: 'NORMAL THIGHS' },
+                { value: 'slightly thick thighs', label: 'SLIGHTLY THICK THIGHS' },
                 { value: 'thick thighs', label: 'THICK THIGHS' },
+                { value: 'very thick thighs', label: 'VERY THICK THIGHS' },
+                { value: 'athletic thighs', label: 'ATHLETIC THIGHS' },
                 { value: 'muscular thighs', label: 'MUSCULAR THIGHS' },
                 { value: 'soft thighs', label: 'SOFT THIGHS' },
+                { value: 'toned thighs', label: 'TONED THIGHS' },
                 { value: 'proportional thighs', label: 'PROPORTIONAL THIGHS' }
             ]
         },
         
         legs: {
             label: 'LEG FEATURES',
-            type: 'toggle',
+            type: 'select',
             priority: 'optional',
             optional: true,
             options: [
+                { value: '', label: 'SELECT LEG FEATURES...' },
                 { value: 'long legs', label: 'LONG LEGS' },
                 { value: 'short legs', label: 'SHORT LEGS' },
                 { value: 'proportional legs', label: 'PROPORTIONAL LEGS' },
@@ -1296,9 +1304,11 @@ const HUMAN_DATA = {
                 { value: 'straight legs', label: 'STRAIGHT LEGS' },
                 { value: 'muscular calves', label: 'MUSCULAR CALVES' },
                 { value: 'skinny calves', label: 'SKINNY CALVES' },
-                { value: 'ankle thickness', label: 'ANKLE THICKNESS' },
-                { value: 'foot size', label: 'FOOT SIZE' },
-                { value: 'arch height', label: 'ARCH HEIGHT' }
+                { value: 'defined calves', label: 'DEFINED CALVES' },
+                { value: 'soft calves', label: 'SOFT CALVES' },
+                { value: 'thick ankles', label: 'THICK ANKLES' },
+                { value: 'thin ankles', label: 'THIN ANKLES' },
+                { value: 'elegant ankles', label: 'ELEGANT ANKLES' }
             ]
         },
         
