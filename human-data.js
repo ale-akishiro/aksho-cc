@@ -1141,6 +1141,43 @@ const HUMAN_DATA = {
             ]
         },
         
+        nippleColor: {
+            label: 'NIPPLE COLOR',
+            type: 'select',
+            priority: 'nsfw',
+            optional: true,
+            options: [
+                { value: '', label: 'SELECT NIPPLE COLOR...' },
+                { value: 'pink nipples', label: 'PINK NIPPLES' },
+                { value: 'light pink nipples', label: 'LIGHT PINK NIPPLES' },
+                { value: 'reddish nipples', label: 'REDDISH NIPPLES' },
+                { value: 'red nipples', label: 'RED NIPPLES' },
+                { value: 'brown nipples', label: 'BROWN NIPPLES' },
+                { value: 'dark brown nipples', label: 'DARK BROWN NIPPLES' },
+                { value: 'dark nipples', label: 'DARK NIPPLES' },
+                { value: 'pale nipples', label: 'PALE NIPPLES' }
+            ]
+        },
+        
+        nippleModifiers: {
+            label: 'NIPPLE MODIFIERS',
+            type: 'select',
+            priority: 'nsfw',
+            optional: true,
+            options: [
+                { value: '', label: 'SELECT NIPPLE TYPE...' },
+                { value: 'puffy nipples', label: 'PUFFY NIPPLES' },
+                { value: 'inverted nipples', label: 'INVERTED NIPPLES' },
+                { value: 'large nipples', label: 'LARGE NIPPLES' },
+                { value: 'small nipples', label: 'SMALL NIPPLES' },
+                { value: 'erect nipples', label: 'ERECT NIPPLES' },
+                { value: 'flat nipples', label: 'FLAT NIPPLES' },
+                { value: 'pointy nipples', label: 'POINTY NIPPLES' },
+                { value: 'sensitive nipples', label: 'SENSITIVE NIPPLES' },
+                { value: 'pierced nipples', label: 'PIERCED NIPPLES' }
+            ]
+        },
+        
         torsoFeatures: {
             label: 'TORSO FEATURES',
             type: 'toggle',
