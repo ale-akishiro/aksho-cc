@@ -1084,29 +1084,60 @@ const HUMAN_DATA = {
 
     // Upper Body
     upperBody: {
-        chestBreast: {
-            label: 'CHEST/BREAST VARIATIONS',
+        breastSize: {
+            label: 'BREAST SIZE',
             type: 'select',
             priority: 'essential',
+            useSubcategories: true,
+            optgroups: [
+                {
+                    label: 'DEFAULT',
+                    options: [
+                        { value: '', label: 'SELECT BREAST SIZE...' }
+                    ]
+                },
+                {
+                    label: 'FEMALE VARIATIONS',
+                    options: [
+                        { value: 'flat chest', label: 'FLAT CHEST' },
+                        { value: 'small breasts', label: 'SMALL BREASTS' },
+                        { value: 'medium breasts', label: 'MEDIUM BREASTS' },
+                        { value: 'large breasts', label: 'LARGE BREASTS' },
+                        { value: 'huge breasts', label: 'HUGE BREASTS' },
+                        { value: 'gigantic breasts', label: 'GIGANTIC BREASTS' }
+                    ]
+                },
+                {
+                    label: 'MALE VARIATIONS',
+                    options: [
+                        { value: 'athletic chest', label: 'ATHLETIC CHEST' },
+                        { value: 'broad chest', label: 'BROAD CHEST' },
+                        { value: 'narrow chest', label: 'NARROW CHEST' },
+                        { value: 'muscular pecs', label: 'MUSCULAR PECS' },
+                        { value: 'defined pecs', label: 'DEFINED PECS' },
+                        { value: 'soft chest', label: 'SOFT CHEST' }
+                    ]
+                }
+            ]
+        },
+        
+        breastModifiers: {
+            label: 'BREAST MODIFIERS',
+            type: 'select',
+            priority: 'optional',
+            optional: true,
             options: [
-                { value: '', label: 'SELECT CHEST/BREAST TYPE...' },
-                // Size
-                { value: 'flat chest', label: 'FLAT CHEST' },
-                { value: 'small breasts', label: 'SMALL BREASTS' },
-                { value: 'medium breasts', label: 'MEDIUM BREASTS' },
-                { value: 'large breasts', label: 'LARGE BREASTS' },
-                { value: 'huge breasts', label: 'HUGE BREASTS' },
-                { value: 'gigantic breasts', label: 'GIGANTIC BREASTS' },
-                // Shape
+                { value: '', label: 'SELECT BREAST MODIFIERS...' },
                 { value: 'perky', label: 'PERKY' },
                 { value: 'soft', label: 'SOFT' },
                 { value: 'natural', label: 'NATURAL' },
                 { value: 'saggy', label: 'SAGGY' },
                 { value: 'round shape', label: 'ROUND SHAPE' },
                 { value: 'teardrop shape', label: 'TEARDROP SHAPE' },
-                { value: 'athletic chest', label: 'ATHLETIC CHEST' },
-                { value: 'broad chest', label: 'BROAD CHEST' },
-                { value: 'narrow chest', label: 'NARROW CHEST' }
+                { value: 'firm', label: 'FIRM' },
+                { value: 'bouncy', label: 'BOUNCY' },
+                { value: 'enhanced', label: 'ENHANCED' },
+                { value: 'asymmetrical', label: 'ASYMMETRICAL' }
             ]
         },
         
