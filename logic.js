@@ -677,12 +677,9 @@ class AkshoStudio {
             const age = ageInput && ageInput.value ? parseInt(ageInput.value) : null;
             console.log('Age input found:', ageInput, 'Age value:', age);
             
-            // Apply Custom Tag Merge system before combining tags
-            const mergedCharacterData = window.processCustomTagMergers ? 
-                window.processCustomTagMergers(characterData) : characterData;
-            
-            // Convert merged character data back to tags and combine with custom tags
-            const mergedTags = this.convertCharacterDataToTags(mergedCharacterData);
+            // Apply simple tag merging for specific combinations
+            const characterTags = this.convertCharacterDataToTags(characterData);
+            const mergedTags = this.applySimpleTagMerging(characterTags);
             const allTags = [...mergedTags, ...customTags];
             const orderedTags = this.orderTagsForPrompt(allTags, age);
             
@@ -756,6 +753,25 @@ class AkshoStudio {
         });
         
         return tags;
+    }
+
+    /**
+     * Apply simple 1-by-1 tag merging for specific combinations
+     * @param {Array} tags - Array of tags to process
+     * @returns {Array} - Array with merged tags
+     */
+    applySimpleTagMerging(tags) {
+        const tagSet = new Set(tags);
+        
+        // Vagina color + type merging
+        if (tagSet.has('pink vagina') && tagSet.has('innie vagina')) {
+            tagSet.delete('pink vagina');
+            tagSet.delete('innie vagina');
+            tagSet.add('pink innie vagina');
+            console.log('🔗 Merged: pink vagina + innie vagina → pink innie vagina');
+        }
+        
+        return Array.from(tagSet);
     }
 
     /**
